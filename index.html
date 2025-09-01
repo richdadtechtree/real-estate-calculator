@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>부태리 계산기 허브 – 3개 탭</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #151822;
+      --text: #e8eaf0;
+      --muted: #96a0b5;
+      --accent: #4caf50;
+      --accent-weak: #3a8f40;
+      --tab: #1b1f2b;
+      --tab-active: #243049;
+      --ring: rgba(76, 175, 80, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, "Apple SD Gothic Neo", "Malgun Gothic", Helvetica, Arial, "Segoe UI Emoji";
+      background: linear-gradient(180deg, #0b0c10 0%, #0f1220 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(150%) blur(8px);
+      background: rgba(11,12,16,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 18px 16px; }
+    h1 { margin: 0 0 4px; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
+    .sub { color: var(--muted); font-size: 13px; }
+
+    .tabs {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+    }
+    [role="tab"] {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--tab);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+    [role="tab"].active { background: var(--tab-active); border-color: var(--accent-weak); box-shadow: 0 0 0 3px var(--ring) inset; }
+    [role="tab"]:hover { transform: translateY(-1px); }
+
+    .panel {
+      margin: 18px auto 28px; background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 10px; /* keep slim; inner is iframe */
+      overflow: hidden;
+    }
+    .panel[hidden] { display: none; }
+
+    iframe {
+      width: 100% ; border: 0; border-radius: 12px;
+      background: #fff; /* calculators use light theme */
+      min-height: 1200px; /* fallback height */
+    }
+
+    footer.page {
+      text-align: center; color: var(--muted); font-size: 13px; padding: 28px 0 36px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer.page a { color: #cfe6ff; text-decoration: none; }
+    footer.page a:hover { text-decoration: underline; }
+
+    .help {
+      margin-top: 10px; color: var(--muted); font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>부태리의 부동산 계산기</h1>
+      <div class="sub">부동산 투자 관련 계산기</div>
+      <div class="tabs" role="tablist" aria-label="계산기 선택">
+        <button id="tab-invest-loan" class="active" role="tab" aria-selected="true" aria-controls="panel-invest-loan">내 자산 + 연봉에 맞는 금액대</button>
+        <button id="tab-cost" role="tab" aria-selected="false" aria-controls="panel-cost">부동산 매수 경비 계산기</button>
+        <button id="tab-loan" role="tab" aria-selected="false" aria-controls="panel-loan">부동산 대출 계산기 </button>
+      </div>
+      <div class="help">💡 팁: </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Panel 1 -->
+    <section id="panel-invest-loan" class="panel" role="tabpanel" aria-labelledby="tab-invest-loan">
+      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자 가능 단지 찾기(대출계산기) r5.html" loading="eager"></iframe>
+    </section>
+
+    <!-- Panel 2 -->
+    <section id="panel-cost" class="panel" role="tabpanel" aria-labelledby="tab-cost" hidden>
+      <iframe title="부동산 매수 경비 계산기" data-file="1. 부동산 매수 경비 산출 계산기 -r2.html" loading="lazy"></iframe>
+    </section>
+
+    <!-- Panel 3 -->
+    <section id="panel-loan" class="panel" role="tabpanel" aria-labelledby="tab-loan" hidden>
+      <iframe title="부동산 대출 계산기" data-file="20250413대출계산기-r5.html" loading="lazy"></iframe>
+    </section>
+
+    <footer class="page">
+      <div><strong>협업 및 수정 문의</strong> · <a href="https://litt.ly/richdadtechtree" target="_blank" rel="noopener">https://litt.ly/richdadtechtree</a></div>
+    </footer>
+  </main>
+
+  <script>
+    (function(){
+      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+      function encodeSrc(iframe){
+        if (iframe && !iframe.dataset.loaded) {
+          try {
+            iframe.src = encodeURI(iframe.dataset.file);
+          } catch (e) {
+            iframe.src = iframe.dataset.file; // fallback
+          }
+          iframe.dataset.loaded = 'true';
+        }
+      }
+
+      function resizeIframe(iframe){
+        // Same-origin에서만 동작
+        try {
+          const doc = iframe.contentWindow.document;
+          const setHeight = () => {
+            const h = Math.max(
+              doc.body.scrollHeight,
+              doc.documentElement.scrollHeight,
+              1200
+            );
+            iframe.style.height = h + 'px';
+          };
+          setHeight();
+
+          // 동적 컨텐츠 변화 대응
+          const mo = new MutationObserver(() => setHeight());
+          mo.observe(doc.documentElement, { childList: true, subtree: true, attributes: true });
+
+          // 폰트 로딩/리사이즈 대응
+          iframe.contentWindow.addEventListener('load', setHeight);
+          window.addEventListener('resize', setHeight);
+        } catch (e) {
+          // 교차 출처면 고정 높이로 스크롤 사용
+          // console.warn('자동 높이조절은 동일 출처에서만 가능:', e);
+        }
+      }
+
+      function activateTab(tab){
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected','false');
+          const p = document.getElementById(t.getAttribute('aria-controls'));
+          if (p) p.hidden = true;
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected','true');
+        const panel = document.getElementById(tab.getAttribute('aria-controls'));
+        if (panel) {
+          panel.hidden = false;
+          const iframe = panel.querySelector('iframe');
+          if (iframe) {
+            encodeSrc(iframe);
+            iframe.addEventListener('load', () => resizeIframe(iframe), { once: true });
+          }
+        }
+        // 주소 해시 반영(선택사항)
+        history.replaceState(null, '', '#' + tab.id.replace('tab-','')); 
+      }
+
+      tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
+
+      // 초기 로드: 해시에 따라 탭 선택
+      const hash = location.hash.replace('#','');
+      const initial = hash ? document.getElementById('tab-' + hash) : tabs[0];
+      activateTab(initial || tabs[0]);
+
+      // 접근성: 좌우 화살표로 이동
+      document.addEventListener('keydown', e => {
+        if (!['ArrowLeft','ArrowRight'].includes(e.key)) return;
+        const idx = tabs.findIndex(t => t.classList.contains('active'));
+        const next = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+        activateTab(tabs[next]);
+        tabs[next].focus();
+      });
+    })();
+  </script>
+</body>
+</html>
