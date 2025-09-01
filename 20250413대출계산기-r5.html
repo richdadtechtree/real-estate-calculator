@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<!-- 제목을 변경했습니다 -->
+<title>부태리의 부동산 대출계산기</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      width: 90%;
+      margin: auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      box-sizing: border-box;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      width: auto;
+      margin-right: 6px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    span.hangul {
+      font-size: 0.9rem;
+      color: #555;
+      display: block;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-weight: bold;
+      margin: 20px 0 10px;
+      font-size: 1.05rem;
+    }
+    /* 하단에 추가될 footer 스타일 */
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    footer a {
+      color: #555;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<!-- 제목도 바꿨습니다 -->
+<h2>부태리의 대출계산기</h2>
+<label>연봉 (만원)</label>
+<input id="income" oninput="updateHangulAmount('income')" type="number"/>
+<span class="hangul" id="incomeText"></span>
+<label>부동산 가격 (만원)</label>
+<input id="propertyPrice" oninput="updateHangulAmount('propertyPrice')" type="number"/>
+<span class="hangul" id="propertyPriceText"></span>
+<label>기존 대출 월 상환금 (만원)</label>
+<input id="existingLoanMonthly" type="number"/>
+<label>대출 금리 (연 %, 소수점 가능)</label>
+<input id="interestRate" step="0.01" type="number"/>
+<label>상환 기간 (년)</label>
+<input id="loanTerm" type="number"/>
+<div class="checkbox-label">
+<input id="speculativeArea" onchange="applyPolicyRates()" type="checkbox"/>
+<label for="speculativeArea">투기지역 여부</label>
+</div>
+<div class="checkbox-label">
+<input id="firstTimeBuyer" onchange="applyPolicyRates()" type="checkbox"/>
+<label for="firstTimeBuyer">생애최초 여부</label>
+</div>
+<div class="checkbox-label">
+<input id="stressDSR2" onchange="toggleStressLevel(2)" type="checkbox"/>
+<label for="stressDSR2">스트레스 DSR 2단계</label>
+</div>
+<div id="regionOptions" style="display: none; margin-bottom: 10px;">
+<div class="checkbox-label">
+<input checked="" name="region" type="radio" value="capital"/>
+<label>수도권 (+1.2%)</label>
+</div>
+<div class="checkbox-label">
+<input name="region" type="radio" value="noncapital"/>
+<label>비수도권 (+0.75%)</label>
+</div>
+</div>
+<div class="checkbox-label">
+<input id="stressDSR3" onchange="toggleStressLevel(3)" type="checkbox"/>
+<div id="stressDSR3Explain" style="display: none; margin: 10px 0; font-size: 0.9rem; background: #eef; padding: 10px; border-radius: 5px;">📌 스트레스 DSR 3단계를 적용하면 대출 금리에 아래 표에 따라 가산 금리가 더해집니다.
+<table border="1" style="width:100%; font-size: 0.9rem; margin: 10px 0; border-collapse: collapse;">
+<thead style="background-color: #ddd;">
+<tr><th>고정금리 기간</th><th>혼합형 가산금리</th><th>주기형 가산금리</th></tr>
+</thead>
+<tbody>
+<tr><td>5년 미만</td><td>+1.5%</td><td>+1.5%</td></tr>
+<tr><td>5~9년</td><td>+1.2%</td><td>+0.6%</td></tr>
+<tr><td>9~15년</td><td>+0.9%</td><td>+0.45%</td></tr>
+<tr><td>15~21년</td><td>+0.6%</td><td>+0.3%</td></tr>
+<tr><td>21년 이상</td><td>0%</td><td>0%</td></tr>
+</tbody>
+</table>
+<p style="margin-top:10px; font-size:0.9rem;">
+📌 <strong>TIP</strong><br>
+1️⃣ 주기형과 혼합형은 고정금리 기간이 길수록 스트레스 DSR 가산금리가 낮아집니다.<br>
+2️⃣ 변동형은 고정금리 기간과 관계없이 <strong>+1.5%</strong>가 항상 적용됩니다.
+</p>
+
+</div><div id="dsr3Options" style="display: none; margin-bottom: 10px;">
+<label>📌 대출 유형</label>
+<div class="checkbox-label">
+<input checked="" name="loanType" onclick="document.getElementById('stressDSR3').checked = true;toggleStressLevel(3);document.getElementById('mixedStressGuide').style.display = 'block';document.getElementById('periodicStressGuide').style.display = 'none';" type="radio" value="mixed"/> 혼합형
+  </div>
+<div class="checkbox-label">
+<input name="loanType" onclick="document.getElementById('stressDSR3').checked = true;toggleStressLevel(3);document.getElementById('mixedStressGuide').style.display = 'none';document.getElementById('periodicStressGuide').style.display = 'block';" type="radio" value="periodic"/> 주기형
+  </div>
+<div id="mixedStressGuide" style="display: none; margin: 5px 0 15px; font-size: 0.9rem; color: #444;">
+  📌 혼합형 선택 시: 고정금리 기간 비중에 따라 100%~0%까지 스트레스 금리가 적용됩니다.
+</div>
+<div id="periodicStressGuide" style="display: none; margin: 5px 0 15px; font-size: 0.9rem; color: #444;">
+  📌 주기형 선택 시: 금리변동 주기 비중에 따라 100%~0%까지 스트레스 금리가 적용됩니다.
+</div>
+<label>고정금리 기간 (30년 만기 기준)</label>
+<select id="fixedRateTerm">
+<option value="0">5년 미만</option>
+<option value="7">5~9년</option>
+<option value="12">9~15년</option>
+<option value="18">15~21년</option>
+<option value="25">21년 이상</option>
+</select>
+</div>
+<label for="stressDSR3">스트레스 DSR 3단계 (+1.5%)</label>
+</div>
+<div class="section-title">📌 상환 방식 선택</div>
+<div class="checkbox-label">
+<input checked="" name="repaymentType" type="radio" value="equalPrincipalInterest"/>
+<label>원리금 균등 상환</label>
+</div>
+<div class="checkbox-label">
+<input name="repaymentType" type="radio" value="equalPrincipal"/>
+<label>원금 균등 상환</label>
+</div>
+<div class="section-title">📌 수동 비율 조정</div>
+<label>LTV 비율 (%)</label>
+<input id="ltvInput" step="0.1" type="number" value="70"/>
+<label>DTI 비율 (%)</label>
+<input id="dtiInput" step="0.1" type="number" value="60"/>
+<label>DSR 비율 (%)</label>
+<input id="dsrInput" step="0.1" type="number" value="40"/>
+<button onclick="calculateLoan()">계산하기</button>
+<div class="result" id="result"></div>
+<!-- 하단에 추가된 footer 영역 -->
+<footer>
+<p>협업 및 수정 문의</p>
+<p><a href=" https://litt.ly/richdadtechtree " target="_blank"> https://litt.ly/richdadtechtree </a></p>
+</footer>
+<script>
+    function numberToKorean(num) {
+      const units = ["", "만", "억", "조", "경"];
+      const digits = ["", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구"];
+      const smallUnits = ["", "십", "백", "천"];
+      num = num * 10000;
+      if (num === 0) return "영";
+      const splitUnits = [];
+      while (num > 0) {
+        splitUnits.push(num % 10000);
+        num = Math.floor(num / 10000);
+      }
+      const result = splitUnits.map((chunk, idx) => {
+        if (chunk === 0) return '';
+        let chunkStr = '';
+        const str = chunk.toString().padStart(4, '0');
+        const nums = str.split('').map(Number);
+        nums.forEach((n, i) => {
+          if (n === 0) return;
+          const unit = smallUnits[3 - i];
+          if (n === 1 && unit !== '') chunkStr += unit;
+          else chunkStr += digits[n] + unit;
+        });
+        return chunkStr + units[idx];
+      });
+      return result.reverse().join('');
+    }
+
+    function updateHangulAmount(fieldId) {
+      const value = parseInt(document.getElementById(fieldId).value);
+      const textId = fieldId + 'Text';
+      document.getElementById(textId).innerText = isNaN(value) ? '' : '→ ' + numberToKorean(value) + '원';
+    }
+
+    function applyPolicyRates() {
+      const isSpeculative = document.getElementById('speculativeArea').checked;
+      const isFirstTime = document.getElementById('firstTimeBuyer').checked;
+      let ltv = 70, dti = 60, dsr = 40;
+      if (isSpeculative && isFirstTime) { ltv = 80; dti = 60; dsr = 40; }
+      else if (isSpeculative) { ltv = 50; dti = 40; dsr = 40; }
+      else if (isFirstTime) { ltv = 80; dti = 60; dsr = 40; }
+      document.getElementById('ltvInput').value = ltv;
+      document.getElementById('dtiInput').value = dti;
+      document.getElementById('dsrInput').value = dsr;
+    }
+
+    function toggleStressLevel(level) {
+      const dsr3 = document.getElementById('stressDSR3');
+      const dsr2 = document.getElementById('stressDSR2');
+      document.getElementById('regionOptions').style.display = (level === 2 && dsr2.checked) ? 'block' : 'none';
+      document.getElementById('dsr3Options').style.display = (level === 3 && dsr3.checked) ? 'block' : 'none';
+      document.getElementById('stressDSR3Explain').style.display = (level === 3 && dsr3.checked) ? 'block' : 'none';
+      if (level === 2 && dsr2.checked) dsr3.checked = false;
+      if (level === 3 && dsr3.checked) dsr2.checked = false;
+      if (level === 2) {
+        document.getElementById('stressDSR3').checked = false;
+        document.getElementById('regionOptions').style.display =
+          document.getElementById('stressDSR2').checked ? 'block' : 'none';
+      } else {
+        document.getElementById('stressDSR2').checked = false;
+        document.getElementById('regionOptions').style.display = 'none';
+      }
+    }
+
+    // 만원 단위를 억원 단위로 변환하는 함수
+    function convertToEok(amount) {
+      return (amount / 10000).toFixed(2);
+    }
+
+    function calculateLoan() {
+      const income = parseFloat(document.getElementById('income').value);
+      const propertyPrice = parseFloat(document.getElementById('propertyPrice').value);
+      const existingLoanMonthly = parseFloat(document.getElementById('existingLoanMonthly').value) || 0;
+      
+      // 원래 입력된 금리를 저장 (원리금 계산에 사용)
+      const originalInterestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+      
+      // 스트레스 DSR용 금리 계산 (DSR 한도 계산에 사용)
+      let stressInterestRate = originalInterestRate;
+      
+      const loanTerm = parseInt(document.getElementById('loanTerm').value);
+      const ltv = parseFloat(document.getElementById('ltvInput').value) / 100;
+      const dti = parseFloat(document.getElementById('dtiInput').value) / 100;
+      const dsr = parseFloat(document.getElementById('dsrInput').value) / 100;
+      const isSpeculative = document.getElementById('speculativeArea').checked;
+      const isFirstTime = document.getElementById('firstTimeBuyer').checked;
+      const stress2 = document.getElementById('stressDSR2').checked;
+      const stress3 = document.getElementById('stressDSR3').checked;
+      const repaymentType = document.querySelector('input[name="repaymentType"]:checked').value;
+
+      // DSR 계산용 스트레스 금리 적용
+      if (stress2) {
+        const region = document.querySelector('input[name="region"]:checked').value;
+        stressInterestRate += region === 'capital' ? 0.012 : 0.0075;
+      }
+      if (stress3) {
+        const type = document.querySelector('input[name="loanType"]:checked')?.value || 'mixed';
+        const term = parseFloat(document.getElementById('fixedRateTerm')?.value);
+        stressInterestRate += calculateStress3AdjustmentFromTerm(term, type) / 100;
+      }
+
+      if ([income, propertyPrice, originalInterestRate, loanTerm, ltv, dti, dsr].some(isNaN)) {
+        document.getElementById('result').innerText = '모든 값을 정확히 입력해주세요.';
+        return;
+      }
+
+      let maxLoanLimit = (isFirstTime && isSpeculative) || isFirstTime ? 60000 : Infinity;
+      const months = loanTerm * 12;
+      
+      // LTV 계산 (스트레스 금리 적용 안함)
+      const ltvLimit = propertyPrice * ltv;
+      
+      // DTI 계산 (스트레스 금리 적용 안함)
+      const monthlyInterestRate = originalInterestRate / 12;
+      const annuityFactor = (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, months)) /
+                            (Math.pow(1 + monthlyInterestRate, months) - 1);
+      const yearlyRepaymentPerLoan = annuityFactor * 12;
+      const dtiLimit = (income * dti) / yearlyRepaymentPerLoan;
+      
+      // DSR 계산 (스트레스 금리 적용)
+      const stressMonthlyInterestRate = stressInterestRate / 12;
+      const maxDSRMonthly = (income * dsr) / 12;
+      const availableMonthlyDSR = maxDSRMonthly - existingLoanMonthly;
+      const dsrLimit = availableMonthlyDSR > 0
+        ? availableMonthlyDSR / stressMonthlyInterestRate * (1 - Math.pow(1 + stressMonthlyInterestRate, -months))
+        : 0;
+
+      const limits = [
+        { type: "LTV", amount: ltvLimit },
+        { type: "DTI", amount: dtiLimit },
+        { type: "DSR", amount: dsrLimit },
+        { type: "생애최초 최대한도", amount: maxLoanLimit }
+      ];
+      const minLoan = limits.reduce((min, cur) => cur.amount < min.amount ? cur : min, limits[0]);
+      const finalLoan = minLoan.amount;
+      const reason = minLoan.type;
+
+      // 원리금 계산 (원래 금리 적용)
+      let monthlyPayment, monthlyPrincipal, monthlyInterest;
+      if (repaymentType === "equalPrincipalInterest") {
+        monthlyPayment = finalLoan * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -months));
+        monthlyPrincipal = finalLoan / months;
+        monthlyInterest = monthlyPayment - monthlyPrincipal;
+      } else {
+        monthlyPrincipal = finalLoan / months;
+        monthlyInterest = finalLoan * monthlyInterestRate;
+        monthlyPayment = monthlyPrincipal + monthlyInterest;
+      }
+
+      const avgMonthlyIncome = income / 12;
+      const monthlyGap = avgMonthlyIncome - monthlyPayment;
+      const repaymentRatio = (monthlyPayment / avgMonthlyIncome) * 100;
+
+      // DSR 스트레스 금리 정보 표시
+      const stressAppliedRate = (stressInterestRate * 100).toFixed(2);
+      const stressInfo = (stress3 || stress2)
+        ? `<strong>DSR 한도 계산에 적용된 스트레스 금리:</strong> ${stressAppliedRate}%<br>
+           <strong>원리금 계산에 적용된 실제 금리:</strong> ${(originalInterestRate * 100).toFixed(2)}%<br>`
+        : "";
+
+      document.getElementById('result').innerHTML = stressInfo +
+        `<strong>LTV 기준 대출 한도:</strong> ${convertToEok(ltvLimit)}억원<br>` +
+        `<strong>DTI 기준 대출 한도:</strong> ${convertToEok(dtiLimit)}억원<br>` +
+        `<strong>DSR 기준 대출 한도:</strong> ${convertToEok(dsrLimit)}억원 (기존 대출 반영)<br>` +
+        (maxLoanLimit !== Infinity ? `<strong>생애최초 최대한도:</strong> ${convertToEok(maxLoanLimit)}억원<br>` : '') +
+        `<hr>` +
+        `💡 <strong>최종 대출 한도는 ${reason} 기준으로 <u>${convertToEok(finalLoan)}억원</u>입니다.</strong><br><br>` +
+        `<strong>월 상환금:</strong> ${Math.floor(monthlyPayment)}만원 (${repaymentType === "equalPrincipalInterest" ? "원리금 균등" : "원금 균등"})<br>` +
+        `- 월 원금: <strong>${Math.floor(monthlyPrincipal)}만원</strong><br>` +
+        `- 월 이자: <strong>${Math.floor(monthlyInterest)}만원</strong><br>` +
+        `<hr><strong>📊 월 소득 분석</strong><br>` +
+        `- 평균 월급: <strong>${Math.floor(avgMonthlyIncome)}만원</strong><br>` +
+        `- 월 상환 후 남는 금액: <strong>${Math.floor(monthlyGap)}만원</strong><br>` +
+        `- 상환 비율: <strong>${repaymentRatio.toFixed(1)}%</strong>`;
+    }
+
+    function calculateStress3Adjustment(ratio, type) {
+      const percent = parseFloat(ratio);
+      if (isNaN(percent)) return 0;
+      if (percent < 5) return 1.5;
+      if (percent < 30) return type === 'mixed' ? 1.2 : 0.6;
+      if (percent < 50) return type === 'mixed' ? 0.9 : 0.45;
+      if (percent < 70) return type === 'mixed' ? 0.6 : 0.3;
+      if (percent < 100) return type === 'mixed' ? 0.3 : 0.15;
+      return 0;
+    }
+
+    function calculateStress3AdjustmentFromTerm(term, type) {
+      if (type === 'floating') return 1.5;
+      if (term < 5) return 1.5;
+      if (term < 9) return type === 'mixed' ? 1.2 : 0.6;
+      if (term < 15) return type === 'mixed' ? 0.9 : 0.45;
+      if (term < 21) return type === 'mixed' ? 0.6 : 0.3;
+      if (term >= 21) return 0;
+      return 0;
+    }
+</script>
+</body>
+</html>
