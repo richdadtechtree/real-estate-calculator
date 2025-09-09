@@ -33,11 +33,18 @@
     }
     .wrap { max-width: 1080px; margin: 0 auto; padding: 18px 16px; }
     h1 { margin: 0 0 4px; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
-    .sub { color: var(--muted); font-size: 13px; }
+    .sub { color: var(--muted); font-size: 13px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 
-    .tabs {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+    /* 방문자수 뱃지 */
+    .badge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:2px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,0.08);
+      background: rgba(76,175,80,0.08);
+      font-weight:700; font-size:12px; color:#cfe6ff;
     }
+
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
     [role="tab"] {
       appearance: none;
       border: 1px solid rgba(255,255,255,0.06);
@@ -74,16 +81,17 @@
     footer.page a { color: #cfe6ff; text-decoration: none; }
     footer.page a:hover { text-decoration: underline; }
 
-    .help {
-      margin-top: 10px; color: var(--muted); font-size: 12px;
-    }
+    .help { margin-top: 10px; color: var(--muted); font-size: 12px; }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
       <h1>부태리의 부동산 계산기</h1>
-      <div class="sub">부동산 투자 관련 계산기</div>
+      <div class="sub">
+        부동산 투자 관련 계산기
+        <span id="daily-visitors" class="badge" aria-live="polite" title="오늘 방문자수">오늘 방문 0</span>
+      </div>
       <div class="tabs" role="tablist" aria-label="계산기 선택">
         <button id="tab-invest-loan" class="active" role="tab" aria-selected="true" aria-controls="panel-invest-loan">내 자산 + 연봉에 맞는 금액대</button>
         <button id="tab-cost" role="tab" aria-selected="false" aria-controls="panel-cost">부동산 매수 경비 계산기</button>
@@ -114,6 +122,7 @@
     </footer>
   </main>
 
+  <!-- 탭/패널 스크립트 -->
   <script>
     (function(){
       const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
@@ -121,11 +130,8 @@
 
       function encodeSrc(iframe){
         if (iframe && !iframe.dataset.loaded) {
-          try {
-            iframe.src = encodeURI(iframe.dataset.file);
-          } catch (e) {
-            iframe.src = iframe.dataset.file; // fallback
-          }
+          try { iframe.src = encodeURI(iframe.dataset.file); }
+          catch (e) { iframe.src = iframe.dataset.file; }
           iframe.dataset.loaded = 'true';
         }
       }
@@ -153,7 +159,6 @@
           window.addEventListener('resize', setHeight);
         } catch (e) {
           // 교차 출처면 고정 높이로 스크롤 사용
-          // console.warn('자동 높이조절은 동일 출처에서만 가능:', e);
         }
       }
 
@@ -176,7 +181,7 @@
           }
         }
         // 주소 해시 반영(선택사항)
-        history.replaceState(null, '', '#' + tab.id.replace('tab-','')); 
+        history.replaceState(null, '', '#' + tab.id.replace('tab-',''));
       }
 
       tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
@@ -194,6 +199,36 @@
         activateTab(tabs[next]);
         tabs[next].focus();
       });
+    })();
+  </script>
+
+  <!-- 일일 방문자수 카운터 (Asia/Seoul 기준) -->
+  <script>
+    (function(){
+      function todaySeoul(){
+        return new Intl.DateTimeFormat('en-CA',{
+          timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'
+        }).format(new Date()); // e.g. 2025-09-10
+      }
+      const ns  = 'buteri-calc';                 // 네임스페이스(원하는 문자열로 변경 가능)
+      const key = 'index-' + todaySeoul();       // 페이지별·일자별 키
+      const el  = document.getElementById('daily-visitors');
+      if(!el) return;
+
+      const visitedFlag = 'visit_' + key;        // 중복 증가 방지용
+      const base = 'https://api.countapi.xyz';
+      const path = localStorage.getItem(visitedFlag) ? '/get' : '/hit';
+
+      fetch(`${base}${path}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`)
+        .then(r => r.json())
+        .then(d => {
+          try { localStorage.setItem(visitedFlag, '1'); } catch(e){}
+          const val = (d && typeof d.value === 'number') ? d.value : 0;
+          el.textContent = '오늘 방문 ' + val.toLocaleString();
+        })
+        .catch(() => {
+          el.textContent = '방문 집계 오류';
+        });
     })();
   </script>
 </body>
