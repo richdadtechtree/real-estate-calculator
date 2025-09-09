@@ -202,33 +202,82 @@
     })();
   </script>
 
-  <!-- 일일 방문자수 카운터 (Asia/Seoul 기준) -->
+  <!-- 일일 방문자수 카운터 (Asia/Seoul 기준, 2중 백업 포함) -->
   <script>
     (function(){
+      const el = document.getElementById('daily-visitors');
+      if(!el) return;
+
       function todaySeoul(){
         return new Intl.DateTimeFormat('en-CA',{
           timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'
         }).format(new Date()); // e.g. 2025-09-10
       }
+
       const ns  = 'buteri-calc';                 // 네임스페이스(원하는 문자열로 변경 가능)
       const key = 'index-' + todaySeoul();       // 페이지별·일자별 키
-      const el  = document.getElementById('daily-visitors');
-      if(!el) return;
+      const visitedFlag = 'visit_' + key;        // 중복 증가 방지용(브라우저별 1회만 증가)
 
-      const visitedFlag = 'visit_' + key;        // 중복 증가 방지용
-      const base = 'https://api.countapi.xyz';
-      const path = localStorage.getItem(visitedFlag) ? '/get' : '/hit';
+      const setText = (n)=> el.textContent = '오늘 방문 ' + Number(n||0).toLocaleString();
+      const setErr  = ()=> el.textContent = '방문 집계 오류';
 
-      fetch(`${base}${path}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`)
-        .then(r => r.json())
-        .then(d => {
-          try { localStorage.setItem(visitedFlag, '1'); } catch(e){}
-          const val = (d && typeof d.value === 'number') ? d.value : 0;
-          el.textContent = '오늘 방문 ' + val.toLocaleString();
-        })
-        .catch(() => {
-          el.textContent = '방문 집계 오류';
-        });
+      const withTimeout = (p, ms=3500) => Promise.race([
+        p, new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))
+      ]);
+
+      // 1) 기본: CountAPI
+      async function hitCountAPI(){
+        const base = 'https://api.countapi.xyz';
+        const encNS = encodeURIComponent(ns);
+        const encKey= encodeURIComponent(key);
+        const path  = localStorage.getItem(visitedFlag) ? '/get' : '/hit';
+        const url   = `${base}${path}/${encNS}/${encKey}`;
+        const opt   = { cache:'no-store', mode:'cors', referrerPolicy:'no-referrer' };
+        let res = await withTimeout(fetch(url, opt));
+        if(!res.ok){
+          if(res.status === 404){
+            // 없으면 생성 후 hit
+            await withTimeout(fetch(`${base}/create?namespace=${encNS}&key=${encKey}&value=0`, opt));
+            res = await withTimeout(fetch(`${base}/hit/${encNS}/${encKey}`, opt));
+            if(!res.ok) throw new Error('create/hit failed');
+          } else {
+            throw new Error('countapi http '+res.status);
+          }
+        }
+        return res.json();
+      }
+
+      // 2) 백업: seeyoufarm hits(배지 SVG 파싱)
+      async function hitFallback(){
+        const pageId = `https://buteri-calc/${key}`; // 실제로 존재할 필요 없음(키로만 사용)
+        const base   = 'https://hits.seeyoufarm.com/api/count';
+        const incrOrGet = localStorage.getItem(visitedFlag) ? 'badge.svg' : 'incr/badge.svg';
+        const url    = `${base}/${incrOrGet}?url=${encodeURIComponent(pageId)}`;
+        const opt    = { cache:'no-store', mode:'cors', referrerPolicy:'no-referrer' };
+        const res    = await withTimeout(fetch(url, opt));
+        if(!res.ok) throw new Error('seeyoufarm http '+res.status);
+        const svg    = await res.text();
+        const matches= svg.match(/>([0-9][0-9,]*)<\/text>/g);
+        if(!matches) throw new Error('svg parse fail');
+        const last   = matches[matches.length-1].replace(/[^0-9,]/g,'').replace(/,/g,'');
+        return { value: parseInt(last,10) || 0 };
+      }
+
+      (async () => {
+        try {
+          const d = await hitCountAPI();
+          try { localStorage.setItem(visitedFlag,'1'); } catch(e){}
+          setText(d && typeof d.value==='number' ? d.value : 0);
+        } catch(e) {
+          try {
+            const d2 = await hitFallback();
+            try { localStorage.setItem(visitedFlag,'1'); } catch(e){}
+            setText(d2 && typeof d2.value==='number' ? d2.value : 0);
+          } catch(e2) {
+            setErr();
+          }
+        }
+      })();
     })();
   </script>
 </body>
