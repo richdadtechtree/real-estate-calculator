@@ -202,13 +202,14 @@
         isNaN(v) ? "" : "→ " + numberToKorean(v) + "원";
     }
 
+    // ✅ 정책 반영: 규제지역 + 생애최초 체크 시 LTV 70%
     function applyPolicyRates() {
       const spec = document.getElementById("speculativeArea").checked;
       const first = document.getElementById("firstTimeBuyer").checked;
       let ltv = 70, dti = 60, dsr = 40;
-      if (spec && first) ltv = 80;
-      else if (spec) { ltv = 40; dti = 40; }
-      else if (first) ltv = 80;
+      if (spec && first) { ltv = 70; dti = 60; dsr = 40; }   // ← 기존 80%에서 70%로 수정
+      else if (spec) { ltv = 40; dti = 40; dsr = 40; }
+      else if (first) { ltv = 80; dti = 60; dsr = 40; }
       document.getElementById("ltvInput").value = ltv;
       document.getElementById("dtiInput").value = dti;
       document.getElementById("dsrInput").value = dsr;
