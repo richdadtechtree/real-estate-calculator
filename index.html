@@ -32,19 +32,26 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .wrap { max-width: 1080px; margin: 0 auto; padding: 18px 16px; }
-    h1 { margin: 0 0 4px; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
-    .sub { color: var(--muted); font-size: 13px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    h1 { margin: 0; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
+    .sub { color: var(--muted); font-size: 13px; }
 
-    /* 방문자수 뱃지 */
-    .badge{
-      display:inline-flex; align-items:center; gap:6px;
-      padding:2px 10px; border-radius:999px;
+    /* 상단 타이틀 + 방문수 배지 한 줄 정렬 */
+    .header-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-bottom: 4px;
+    }
+    /* 방문수 배지(다크 테마) */
+    #daily-visitors{
+      display:inline-flex; align-items:center; gap:.45em;
+      padding:.38em .7em; border-radius:999px;
+      background:var(--tab); color:var(--text);
       border:1px solid rgba(255,255,255,0.08);
-      background: rgba(76,175,80,0.08);
-      font-weight:700; font-size:12px; color:#cfe6ff;
+      font-weight:700; font-size:13px;
     }
 
-    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .tabs {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+    }
     [role="tab"] {
       appearance: none;
       border: 1px solid rgba(255,255,255,0.06);
@@ -81,17 +88,20 @@
     footer.page a { color: #cfe6ff; text-decoration: none; }
     footer.page a:hover { text-decoration: underline; }
 
-    .help { margin-top: 10px; color: var(--muted); font-size: 12px; }
+    .help {
+      margin-top: 10px; color: var(--muted); font-size: 12px;
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <h1>부태리의 부동산 계산기</h1>
-      <div class="sub">
-        부동산 투자 관련 계산기
-        <span id="daily-visitors" class="badge" aria-live="polite" title="오늘 방문자수">오늘 방문 0</span>
+      <div class="header-top">
+        <h1>부태리의 부동산 계산기</h1>
+        <!-- ✅ 방문수 배지(CountAPI 성공 시 텍스트, 실패 시 이미지 배지로 자동 대체) -->
+        <span id="daily-visitors" aria-live="polite" title="당일 중복 1회만 증가">오늘 방문 <span id="dv-num">…</span></span>
       </div>
+      <div class="sub">부동산 투자 관련 계산기</div>
       <div class="tabs" role="tablist" aria-label="계산기 선택">
         <button id="tab-invest-loan" class="active" role="tab" aria-selected="true" aria-controls="panel-invest-loan">내 자산 + 연봉에 맞는 금액대</button>
         <button id="tab-cost" role="tab" aria-selected="false" aria-controls="panel-cost">부동산 매수 경비 계산기</button>
@@ -104,7 +114,7 @@
   <main class="wrap">
     <!-- Panel 1 -->
     <section id="panel-invest-loan" class="panel" role="tabpanel" aria-labelledby="tab-invest-loan">
-      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자 가능 단지 찾기(대출계산기) r5.html" loading="eager"></iframe>
+      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자 가능 단지 찾기(대출계산기) r6.html" loading="eager"></iframe>
     </section>
 
     <!-- Panel 2 -->
@@ -122,7 +132,6 @@
     </footer>
   </main>
 
-  <!-- 탭/패널 스크립트 -->
   <script>
     (function(){
       const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
@@ -130,8 +139,11 @@
 
       function encodeSrc(iframe){
         if (iframe && !iframe.dataset.loaded) {
-          try { iframe.src = encodeURI(iframe.dataset.file); }
-          catch (e) { iframe.src = iframe.dataset.file; }
+          try {
+            iframe.src = encodeURI(iframe.dataset.file);
+          } catch (e) {
+            iframe.src = iframe.dataset.file; // fallback
+          }
           iframe.dataset.loaded = 'true';
         }
       }
@@ -159,6 +171,7 @@
           window.addEventListener('resize', setHeight);
         } catch (e) {
           // 교차 출처면 고정 높이로 스크롤 사용
+          // console.warn('자동 높이조절은 동일 출처에서만 가능:', e);
         }
       }
 
@@ -181,7 +194,7 @@
           }
         }
         // 주소 해시 반영(선택사항)
-        history.replaceState(null, '', '#' + tab.id.replace('tab-',''));
+        history.replaceState(null, '', '#' + tab.id.replace('tab-','')); 
       }
 
       tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
@@ -202,83 +215,91 @@
     })();
   </script>
 
-  <!-- 일일 방문자수 카운터 (Asia/Seoul 기준, 2중 백업 포함) -->
+  <!-- ============================== -->
+  <!-- 방문수: CountAPI + 중복 방지 + 실패 시 배지 대체 -->
+  <!-- ============================== -->
   <script>
-    (function(){
-      const el = document.getElementById('daily-visitors');
-      if(!el) return;
+    (() => {
+      const tz   = 'Asia/Seoul';
+      const wrap = document.getElementById('daily-visitors');
+      const num  = document.getElementById('dv-num');
 
-      function todaySeoul(){
-        return new Intl.DateTimeFormat('en-CA',{
-          timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'
-        }).format(new Date()); // e.g. 2025-09-10
+      // 🔧 네임스페이스(브랜드/프로젝트명으로 바꾸세요)
+      const NS = 'buteri'; // 예: 'buteri-calc', 'richdadtechtree'
+
+      // 페이지 슬러그(도메인+경로 → 안전한 문자열)
+      const slug = (location.hostname + location.pathname)
+        .replace(/[^a-z0-9]+/gi,'_').replace(/^_+|_+$/g,'').toLowerCase() || 'home';
+
+      // YYYY-MM-DD (서울 기준)
+      const today = new Intl.DateTimeFormat('en-CA', {
+        timeZone: tz, year:'numeric', month:'2-digit', day:'2-digit'
+      }).format(new Date());
+
+      // ▶ 키 = [페이지별] × [하루]
+      // 누적(총 방문)으로 쓰려면 아래 줄을: const KEY = `${slug}__total`;
+      const KEY = `${slug}__${today}`;
+
+      // ---- 중복 방지(로컬스토리지 + 쿠키) ----
+      const lsFlag = `pvflag_${KEY}`;
+      const hasLS = () => !!localStorage.getItem(lsFlag);
+      const setLS = () => localStorage.setItem(lsFlag, '1');
+      const clearLS = () => localStorage.removeItem(lsFlag);
+
+      const hasCookie = () => document.cookie.includes(`pvck_${KEY}=1`);
+      const setCookie = () => document.cookie = `pvck_${KEY}=1; Max-Age=86400; Path=/; SameSite=Lax`;
+      const clearCookie = () => document.cookie = `pvck_${KEY}=; Max-Age=0; Path=/; SameSite=Lax`;
+
+      const hasFlag = () => hasLS() || hasCookie();
+      const setFlag = () => { setLS(); setCookie(); };
+      const clearFlag = () => { clearLS(); clearCookie(); };
+
+      const setNum = (v) => { if (num) num.textContent = Number(v || 0).toLocaleString(); };
+      const timeout = (ms) => new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms));
+
+      async function countapi(mode) {
+        const url = `https://api.countapi.xyz/${mode}/${encodeURIComponent(NS)}/${encodeURIComponent(KEY)}`;
+        const res = await Promise.race([ fetch(url, { cache: 'no-store' }), timeout(2500) ]);
+        if (!res.ok) throw new Error('countapi http ' + res.status);
+        const j = await res.json();
+        return j.value;
       }
 
-      const ns  = 'buteri-calc';                 // 네임스페이스(원하는 문자열로 변경 가능)
-      const key = 'index-' + todaySeoul();       // 페이지별·일자별 키
-      const visitedFlag = 'visit_' + key;        // 중복 증가 방지용(브라우저별 1회만 증가)
-
-      const setText = (n)=> el.textContent = '오늘 방문 ' + Number(n||0).toLocaleString();
-      const setErr  = ()=> el.textContent = '방문 집계 오류';
-
-      const withTimeout = (p, ms=3500) => Promise.race([
-        p, new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))
-      ]);
-
-      // 1) 기본: CountAPI
-      async function hitCountAPI(){
-        const base = 'https://api.countapi.xyz';
-        const encNS = encodeURIComponent(ns);
-        const encKey= encodeURIComponent(key);
-        const path  = localStorage.getItem(visitedFlag) ? '/get' : '/hit';
-        const url   = `${base}${path}/${encNS}/${encKey}`;
-        const opt   = { cache:'no-store', mode:'cors', referrerPolicy:'no-referrer' };
-        let res = await withTimeout(fetch(url, opt));
-        if(!res.ok){
-          if(res.status === 404){
-            // 없으면 생성 후 hit
-            await withTimeout(fetch(`${base}/create?namespace=${encNS}&key=${encKey}&value=0`, opt));
-            res = await withTimeout(fetch(`${base}/hit/${encNS}/${encKey}`, opt));
-            if(!res.ok) throw new Error('create/hit failed');
-          } else {
-            throw new Error('countapi http '+res.status);
-          }
-        }
-        return res.json();
-      }
-
-      // 2) 백업: seeyoufarm hits(배지 SVG 파싱)
-      async function hitFallback(){
-        const pageId = `https://buteri-calc/${key}`; // 실제로 존재할 필요 없음(키로만 사용)
-        const base   = 'https://hits.seeyoufarm.com/api/count';
-        const incrOrGet = localStorage.getItem(visitedFlag) ? 'badge.svg' : 'incr/badge.svg';
-        const url    = `${base}/${incrOrGet}?url=${encodeURIComponent(pageId)}`;
-        const opt    = { cache:'no-store', mode:'cors', referrerPolicy:'no-referrer' };
-        const res    = await withTimeout(fetch(url, opt));
-        if(!res.ok) throw new Error('seeyoufarm http '+res.status);
-        const svg    = await res.text();
-        const matches= svg.match(/>([0-9][0-9,]*)<\/text>/g);
-        if(!matches) throw new Error('svg parse fail');
-        const last   = matches[matches.length-1].replace(/[^0-9,]/g,'').replace(/,/g,'');
-        return { value: parseInt(last,10) || 0 };
+      function fallbackBadge() {
+        // CountAPI가 차단/지연이면 이미지 배지로 대체(숫자 계속 표시)
+        const track = encodeURIComponent(`https://${location.host}${location.pathname}`);
+        const img = new Image();
+        img.src = `https://myhits.vercel.app/api/hit/${track}?label=${encodeURIComponent('오늘 방문')}&size=small`;
+        img.alt = '오늘 방문수';
+        img.style.display = 'inline-block';
+        img.style.verticalAlign = 'middle';
+        wrap.replaceWith(img);
       }
 
       (async () => {
+        const firstToday = !hasFlag();
         try {
-          const d = await hitCountAPI();
-          try { localStorage.setItem(visitedFlag,'1'); } catch(e){}
-          setText(d && typeof d.value==='number' ? d.value : 0);
-        } catch(e) {
-          try {
-            const d2 = await hitFallback();
-            try { localStorage.setItem(visitedFlag,'1'); } catch(e){}
-            setText(d2 && typeof d2.value==='number' ? d2.value : 0);
-          } catch(e2) {
-            setErr();
+          if (firstToday) {
+            // 선플래그(동시 오픈 방지) → 서버 hit
+            setFlag();
+            const hit = await countapi('hit');
+            setNum(hit ?? 1);
+          } else {
+            // 이미 방문한 브라우저면 조회만
+            const val = await countapi('get');
+            setNum(val ?? 0);
           }
+        } catch (err) {
+          // 실패 시 선플래그 롤백 + 배지 대체
+          if (firstToday) clearFlag();
+          fallbackBadge();
         }
       })();
     })();
   </script>
+
+  <noscript>
+    <p style="text-align:center;color:#96a0b5">자바스크립트를 켜야 방문수를 표시할 수 있어요.</p>
+  </noscript>
 </body>
 </html>
