@@ -230,7 +230,7 @@
       const isFirstTime = document.getElementById('firstTimeBuyer').checked;
       let ltv = 70, dti = 60, dsr = 40;
       if (isSpeculative && isFirstTime) { ltv = 80; dti = 60; dsr = 40; }
-      else if (isSpeculative) { ltv = 50; dti = 40; dsr = 40; }
+      else if (isSpeculative) { ltv = 40; dti = 40; dsr = 40; }
       else if (isFirstTime) { ltv = 80; dti = 60; dsr = 40; }
       document.getElementById('ltvInput').value = ltv;
       document.getElementById('dtiInput').value = dti;
