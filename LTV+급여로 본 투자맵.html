@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>부태리 | DSR40% 한도 & LTV/전세 표</title>
+<style>
+  :root{--fg:#222;--bg:#f9f9f9;--card:#fff;--accent:#4CAF50;--muted:#666;}
+  *{box-sizing:border-box}
+  body{
+    font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    max-width: 900px; width: 94%; margin: 24px auto; padding: 0;
+    color:var(--fg); background:var(--bg);
+  }
+  h1{font-size:1.35rem; margin:0 0 14px; text-align:center}
+  .grid{display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-top:8px}
+  .grid .wide{grid-column: span 3}
+  label{font-weight:600; font-size:0.95rem}
+  input[type="number"]{
+    width:100%; padding:12px; font-size:1rem; border:1px solid #ddd; border-radius:10px; background:#fff;
+  }
+  .card{
+    background:var(--card); border-radius:14px; padding:16px; box-shadow:0 1px 6px rgba(0,0,0,.06);
+    margin-top:14px;
+  }
+  .hint{font-size:0.85rem; color:var(--muted)}
+  .pill{
+    display:inline-block; padding:6px 10px; border-radius:999px; background:#eef7ee; color:#1e6e26; font-weight:700; font-size:0.92rem
+  }
+  .primary-btn{
+    background:var(--accent); color:#fff; border:none; border-radius:12px; padding:12px 16px; font-weight:700;
+    cursor:pointer; width:100%;
+  }
+  .primary-btn:hover{filter:brightness(.95)}
+  table{width:100%; border-collapse:collapse; margin-top:10px; font-size:0.95rem}
+  thead th{
+    position:sticky; top:0; background:#f0f0f0; z-index:1;
+    padding:10px 8px; border-bottom:2px solid #ddd; text-align:center
+  }
+  tbody td{padding:9px 8px; border-bottom:1px solid #eee; text-align:right}
+  tbody td:first-child{font-weight:700; text-align:center}
+  /* ✅ LTV·전세 영역 구분선 */
+  .sep{border-right:2px solid #bbb !important}
+  /* ✅ 조건부 색상 */
+  .invest-ok{background:#eaf4ff}   /* 투자 가능(≥) → 연한 파란색 */
+  .invest-low{background:#fff2e0}  /* 투자 부족(<) → 연한 주황색 */
+  .footer{margin:18px 0 28px; text-align:center; font-size:0.9rem; color:var(--muted)}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:6px}
+  .dsr-box{display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap}
+  .dsr-val{font-size:1.05rem; font-weight:800}
+  .note{font-size:0.85rem; color:#444; background:#f6f6ff; padding:8px 10px; border-radius:10px; margin-top:8px}
+</style>
+</head>
+<body>
+  <h1>부태리의 DSR 40% 한도 & LTV/전세 표</h1>
+
+  <!-- 입력 카드 -->
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label>연봉 (만원)</label>
+        <input id="income" type="number" placeholder="예: 6,000" oninput="renderAll()" />
+        <div class="hint">세전 연소득 기준, 기타부채 없음 가정</div>
+      </div>
+      <div>
+        <label>대출 금리 (연 %)</label>
+        <input id="rate" type="number" step="0.01" value="4.5" oninput="renderAll()"/>
+        <div class="hint">원리금균등 상환 가정</div>
+      </div>
+      <div>
+        <label>상환 기간 (년)</label>
+        <input id="years" type="number" value="30" oninput="renderAll()"/>
+        <div class="hint">예: 30</div>
+      </div>
+
+      <div>
+        <label>투자금액 (억)</label>
+        <input id="investEok" type="number" step="0.1" value="0" oninput="renderAll()"/>
+        <div class="hint">자기자본(현금·보증금 등) 총액</div>
+      </div>
+      <div>
+        <label>표 최소 (억)</label>
+        <input id="minEok" type="number" value="6" oninput="renderAll()"/>
+      </div>
+      <div>
+        <label>표 최대 (억)</label>
+        <input id="maxEok" type="number" value="20" oninput="renderAll()"/>
+      </div>
+      <div>
+        <label>표 간격 (억)</label>
+        <input id="stepEok" type="number" value="1" oninput="renderAll()"/>
+      </div>
+    </div>
+
+    <div style="margin-top:12px">
+      <button class="primary-btn" onclick="renderAll()">계산하기</button>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="dsr-box">
+        <div><span class="pill">DSR 40%</span></div>
+        <div class="dsr-val" id="dsrLimitDisplay">—</div>
+      </div>
+      <div class="note">
+        📌 색상: <b>하늘색</b>=투자 가능(≥필요자본), <b>연주황</b>=투자 부족<br/>
+        ⚙️ LTV 셀은 <b>대출액 6억 상한</b>을 적용해 표시·판정합니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 결과 표 카드 -->
+  <div class="card" id="tableCard">
+    <div class="row" style="margin-bottom:6px">
+      <div><strong>단지가격별 LTV/전세가율 표</strong></div>
+      <div class="hint">단위: 억원</div>
+    </div>
+    <div style="max-height: 60vh; overflow:auto; border:1px solid #eee; border-radius:10px">
+      <table id="resultTable">
+        <thead>
+          <tr>
+            <th rowspan="2">가격</th>
+            <th class="sep" colspan="3">대출액 (LTV, 6억 상한)</th>
+            <th colspan="4">전세금 (전세가율)</th>
+          </tr>
+          <tr>
+            <th>70%</th><th>50%</th><th class="sep">40%</th>
+            <th>70%</th><th>60%</th><th>50%</th><th>40%</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    계산 가정: 원리금균등, 기타부채·보험료 등 DSR 공제 없음. 표의 LTV는 <b>가격×LTV 후 6억 상한</b>을 적용해 표기합니다.
+  </div>
+
+<script>
+  // 기본 포맷터
+  const toEok = (manwon) => manwon / 10000;
+  const fmtEok = (eok) => isFinite(eok) ? eok.toLocaleString('ko-KR',{minimumFractionDigits:2, maximumFractionDigits:2}) + '억' : '—';
+
+  // DSR 40% 한도 계산 (원리금균등)
+  function calcDSRLimitManwon(incomeManwon, annualRatePct, years){
+    if(!incomeManwon || !annualRatePct || !years) return 0;
+    const monthlyPay = (incomeManwon * 0.40) / 12; // 만원
+    const r = (annualRatePct/100) / 12;
+    const n = years * 12;
+    if(r === 0) return monthlyPay * n; // 금리 0% 안전처리
+    const pv = monthlyPay * (1 - Math.pow(1+r, -n)) / r;
+    return pv; // 만원
+  }
+
+  function buildTable(minEok, maxEok, stepEok, investEok){
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    const ltvRates = [0.70, 0.50, 0.40];
+    const jeonseRates = [0.70, 0.60, 0.50, 0.40];
+
+    // 보정: 범위/간격 유효성
+    if(maxEok < minEok){ const t=minEok; minEok=maxEok; maxEok=t; }
+    if(stepEok <= 0) stepEok = 1;
+
+    for(let priceEok = minEok; priceEok <= maxEok + 1e-9; priceEok += stepEok){
+      const tr = document.createElement('tr');
+
+      // 가격
+      const tdPrice = document.createElement('td');
+      tdPrice.textContent = fmtEok(priceEok);
+      tr.appendChild(tdPrice);
+
+      // LTV 대출액 (6억 상한 + 투자여력 색상 + 구분선)
+      ltvRates.forEach((r, idx)=>{
+        const rawLoanEok = priceEok * r;                  // 계산상 대출액(억)
+        const loanEok = Math.min(rawLoanEok, 6);          // ✅ 표기/판정용 6억 상한 적용
+        const needEquityEok = priceEok - loanEok;         // 필요 자기자본(억)
+
+        const td = document.createElement('td');
+        // 투자여력으로 색상 결정
+        if(investEok >= needEquityEok) td.classList.add('invest-ok');
+        else td.classList.add('invest-low');
+
+        if(idx === 2) td.classList.add('sep'); // LTV/전세 구분선
+        td.textContent = fmtEok(loanEok);
+        td.title = `필요자본(LTV): ${fmtEok(needEquityEok)} / 보유: ${fmtEok(investEok)}${rawLoanEok>6?` (원계산:${fmtEok(rawLoanEok)}→상한 6억)` : ''}`;
+        tr.appendChild(td);
+      });
+
+      // 전세가율 금액 (투자여력 색상 적용)
+      jeonseRates.forEach(r=>{
+        const jeonseEok = priceEok * r;           // 전세금(억)
+        const gapEok = priceEok - jeonseEok;      // 갭 = 필요 자기자본(억)
+        const td = document.createElement('td');
+        if(investEok >= gapEok) td.classList.add('invest-ok');
+        else td.classList.add('invest-low');
+        td.textContent = fmtEok(jeonseEok);
+        td.title = `필요자본(갭): ${fmtEok(gapEok)} / 보유: ${fmtEok(investEok)}`;
+        tr.appendChild(td);
+      });
+
+      tbody.appendChild(tr);
+    }
+  }
+
+  function renderAll(){
+    const income = parseFloat(document.getElementById('income').value);
+    const rate = parseFloat(document.getElementById('rate').value);
+    const years = parseFloat(document.getElementById('years').value);
+
+    const investEok = parseFloat(document.getElementById('investEok').value) || 0;
+
+    const minEok = parseFloat(document.getElementById('minEok').value) || 6;
+    const maxEok = parseFloat(document.getElementById('maxEok').value) || 20;
+    const stepEok = parseFloat(document.getElementById('stepEok').value) || 1;
+
+    // DSR 한도 (만원 -> 억) — 색칠에는 사용하지 않음
+    const dsrLimitManwon = calcDSRLimitManwon(income, rate, years);
+    const dsrLimitEok = toEok(dsrLimitManwon);
+    document.getElementById('dsrLimitDisplay').textContent =
+      dsrLimitManwon > 0 ? `${fmtEok(dsrLimitEok)} (연 ${isFinite(rate)?rate.toFixed(2):'-'}%, ${years||'-'}년)` : '연봉·금리·기간을 입력하세요';
+
+    // 표
+    buildTable(minEok, maxEok, stepEok, investEok);
+  }
+
+  // 초기 렌더
+  renderAll();
+</script>
+</body>
+</html>
