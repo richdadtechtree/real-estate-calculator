@@ -39,9 +39,9 @@
   }
   tbody td{padding:9px 8px; border-bottom:1px solid #eee; text-align:right}
   tbody td:first-child{font-weight:700; text-align:center}
-  /* ✅ LTV·전세 영역 구분선 */
+  /* LTV·전세 영역 구분선 */
   .sep{border-right:2px solid #bbb !important}
-  /* ✅ 조건부 색상 */
+  /* 조건부 색상 */
   .invest-ok{background:#eaf4ff}   /* 투자 가능(≥) → 연한 파란색 */
   .invest-low{background:#fff2e0}  /* 투자 부족(<) → 연한 주황색 */
   .footer{margin:18px 0 28px; text-align:center; font-size:0.9rem; color:var(--muted)}
@@ -102,8 +102,8 @@
         <div class="dsr-val" id="dsrLimitDisplay">—</div>
       </div>
       <div class="note">
-        📌 색상: <b>하늘색</b>=투자 가능(≥필요자본), <b>연주황</b>=투자 부족<br/>
-        ⚙️ LTV 셀은 <b>대출액 6억 상한</b>을 적용해 표시·판정합니다.
+        색상/투자판정 기준(LTV 열): <b>min(DSR 한도, LTV 계산액, 6억)</b>을 사용해 필요한 자기자본을 산출합니다.<br/>
+        표시는 LTV 값을 <b>6억 상한</b>으로 캡 해 표기합니다.
       </div>
     </div>
   </div>
@@ -119,7 +119,7 @@
         <thead>
           <tr>
             <th rowspan="2">가격</th>
-            <th class="sep" colspan="3">대출액 (LTV, 6억 상한)</th>
+            <th class="sep" colspan="3">대출액 (LTV, 6억 상한 표기)</th>
             <th colspan="4">전세금 (전세가율)</th>
           </tr>
           <tr>
@@ -133,32 +133,31 @@
   </div>
 
   <div class="footer">
-    계산 가정: 원리금균등, 기타부채·보험료 등 DSR 공제 없음. 표의 LTV는 <b>가격×LTV 후 6억 상한</b>을 적용해 표기합니다.
+    계산 가정: 원리금균등, 기타부채·보험료 등 DSR 공제 없음. LTV 표시는 가격×LTV 후 <b>6억 상한</b> 적용, 색상 판정은 <b>min(DSR, LTV, 6억)</b>.
   </div>
 
 <script>
-  // 기본 포맷터
+  // 포맷터
   const toEok = (manwon) => manwon / 10000;
   const fmtEok = (eok) => isFinite(eok) ? eok.toLocaleString('ko-KR',{minimumFractionDigits:2, maximumFractionDigits:2}) + '억' : '—';
 
-  // DSR 40% 한도 계산 (원리금균등)
+  // DSR 40% 한도 (원리금균등)
   function calcDSRLimitManwon(incomeManwon, annualRatePct, years){
     if(!incomeManwon || !annualRatePct || !years) return 0;
     const monthlyPay = (incomeManwon * 0.40) / 12; // 만원
     const r = (annualRatePct/100) / 12;
     const n = years * 12;
     if(r === 0) return monthlyPay * n; // 금리 0% 안전처리
-    const pv = monthlyPay * (1 - Math.pow(1+r, -n)) / r;
-    return pv; // 만원
+    return monthlyPay * (1 - Math.pow(1+r, -n)) / r; // 만원
   }
 
-  function buildTable(minEok, maxEok, stepEok, investEok){
+  function buildTable(minEok, maxEok, stepEok, investEok, dsrLimitEok){
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
     const ltvRates = [0.70, 0.50, 0.40];
     const jeonseRates = [0.70, 0.60, 0.50, 0.40];
 
-    // 보정: 범위/간격 유효성
+    // 보정
     if(maxEok < minEok){ const t=minEok; minEok=maxEok; maxEok=t; }
     if(stepEok <= 0) stepEok = 1;
 
@@ -170,27 +169,31 @@
       tdPrice.textContent = fmtEok(priceEok);
       tr.appendChild(tdPrice);
 
-      // LTV 대출액 (6억 상한 + 투자여력 색상 + 구분선)
+      // LTV 대출액 (표시는 6억 캡, 색상판정은 min(DSR, LTV, 6))
       ltvRates.forEach((r, idx)=>{
-        const rawLoanEok = priceEok * r;                  // 계산상 대출액(억)
-        const loanEok = Math.min(rawLoanEok, 6);          // ✅ 표기/판정용 6억 상한 적용
-        const needEquityEok = priceEok - loanEok;         // 필요 자기자본(억)
+        const rawLoanEok = priceEok * r;                // LTV 계산액(억)
+        const ltvCappedEok = Math.min(rawLoanEok, 6);   // 표기용 6억 상한
+        const dsrCap = (dsrLimitEok > 0) ? dsrLimitEok : Infinity;
+        const effectiveLoanEok = Math.min(rawLoanEok, 6, dsrCap); // ✅ 판정용 커트라인
 
+        const needEquityEok = priceEok - effectiveLoanEok; // 필요 자기자본(판정기준)
         const td = document.createElement('td');
-        // 투자여력으로 색상 결정
+
+        // 색상판정
         if(investEok >= needEquityEok) td.classList.add('invest-ok');
         else td.classList.add('invest-low');
 
         if(idx === 2) td.classList.add('sep'); // LTV/전세 구분선
-        td.textContent = fmtEok(loanEok);
-        td.title = `필요자본(LTV): ${fmtEok(needEquityEok)} / 보유: ${fmtEok(investEok)}${rawLoanEok>6?` (원계산:${fmtEok(rawLoanEok)}→상한 6억)` : ''}`;
+        td.textContent = fmtEok(ltvCappedEok); // 표시는 6억 상한
+        td.title = `근거: min(DSR:${fmtEok(dsrCap===Infinity?NaN:dsrCap)}, LTV:${fmtEok(rawLoanEok)}, 6억) = ${fmtEok(effectiveLoanEok)}
+필요자본: ${fmtEok(needEquityEok)} / 보유: ${fmtEok(investEok)}`;
         tr.appendChild(td);
       });
 
-      // 전세가율 금액 (투자여력 색상 적용)
+      // 전세가율 (DSR 미적용: 갭=가격−전세금 기준)
       jeonseRates.forEach(r=>{
         const jeonseEok = priceEok * r;           // 전세금(억)
-        const gapEok = priceEok - jeonseEok;      // 갭 = 필요 자기자본(억)
+        const gapEok = priceEok - jeonseEok;      // 필요자본(갭)
         const td = document.createElement('td');
         if(investEok >= gapEok) td.classList.add('invest-ok');
         else td.classList.add('invest-low');
@@ -205,23 +208,22 @@
 
   function renderAll(){
     const income = parseFloat(document.getElementById('income').value);
-    const rate = parseFloat(document.getElementById('rate').value);
-    const years = parseFloat(document.getElementById('years').value);
+    const rate   = parseFloat(document.getElementById('rate').value);
+    const years  = parseFloat(document.getElementById('years').value);
 
     const investEok = parseFloat(document.getElementById('investEok').value) || 0;
-
     const minEok = parseFloat(document.getElementById('minEok').value) || 6;
     const maxEok = parseFloat(document.getElementById('maxEok').value) || 20;
     const stepEok = parseFloat(document.getElementById('stepEok').value) || 1;
 
-    // DSR 한도 (만원 -> 억) — 색칠에는 사용하지 않음
+    // DSR 한도 (만원 -> 억)
     const dsrLimitManwon = calcDSRLimitManwon(income, rate, years);
     const dsrLimitEok = toEok(dsrLimitManwon);
     document.getElementById('dsrLimitDisplay').textContent =
       dsrLimitManwon > 0 ? `${fmtEok(dsrLimitEok)} (연 ${isFinite(rate)?rate.toFixed(2):'-'}%, ${years||'-'}년)` : '연봉·금리·기간을 입력하세요';
 
-    // 표
-    buildTable(minEok, maxEok, stepEok, investEok);
+    // 표 렌더
+    buildTable(minEok, maxEok, stepEok, investEok, dsrLimitEok);
   }
 
   // 초기 렌더
