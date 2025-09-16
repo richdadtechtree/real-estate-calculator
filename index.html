@@ -35,12 +35,11 @@
     h1 { margin: 0; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
     .sub { color: var(--muted); font-size: 13px; }
 
-    /* 상단 타이틀 + 방문수 배지 한 줄 정렬 */
     .header-top {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       margin-bottom: 4px;
     }
-    /* 방문수 배지(다크 테마) */
+    /* 방문수 배지 */
     #daily-visitors{
       display:inline-flex; align-items:center; gap:.45em;
       padding:.38em .7em; border-radius:999px; font-size:12px; line-height:1;
@@ -68,7 +67,7 @@
       margin: 18px auto 28px; background: var(--card);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 18px;
-      padding: 10px; /* keep slim; inner is iframe */
+      padding: 10px;
       overflow: hidden;
     }
     .panel[hidden] { display: none; }
@@ -78,13 +77,14 @@
     footer.page { text-align: center; color: var(--muted); font-size: 13px; padding: 28px 0 36px; border-top: 1px solid rgba(255,255,255,0.06); }
     footer.page a { color: #cfe6ff; text-decoration: none; }
 
-    /* === 팝업(모달) 스타일 === */
+    /* === 팝업(모달) === */
     .modal-backdrop[hidden] { display: none; }
     .modal-backdrop {
-      position: fixed; inset: 0; z-index: 1000; /* 헤더보다 위 */
+      position: fixed; inset: 0; z-index: 1000;
       display: grid; place-items: center;
       background: rgba(0,0,0,.55);
       backdrop-filter: blur(4px);
+      overscroll-behavior: contain;
     }
     .modal {
       position: relative;
@@ -96,9 +96,17 @@
       box-shadow: 0 16px 60px rgba(0,0,0,.35);
       display: flex; flex-direction: column;
       overflow: hidden;
+      overscroll-behavior: contain;
     }
-    .modal-body { flex: 1 1 auto; min-height: 60vh; background:#111; overflow:auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
-    .modal-body iframe { width:100%; border:0; border-radius:0; background:#fff; display:block; height:auto; min-height:60vh; }
+    .modal-body {
+      flex: 1 1 auto; min-height: 60vh; background:#111;
+      overflow:auto; -webkit-overflow-scrolling: touch; touch-action: pan-y;
+      overscroll-behavior: contain;
+    }
+    .modal-body iframe {
+      width:100%; border:0; border-radius:0; background:#fff;
+      display:block; height:auto; min-height:60vh;
+    }
     .modal-footer {
       display:flex; align-items:center; justify-content: space-between; gap:12px;
       padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); background: rgba(8,12,16,0.72);
@@ -109,14 +117,20 @@
     .checkbox { display:flex; align-items:center; gap:10px; font-size: 14px; color:#f4fff7; font-weight:700; text-shadow: 0 1px 1px rgba(0,0,0,.6); }
     .checkbox input { width:18px; height:18px; margin:0; accent-color: var(--accent); }
     .checkbox input:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
     .btn { appearance:none; border:1px solid rgba(255,255,255,0.14); color:var(--text); background:var(--tab); padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; }
     .btn:hover { transform: translateY(-1px); box-shadow: 0 0 0 3px var(--ring) inset; }
-    /* 상단 X 닫기 버튼 */
-    .modal-x { position:absolute; top: calc(8px + env(safe-area-inset-top)); right: 10px; width:40px; height:40px; display:grid; place-items:center; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background: rgba(0,0,0,0.45); color:#fff; font-size:20px; font-weight:800; z-index:20; cursor:pointer; }
-    .modal-x:active { transform: scale(0.98); }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 0 0 3px var(--ring) inset; }
 
-    /* 모바일에서 최대화 느낌 */
+    /* 상단 X 닫기 버튼 */
+    .modal-x {
+      position:absolute; top: calc(8px + env(safe-area-inset-top)); right: 10px;
+      width:40px; height:40px; display:grid; place-items:center;
+      border-radius:10px; border:1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.45); color:#fff; font-size:20px; font-weight:800;
+      z-index:20; cursor:pointer;
+    }
+    .modal-x:active { transform: scale(0.98); }
+
     @media (max-width: 640px){
       .modal { width: 100vw; height: 100vh; max-height: 100vh; border-radius: 0; }
       .modal-footer { padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); }
@@ -125,8 +139,6 @@
       @media (max-width: 640px){
         .modal { height: 100dvh; max-height: 100dvh; }
       }
-    }
-      .modal-footer { padding: 12px 14px; }
     }
   </style>
 </head>
@@ -138,7 +150,7 @@
           <h1>부태리 계산기 허브</h1>
           <div class="sub">내 투자/대출/경비 계산 도구를 한 곳에서</div>
         </div>
-        <div id="daily-visitors" aria-label="오늘 방문수">
+        <div id="daily-visitors" aria-label="오늘 방문수" title="전역 방문수(오늘)">
           <span class="dot" aria-hidden="true"></span>
           <span>오늘 방문수</span>
           <strong id="visitor-count">–</strong>
@@ -188,9 +200,7 @@
   <div id="intro-modal" class="modal-backdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-label="부태리 신고가">
       <button class="modal-x" id="intro-close-x" aria-label="닫기" title="닫기">✕</button>
-      
       <div class="modal-body">
-        <!-- 필요 시 로딩 후 주입 (초기에는 data-src만 세팅) -->
         <iframe id="intro-iframe" title="부태리 신고가" data-src="부태리신고가.html"></iframe>
       </div>
       <div class="modal-footer">
@@ -206,51 +216,39 @@
 
   <script>
     (function(){
+      /* ====== 탭 ====== */
       const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
-      const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
-
       function encodeSrc(iframe){
         if (iframe && !iframe.dataset.loaded) {
           try { iframe.src = encodeURI(iframe.dataset.file); } catch (e) { iframe.src = iframe.dataset.file; }
           iframe.dataset.loaded = 'true';
         }
       }
-
       function resizeIframe(iframe){
-        // Same-origin에서만 동작
         try {
           const doc = iframe.contentDocument || iframe.contentWindow.document;
           if (!doc) return;
-
           const setHeight = () => {
-            const body = doc.body;
-            const html = doc.documentElement;
+            const body = doc.body, html = doc.documentElement;
             const h = Math.max(
               body.scrollHeight, body.offsetHeight,
               html.clientHeight, html.scrollHeight, html.offsetHeight
             );
             iframe.style.minHeight = Math.max(900, h + 24) + 'px';
           };
-
-          const mo = new MutationObserver(() => setHeight());
-          mo.observe(doc.documentElement, { childList: true, subtree: true, attributes: true });
-
-          // 폰트 로딩/리사이즈 대응
+          new MutationObserver(() => setHeight()).observe(doc.documentElement, { childList: true, subtree: true, attributes: true });
           iframe.contentWindow.addEventListener('load', setHeight);
           window.addEventListener('resize', setHeight);
-        } catch (e) {
-          // 교차 출처면 고정 높이로 스크롤 사용
-        }
+        } catch (e) { /* 교차 출처면 고정 높이 */ }
       }
-
       function activateTab(tab){
-        tabs.forEach(t => {
+        const allTabs = tabs;
+        allTabs.forEach(t => {
           t.classList.remove('active');
           t.setAttribute('aria-selected','false');
           const p = document.getElementById(t.getAttribute('aria-controls'));
           if (p) p.hidden = true;
         });
-
         tab.classList.add('active');
         tab.setAttribute('aria-selected','true');
         const panel = document.getElementById(tab.getAttribute('aria-controls'));
@@ -260,19 +258,12 @@
           encodeSrc(iframe);
           resizeIframe(iframe);
         }
-
-        // 해시 갱신 (예: #cost, #loan, #map)
         history.replaceState(null, '', '#' + tab.id.replace('tab','').replace(/^-/,'')); 
       }
-
       tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
-
-      // 초기 로드: 해시에 따라 탭 선택
       const hash = location.hash.replace('#','');
       const initial = hash ? document.getElementById('tab-' + hash) : tabs[0];
       activateTab(initial || tabs[0]);
-
-      // 접근성: 좌우 화살표로 이동
       document.addEventListener('keydown', e => {
         if (!['ArrowLeft','ArrowRight'].includes(e.key)) return;
         const idx = tabs.findIndex(t => t.classList.contains('active'));
@@ -280,11 +271,19 @@
         activateTab(tabs[next]);
       });
 
-      // 방문자수 (전역 합계: Google Apps Script 웹앱 연동)
-      // 1) 아래 WEBAPP_URL 에 본인 GAS 배포 URL을 넣어주세요.
-      // 2) 동작: 페이지가 열릴 때 전역 카운터에 +1 (오늘/누적 모두 서버에서 계산, Asia/Seoul 기준)
-      const WEBAPP_URL = 'YOUR_GAS_WEBAPP_URL'; // 예: https://script.google.com/macros/s/AKfycb.../exec
+      /* ====== 한국시간 오늘 키 ====== */
+      function todayKeySeoul(){
+        try {
+          const f = new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit' });
+          return f.format(new Date()); // YYYY-MM-DD
+        } catch (e) {
+          const d = new Date(Date.now() + 9*60*60*1000);
+          return d.toISOString().slice(0,10);
+        }
+      }
 
+      /* ====== 방문자수 (전역 합계: GAS 웹앱) ====== */
+      const WEBAPP_URL = 'YOUR_GAS_WEBAPP_URL'; // ← 여기에 본인 GAS 웹앱 URL 입력
       async function updateVisitorCountGlobal(){
         const el = document.getElementById('visitor-count');
         try{
@@ -292,12 +291,11 @@
           const url = WEBAPP_URL + '?action=hit&t=' + Date.now(); // cache-buster
           const res = await fetch(url, { method:'GET' });
           const data = await res.json();
-          // 기대 형식: { ok:true, date:'YYYY-MM-DD', today:123, total:4567 }
           if (!data || data.ok !== true) throw new Error('Invalid response');
           el.textContent = Number(data.today).toLocaleString('ko-KR');
           el.setAttribute('title', `누적 합계: ${Number(data.total).toLocaleString('ko-KR')}회 (기준일 ${data.date})`);
         }catch(err){
-          // 실패 시 로컬 임시 카운트로 폴백(사용자 브라우저 한정)
+          // 폴백: 로컬 카운트
           try {
             const key = todayKeySeoul();
             const stored = JSON.parse(localStorage.getItem('visit-count') || '{}');
@@ -310,28 +308,62 @@
           }
         }
       }
-
       updateVisitorCountGlobal();
 
       /* ====== 팝업(오늘 하루 열지 않기) ====== */
       const MODAL_ID = 'intro-modal';
       const HIDE_KEY = 'intro-hide-date';
-      const iframeIntro = document.getElementById('intro-iframe');
       const modal = document.getElementById(MODAL_ID);
+      const iframeIntro = document.getElementById('intro-iframe');
       const btnClose = document.getElementById('intro-close');
       const btnCloseX = document.getElementById('intro-close-x');
       const chkDont = document.getElementById('dont-show-today');
       const linkReopen = document.getElementById('reopen-intro');
 
-      // Asia/Seoul 날짜 키 (YYYY-MM-DD)
-      function todayKeySeoul(){
+      // 배경 스크롤 잠그기(모바일 안전)
+      let _savedScrollY = 0;
+      function lockScroll(lock){
+        const html = document.documentElement;
+        if (lock) {
+          _savedScrollY = window.scrollY || 0;
+          html.style.position = 'fixed';
+          html.style.top = `-${_savedScrollY}px`;
+          html.style.left = '0';
+          html.style.right = '0';
+          html.style.overflow = 'hidden';
+          html.style.width = '100%';
+        } else {
+          const y = _savedScrollY;
+          html.style.position = '';
+          html.style.top = '';
+          html.style.left = '';
+          html.style.right = '';
+          html.style.overflow = '';
+          html.style.width = '';
+          window.scrollTo(0, y);
+        }
+      }
+
+      // 동일 출처일 때 iframe 자동 높이
+      function attachIntroAutoSize(){
         try {
-          const f = new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit' });
-          return f.format(new Date());
-        } catch (e) {
-          // Intl 미지원 환경 대비: KST = UTC+9 근사
-          const d = new Date(Date.now() + 9*60*60*1000);
-          return d.toISOString().slice(0,10);
+          const doc = iframeIntro.contentDocument || iframeIntro.contentWindow.document;
+          if (!doc) return;
+          const setH = () => {
+            const body = doc.body, html = doc.documentElement;
+            const h = Math.max(
+              body.scrollHeight, body.offsetHeight,
+              html.clientHeight, html.scrollHeight, html.offsetHeight
+            );
+            iframeIntro.style.height = Math.max(600, h) + 'px';
+            iframeIntro.style.display = 'block';
+          };
+          setH();
+          new MutationObserver(setH).observe(doc.documentElement, { childList:true, subtree:true, attributes:true });
+          iframeIntro.contentWindow.addEventListener('load', setH);
+        } catch(e) {
+          // 교차 출처면 iframe 자체 스크롤
+          iframeIntro.style.height = '100%';
         }
       }
 
@@ -340,17 +372,12 @@
         catch(e){ return true; }
       }
 
-      function lockScroll(lock){
-        document.documentElement.style.overflow = lock ? 'hidden' : '';
-      }
-
       function openIntro(){
+        // load 핸들러를 먼저 걸고, 그 다음 src 설정 (타이밍 중요)
+        iframeIntro.addEventListener('load', attachIntroAutoSize, { once: true });
         if (!iframeIntro.src) {
           iframeIntro.src = iframeIntro.dataset.src;
         }
-        modal.hidden = false;
-        lockScroll(true);
-      }
         modal.hidden = false;
         lockScroll(true);
       }
@@ -363,54 +390,18 @@
         lockScroll(false);
       }
 
-      // 최초 진입 시 표시
-      if (shouldShowIntro()) {
-        openIntro();
-      }
-
-      // 이벤트 바인딩
-      btnClose.addEventListener('click', closeIntro);
-      btnCloseX?.addEventListener('click', closeIntro);
-      modal.addEventListener('click', (e) => { if (e.target === modal) closeIntro(); });
-      document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && !modal.hidden) closeIntro(); });
-
-      // === 신고가 iframe 자동 높이(동일 출처 시) ===
-      function sizeIntroIframe(){
-        try {
-          const doc = iframeIntro.contentDocument || iframeIntro.contentWindow.document;
-          if (!doc) return;
-          const setH = () => {
-            const body = doc.body, html = doc.documentElement;
-            const h = Math.max(
-              body.scrollHeight, body.offsetHeight,
-              html.clientHeight, html.scrollHeight, html.offsetHeight
-            );
-            // 컨텐츠 전체 높이를 iframe에 적용 → modal-body가 스크롤 컨테이너가 됨
-            iframeIntro.style.height = Math.max(600, h) + 'px';
-          };
-          setH();
-          new MutationObserver(setH).observe(doc.documentElement, { childList:true, subtree:true, attributes:true });
-          iframeIntro.contentWindow.addEventListener('load', setH);
-        } catch(e) {
-          // 교차 출처면 iframe 자체 스크롤로 대체
-          iframeIntro.style.height = '100%';
-          iframeIntro.style.overflow = 'auto';
-          iframeIntro.style.webkitOverflowScrolling = 'touch';
-        }
-      }
-      iframeIntro.addEventListener('load', sizeIntroIframe);
-
-      linkReopen?.addEventListener('click', (e)=>{
+      if (btnClose) btnClose.addEventListener('click', closeIntro);
+      if (btnCloseX) btnCloseX.addEventListener('click', closeIntro);
+      modal.addEventListener('click', function(e){ if (e.target === modal) closeIntro(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) closeIntro(); });
+      if (linkReopen) linkReopen.addEventListener('click', function(e){
         e.preventDefault();
         try { localStorage.removeItem(HIDE_KEY); } catch(e){}
-        chkDont.checked = false;
-        openIntro();
-      });('click', (e)=>{
-        e.preventDefault();
-        try { localStorage.removeItem(HIDE_KEY); } catch(e){}
-        chkDont.checked = false;
+        if (chkDont) chkDont.checked = false;
         openIntro();
       });
+
+      if (shouldShowIntro()) openIntro();
     })();
   </script>
 </body>
