@@ -35,7 +35,6 @@
     h1 { margin: 0; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
     .sub { color: var(--muted); font-size: 13px; }
 
-    /* 상단 타이틀 + 방문수 배지 한 줄 정렬 */
     .header-top {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       margin-bottom: 4px;
@@ -81,12 +80,13 @@
     /* === 팝업(모달) 스타일 === */
     .modal-backdrop[hidden] { display: none; }
     .modal-backdrop {
-      position: fixed; inset: 0; z-index: 1000; /* 헤더보다 위 */
+      position: fixed; inset: 0; z-index: 1000;
       display: grid; place-items: center;
       background: rgba(0,0,0,.55);
       backdrop-filter: blur(4px);
     }
     .modal {
+      position: relative;
       width: min(960px, 96vw);
       max-height: 92vh;
       background: var(--card);
@@ -96,24 +96,33 @@
       display: flex; flex-direction: column;
       overflow: hidden;
     }
-    .modal-body { flex: 1 1 auto; min-height: 60vh; background:#111; }
+    .modal-body { flex: 1 1 auto; min-height: 60vh; background:#111; overflow:auto; -webkit-overflow-scrolling: touch; }
     .modal-body iframe { width:100%; height:100%; border:0; border-radius:0; background:#fff; }
     .modal-footer {
       display:flex; align-items:center; justify-content: space-between; gap:12px;
-      padding: 12px 14px; background: rgba(8,12,16,0.72);
+      padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); background: rgba(8,12,16,0.72);
       border-top: 1px solid rgba(255,255,255,0.08);
       box-shadow: 0 -10px 30px rgba(0,0,0,0.35);
+      z-index: 10;
     }
     .checkbox { display:flex; align-items:center; gap:10px; font-size: 14px; color:#f4fff7; font-weight:700; text-shadow: 0 1px 1px rgba(0,0,0,.6); }
     .checkbox input { width:18px; height:18px; margin:0; accent-color: var(--accent); }
     .checkbox input:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
     .btn { appearance:none; border:1px solid rgba(255,255,255,0.14); color:var(--text); background:var(--tab); padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; }
     .btn:hover { transform: translateY(-1px); box-shadow: 0 0 0 3px var(--ring) inset; }
+    /* 상단 X 닫기 버튼 */
+    .modal-x { position:absolute; top: calc(8px + env(safe-area-inset-top)); right: 10px; width:40px; height:40px; display:grid; place-items:center; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background: rgba(0,0,0,0.45); color:#fff; font-size:20px; font-weight:800; z-index:20; cursor:pointer; }
+    .modal-x:active { transform: scale(0.98); }
 
-    /* 모바일에서 최대화 느낌 */
     @media (max-width: 640px){
       .modal { width: 100vw; height: 100vh; max-height: 100vh; border-radius: 0; }
-      .modal-footer { padding: 12px 14px; }
+      .modal-footer { padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); }
+    }
+    @supports (height: 100dvh){
+      @media (max-width: 640px){
+        .modal { height: 100dvh; max-height: 100dvh; }
+      }
     }
   </style>
 </head>
@@ -174,8 +183,8 @@
   <!-- === 최초 방문/재방문 시 표시되는 팝업(모달) === -->
   <div id="intro-modal" class="modal-backdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-label="부태리 신고가">
+      <button class="modal-x" id="intro-close-x" aria-label="닫기" title="닫기">✕</button>
       <div class="modal-body">
-        <!-- 필요 시 로딩 후 주입 (초기에는 data-src만 세팅) -->
         <iframe id="intro-iframe" title="부태리 신고가" data-src="부태리신고가.html"></iframe>
       </div>
       <div class="modal-footer">
@@ -265,7 +274,18 @@
         activateTab(tabs[next]);
       });
 
-      // 방문자수 (전역 합계: Google Apps Script 웹앱 연동)
+      // ====== 공통: 한국시간 오늘 키 ======
+      function todayKeySeoul(){
+        try {
+          const f = new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit' });
+          return f.format(new Date()); // YYYY-MM-DD
+        } catch (e) {
+          const d = new Date(Date.now() + 9*60*60*1000);
+          return d.toISOString().slice(0,10);
+        }
+      }
+
+      // ====== 방문자수 (전역 합계: Google Apps Script 웹앱 연동) ======
       // 1) 아래 WEBAPP_URL 에 본인 GAS 배포 URL을 넣어주세요.
       // 2) 동작: 페이지가 열릴 때 전역 카운터에 +1 (오늘/누적 모두 서버에서 계산, Asia/Seoul 기준)
       const WEBAPP_URL = 'YOUR_GAS_WEBAPP_URL'; // 예: https://script.google.com/macros/s/AKfycb.../exec
@@ -295,7 +315,6 @@
           }
         }
       }
-
       updateVisitorCountGlobal();
 
       /* ====== 팝업(오늘 하루 열지 않기) ====== */
@@ -304,20 +323,9 @@
       const iframeIntro = document.getElementById('intro-iframe');
       const modal = document.getElementById(MODAL_ID);
       const btnClose = document.getElementById('intro-close');
+      const btnCloseX = document.getElementById('intro-close-x');
       const chkDont = document.getElementById('dont-show-today');
       const linkReopen = document.getElementById('reopen-intro');
-
-      // Asia/Seoul 날짜 키 (YYYY-MM-DD)
-      function todayKeySeoul(){
-        try {
-          const f = new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit' });
-          return f.format(new Date());
-        } catch (e) {
-          // Intl 미지원 환경 대비: KST = UTC+9 근사
-          const d = new Date(Date.now() + 9*60*60*1000);
-          return d.toISOString().slice(0,10);
-        }
-      }
 
       function shouldShowIntro(){
         try { return localStorage.getItem(HIDE_KEY) !== todayKeySeoul(); }
@@ -329,7 +337,6 @@
       }
 
       function openIntro(){
-        // iframe src 주입 (처음 열릴 때만)
         if (!iframeIntro.src) {
           iframeIntro.src = iframeIntro.dataset.src;
         }
@@ -345,22 +352,14 @@
         lockScroll(false);
       }
 
-      // 최초 진입 시 표시
       if (shouldShowIntro()) {
         openIntro();
       }
 
-      // 이벤트 바인딩
       btnClose.addEventListener('click', closeIntro);
-      // 배경 클릭 시 닫기 (모달 영역 밖 클릭)
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeIntro();
-      });
-      // ESC로 닫기
-      document.addEventListener('keydown', (e)=>{
-        if (e.key === 'Escape' && !modal.hidden) closeIntro();
-      });
-      // 다시보기 링크
+      btnCloseX?.addEventListener('click', closeIntro);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeIntro(); });
+      document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && !modal.hidden) closeIntro(); });
       linkReopen?.addEventListener('click', (e)=>{
         e.preventDefault();
         try { localStorage.removeItem(HIDE_KEY); } catch(e){}
