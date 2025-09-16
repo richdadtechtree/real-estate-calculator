@@ -5,139 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>부태리 계산기 허브 – 4개 탭</title>
   <style>
-    :root {
-      --bg: #0b0c10;
-      --card: #151822;
-      --text: #e8eaf0;
-      --muted: #96a0b5;
-      --accent: #4caf50;
-      --accent-weak: #3a8f40;
-      --tab: rgba(255,255,255,0.06);
-      --tab-active: linear-gradient(180deg, rgba(76,175,80,0.18), rgba(76,175,80,0.06));
-      --ring: rgba(76, 175, 80, 0.35);
+    :root{
+      --bg:#0b0c10; --card:#151822; --text:#e8eaf0; --muted:#96a0b5;
+      --accent:#4caf50; --accent-weak:#3a8f40; --tab:rgba(255,255,255,.06);
+      --tab-active:linear-gradient(180deg, rgba(76,175,80,.18), rgba(76,175,80,.06));
+      --ring:rgba(76,175,80,.35);
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Helvetica, Arial, "Segoe UI Emoji";
-      background: linear-gradient(180deg, #0b0c10 0%, #0f1220 100%);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif;
+      background:linear-gradient(180deg,#0b0c10 0%,#0f1220 100%); color:var(--text);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    header {
-      position: sticky; top: 0; z-index: 10;
-      backdrop-filter: saturate(150%) blur(8px);
-      background: rgba(11,12,16,0.6);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 18px 16px; }
-    h1 { margin: 0; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
-    .sub { color: var(--muted); font-size: 13px; }
+    header{position:sticky; top:0; z-index:10; backdrop-filter:saturate(150%) blur(8px); background:rgba(11,12,16,.6); border-bottom:1px solid rgba(255,255,255,.06)}
+    .wrap{max-width:1080px; margin:0 auto; padding:18px 16px}
+    h1{margin:0; font-size:clamp(20px,2.8vw,28px); letter-spacing:-.2px}
+    .sub{color:var(--muted); font-size:13px}
 
-    .header-top {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      margin-bottom: 4px;
-    }
+    .header-top{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px}
     /* 방문수 배지 */
     #daily-visitors{
       display:inline-flex; align-items:center; gap:.45em;
       padding:.38em .7em; border-radius:999px; font-size:12px; line-height:1;
-      color:#e6f6ea; background:rgba(88, 199, 120, .12); border:1px solid rgba(88,199,120,.28);
+      color:#e6f6ea; background:rgba(88,199,120,.12); border:1px solid rgba(88,199,120,.28)
     }
-    #daily-visitors .dot{ width:.5em; height:.5em; border-radius:50%; background:#58c778; box-shadow:0 0 0 3px rgba(88,199,120,.28); }
+    #daily-visitors .dot{width:.5em; height:.5em; border-radius:50%; background:#58c778; box-shadow:0 0 0 3px rgba(88,199,120,.28)}
 
-    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-    [role="tab"] {
-      appearance: none;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: var(--tab);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all .18s ease;
+    .tabs{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px}
+    [role="tab"]{
+      appearance:none; border:1px solid rgba(255,255,255,.06); background:var(--tab); color:var(--text);
+      padding:10px 14px; border-radius:999px; font-weight:700; font-size:14px; cursor:pointer; transition:all .18s ease
     }
-    [role="tab"].active { background: var(--tab-active); border-color: var(--accent-weak); box-shadow: 0 0 0 3px var(--ring) inset; }
-    [role="tab"]:hover { transform: translateY(-1px); }
+    [role="tab"].active{background:var(--tab-active); border-color:var(--accent-weak); box-shadow:0 0 0 3px var(--ring) inset}
+    [role="tab"]:hover{transform:translateY(-1px)}
 
-    .panel {
-      margin: 18px auto 28px; background: var(--card);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 18px;
-      padding: 10px;
-      overflow: hidden;
+    .panel{
+      margin:18px auto 28px; background:var(--card); border:1px solid rgba(255,255,255,.06);
+      border-radius:18px; padding:10px; overflow:hidden
     }
-    .panel[hidden] { display: none; }
+    .panel[hidden]{display:none}
+    iframe{width:100%; border:0; border-radius:12px; background:#fff; min-height:1200px}
 
-    iframe { width: 100% ; border: 0; border-radius: 12px; background: #fff; min-height: 1200px; }
-
-    footer.page { text-align: center; color: var(--muted); font-size: 13px; padding: 28px 0 36px; border-top: 1px solid rgba(255,255,255,0.06); }
-    footer.page a { color: #cfe6ff; text-decoration: none; }
+    footer.page{border-top:1px solid rgba(255,255,255,.06); text-align:center; color:var(--muted); font-size:13px; padding:28px 0 36px}
+    footer.page a{color:#cfe6ff; text-decoration:none}
 
     /* === 팝업(모달) === */
-    .modal-backdrop[hidden] { display: none; }
-    .modal-backdrop {
-      position: fixed; inset: 0; z-index: 1000;
-      display: grid; place-items: center;
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(4px);
-      overscroll-behavior: contain;
+    .modal-backdrop[hidden]{display:none}
+    .modal-backdrop{
+      position:fixed; inset:0; z-index:1000; display:grid; place-items:center;
+      background:rgba(0,0,0,.55); backdrop-filter:blur(4px); overscroll-behavior:contain
     }
-    .modal {
-      position: relative;
-      width: min(960px, 96vw);
-      max-height: 92vh;
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      box-shadow: 0 16px 60px rgba(0,0,0,.35);
-      display: flex; flex-direction: column;
-      overflow: hidden;
-      overscroll-behavior: contain;
+    .modal{
+      position:relative; width:min(960px,96vw); max-height:92vh; background:var(--card);
+      border:1px solid rgba(255,255,255,.08); border-radius:18px; box-shadow:0 16px 60px rgba(0,0,0,.35);
+      display:flex; flex-direction:column; overflow:hidden; overscroll-behavior:contain
     }
-    .modal-body {
-      flex: 1 1 auto; min-height: 60vh; background:#111;
-      overflow:auto; -webkit-overflow-scrolling: touch; touch-action: pan-y;
-      overscroll-behavior: contain;
+    .modal-body{
+      flex:1 1 auto; min-height:60vh; background:#111; overflow:auto; -webkit-overflow-scrolling:touch; touch-action:pan-y; overscroll-behavior:contain
     }
-    .modal-body iframe {
-      width:100%; border:0; border-radius:0; background:#fff;
-      display:block; height:auto; min-height:60vh;
+    .modal-body iframe{width:100%; border:0; border-radius:0; background:#fff; display:block; height:auto; min-height:60vh}
+    .modal-footer{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 14px calc(12px + env(safe-area-inset-bottom)); background:rgba(8,12,16,.72);
+      border-top:1px solid rgba(255,255,255,.08); box-shadow:0 -10px 30px rgba(0,0,0,.35); z-index:10
     }
-    .modal-footer {
-      display:flex; align-items:center; justify-content: space-between; gap:12px;
-      padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); background: rgba(8,12,16,0.72);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.35);
-      z-index: 10;
-    }
-    .checkbox { display:flex; align-items:center; gap:10px; font-size: 14px; color:#f4fff7; font-weight:700; text-shadow: 0 1px 1px rgba(0,0,0,.6); }
-    .checkbox input { width:18px; height:18px; margin:0; accent-color: var(--accent); }
-    .checkbox input:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+    .checkbox{display:flex; align-items:center; gap:10px; font-size:14px; color:#f4fff7; font-weight:700; text-shadow:0 1px 1px rgba(0,0,0,.6)}
+    .checkbox input{width:18px; height:18px; margin:0; accent-color:var(--accent)}
+    .checkbox input:focus-visible{outline:2px solid var(--ring); outline-offset:2px}
 
-    .btn { appearance:none; border:1px solid rgba(255,255,255,0.14); color:var(--text); background:var(--tab); padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 0 0 3px var(--ring) inset; }
+    .btn{appearance:none; border:1px solid rgba(255,255,255,.14); color:var(--text); background:var(--tab); padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer}
+    .btn:hover{transform:translateY(-1px); box-shadow:0 0 0 3px var(--ring) inset}
 
     /* 상단 X 닫기 버튼 */
-    .modal-x {
-      position:absolute; top: calc(8px + env(safe-area-inset-top)); right: 10px;
-      width:40px; height:40px; display:grid; place-items:center;
-      border-radius:10px; border:1px solid rgba(255,255,255,0.16);
-      background: rgba(0,0,0,0.45); color:#fff; font-size:20px; font-weight:800;
-      z-index:20; cursor:pointer;
+    .modal-x{
+      position:absolute; top:calc(8px + env(safe-area-inset-top)); right:10px; width:40px; height:40px;
+      display:grid; place-items:center; border-radius:10px; border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.45); color:#fff; font-size:20px; font-weight:800; z-index:20; cursor:pointer
     }
-    .modal-x:active { transform: scale(0.98); }
+    .modal-x:active{transform:scale(.98)}
 
-    @media (max-width: 640px){
-      .modal { width: 100vw; height: 100vh; max-height: 100vh; border-radius: 0; }
-      .modal-footer { padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); }
+    @media (max-width:640px){
+      .modal{width:100vw; height:100vh; max-height:100vh; border-radius:0}
+      .modal-footer{padding:12px 14px calc(12px + env(safe-area-inset-bottom))}
     }
-    @supports (height: 100dvh){
-      @media (max-width: 640px){
-        .modal { height: 100dvh; max-height: 100dvh; }
+    @supports (height:100dvh){
+      @media (max-width:640px){
+        .modal{height:100dvh; max-height:100dvh}
       }
     }
   </style>
@@ -218,6 +171,7 @@
     (function(){
       /* ====== 탭 ====== */
       const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+
       function encodeSrc(iframe){
         if (iframe && !iframe.dataset.loaded) {
           try { iframe.src = encodeURI(iframe.dataset.file); } catch (e) { iframe.src = iframe.dataset.file; }
@@ -236,14 +190,13 @@
             );
             iframe.style.minHeight = Math.max(900, h + 24) + 'px';
           };
-          new MutationObserver(() => setHeight()).observe(doc.documentElement, { childList: true, subtree: true, attributes: true });
+          new MutationObserver(setHeight).observe(doc.documentElement, { childList:true, subtree:true, attributes:true });
           iframe.contentWindow.addEventListener('load', setHeight);
           window.addEventListener('resize', setHeight);
         } catch (e) { /* 교차 출처면 고정 높이 */ }
       }
       function activateTab(tab){
-        const allTabs = tabs;
-        allTabs.forEach(t => {
+        tabs.forEach(t => {
           t.classList.remove('active');
           t.setAttribute('aria-selected','false');
           const p = document.getElementById(t.getAttribute('aria-controls'));
@@ -282,29 +235,59 @@
         }
       }
 
-      /* ====== 방문자수 (전역 합계: GAS 웹앱) ====== */
-      const WEBAPP_URL = 'YOUR_GAS_WEBAPP_URL'; // ← 여기에 본인 GAS 웹앱 URL 입력
+      /* ====== 방문자수 (전역 합계: GAS + JSONP 폴백) ====== */
+      const WEBAPP_URL = 'YOUR_GAS_WEBAPP_URL';  /* ← 본인 GAS 웹앱 URL(https://script.google.com/macros/s/.../exec) */
+      function renderCount(data){
+        const el = document.getElementById('visitor-count');
+        el.textContent = Number(data.today).toLocaleString('ko-KR');
+        el.setAttribute('title', `누적 합계: ${Number(data.total).toLocaleString('ko-KR')}회 (기준일 ${data.date})`);
+      }
+      function jsonp(url, timeout=4000){
+        return new Promise((resolve, reject) => {
+          const cbName = 'visitor_cb_' + Math.random().toString(36).slice(2);
+          const script = document.createElement('script');
+          let done = false;
+          function cleanup(){
+            if (done) return;
+            done = true;
+            try { delete window[cbName]; } catch(_){}
+            if (script && script.parentNode) script.parentNode.removeChild(script);
+          }
+          const timer = setTimeout(function(){ cleanup(); reject(new Error('JSONP timeout')); }, timeout);
+          window[cbName] = function(data){ clearTimeout(timer); cleanup(); resolve(data); };
+          script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName + '&t=' + Date.now();
+          script.onerror = function(){ clearTimeout(timer); cleanup(); reject(new Error('JSONP error')); };
+          document.head.appendChild(script);
+        });
+      }
       async function updateVisitorCountGlobal(){
         const el = document.getElementById('visitor-count');
         try{
           if (!WEBAPP_URL || !/^https?:\/\//.test(WEBAPP_URL)) throw new Error('WEBAPP_URL not set');
-          const url = WEBAPP_URL + '?action=hit&t=' + Date.now(); // cache-buster
-          const res = await fetch(url, { method:'GET' });
+          const ctrl = new AbortController();
+          const timer = setTimeout(function(){ ctrl.abort(); }, 2500);
+          const res = await fetch(WEBAPP_URL + '?action=hit&t=' + Date.now(), {
+            method:'GET', signal:ctrl.signal, credentials:'omit', cache:'no-store'
+          });
+          clearTimeout(timer);
+          if (!res.ok) throw new Error('fetch not ok');
           const data = await res.json();
-          if (!data || data.ok !== true) throw new Error('Invalid response');
-          el.textContent = Number(data.today).toLocaleString('ko-KR');
-          el.setAttribute('title', `누적 합계: ${Number(data.total).toLocaleString('ko-KR')}회 (기준일 ${data.date})`);
-        }catch(err){
-          // 폴백: 로컬 카운트
-          try {
-            const key = todayKeySeoul();
-            const stored = JSON.parse(localStorage.getItem('visit-count') || '{}');
-            stored[key] = (stored[key] || 0) + 1;
-            localStorage.setItem('visit-count', JSON.stringify(stored));
-            el.textContent = stored[key];
-            el.setAttribute('title', '전역 합계 서버 연결 실패: 임시 로컬 카운트 표시');
-          } catch(e2){
-            el.textContent = '–';
+          if (!data || data.ok !== true) throw new Error('bad data');
+          renderCount(data);
+        }catch(errFetch){
+          try{
+            const data = await jsonp(WEBAPP_URL + '?action=hit');
+            if (!data || data.ok !== true) throw new Error('jsonp bad data');
+            renderCount(data);
+          }catch(errJsonp){
+            try{
+              const key = todayKeySeoul();
+              const stored = JSON.parse(localStorage.getItem('visit-count') || '{}');
+              stored[key] = (stored[key] || 0) + 1;
+              localStorage.setItem('visit-count', JSON.stringify(stored));
+              el.textContent = stored[key];
+              el.setAttribute('title','전역 합계 서버 연결 실패: 임시 로컬 카운트');
+            }catch(e2){ el.textContent = '–'; }
           }
         }
       }
@@ -320,19 +303,19 @@
       const chkDont = document.getElementById('dont-show-today');
       const linkReopen = document.getElementById('reopen-intro');
 
-      // 배경 스크롤 잠그기(모바일 안전)
+      /* 배경 스크롤 잠그기(모바일 안전) */
       let _savedScrollY = 0;
       function lockScroll(lock){
         const html = document.documentElement;
-        if (lock) {
+        if (lock){
           _savedScrollY = window.scrollY || 0;
           html.style.position = 'fixed';
-          html.style.top = `-${_savedScrollY}px`;
+          html.style.top = '-' + _savedScrollY + 'px';
           html.style.left = '0';
           html.style.right = '0';
           html.style.overflow = 'hidden';
           html.style.width = '100%';
-        } else {
+        }else{
           const y = _savedScrollY;
           html.style.position = '';
           html.style.top = '';
@@ -344,64 +327,52 @@
         }
       }
 
-      // 동일 출처일 때 iframe 자동 높이
+      /* 동일 출처일 때 iframe 자동 높이 */
       function attachIntroAutoSize(){
-        try {
+        try{
           const doc = iframeIntro.contentDocument || iframeIntro.contentWindow.document;
           if (!doc) return;
-          const setH = () => {
+          const setH = function(){
             const body = doc.body, html = doc.documentElement;
-            const h = Math.max(
-              body.scrollHeight, body.offsetHeight,
-              html.clientHeight, html.scrollHeight, html.offsetHeight
-            );
+            const h = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
             iframeIntro.style.height = Math.max(600, h) + 'px';
             iframeIntro.style.display = 'block';
           };
           setH();
           new MutationObserver(setH).observe(doc.documentElement, { childList:true, subtree:true, attributes:true });
           iframeIntro.contentWindow.addEventListener('load', setH);
-        } catch(e) {
-          // 교차 출처면 iframe 자체 스크롤
+        }catch(e){
+          /* 교차 출처면 iframe 자체 스크롤 */
           iframeIntro.style.height = '100%';
         }
       }
 
-      function shouldShowIntro(){
-        try { return localStorage.getItem(HIDE_KEY) !== todayKeySeoul(); }
-        catch(e){ return true; }
+      function todayHideSet(){ try{ localStorage.setItem(HIDE_KEY, todayKeySeoul()); }catch(e){} }
+      function todayHideCheck(){
+        try{ return localStorage.getItem(HIDE_KEY) === todayKeySeoul(); }
+        catch(e){ return false; }
       }
 
       function openIntro(){
-        // load 핸들러를 먼저 걸고, 그 다음 src 설정 (타이밍 중요)
-        iframeIntro.addEventListener('load', attachIntroAutoSize, { once: true });
-        if (!iframeIntro.src) {
-          iframeIntro.src = iframeIntro.dataset.src;
-        }
-        modal.hidden = false;
-        lockScroll(true);
+        iframeIntro.addEventListener('load', attachIntroAutoSize, { once:true });
+        if (!iframeIntro.src){ iframeIntro.src = iframeIntro.dataset.src; }
+        modal.hidden = false; lockScroll(true);
+      }
+      function closeIntro(){
+        if (chkDont && chkDont.checked){ todayHideSet(); }
+        modal.hidden = true; lockScroll(false);
       }
 
-      function closeIntro(){
-        if (chkDont && chkDont.checked) {
-          try { localStorage.setItem(HIDE_KEY, todayKeySeoul()); } catch(e){}
-        }
-        modal.hidden = true;
-        lockScroll(false);
-      }
+      if (!todayHideCheck()) openIntro();
 
       if (btnClose) btnClose.addEventListener('click', closeIntro);
       if (btnCloseX) btnCloseX.addEventListener('click', closeIntro);
       modal.addEventListener('click', function(e){ if (e.target === modal) closeIntro(); });
       document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) closeIntro(); });
       if (linkReopen) linkReopen.addEventListener('click', function(e){
-        e.preventDefault();
-        try { localStorage.removeItem(HIDE_KEY); } catch(e){}
-        if (chkDont) chkDont.checked = false;
-        openIntro();
+        e.preventDefault(); try{ localStorage.removeItem(HIDE_KEY); }catch(_){}
+        if (chkDont) chkDont.checked = false; openIntro();
       });
-
-      if (shouldShowIntro()) openIntro();
     })();
   </script>
 </body>
