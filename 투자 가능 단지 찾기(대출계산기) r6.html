@@ -110,48 +110,46 @@
   <div class="checkbox-label">
     <input type="checkbox" id="stressDSR3" onchange="toggleStressLevel(3)">
     <label for="stressDSR3">스트레스 DSR 3단계 (+1.5%)</label>
-<div id="stressDSR3Explain" style="display: none; margin: 10px 0; font-size: 0.9rem; background: #eef; padding: 10px; border-radius: 5px;">
-📌 스트레스 DSR 3단계를 적용하면 대출 금리에 아래 표에 따라 가산 금리가 더해집니다.
-<table style="width:100%; font-size: 0.9rem; margin: 10px 0;">
-<thead>
-<tr><th>고정금리 기간</th><th>혼합형 가산금리</th><th>주기형 가산금리</th></tr>
-</thead>
-<tbody>
-<tr><td>5년 미만</td><td>+1.5%</td><td>+1.5%</td></tr>
-<tr><td>5~9년</td><td>+1.2%</td><td>+0.6%</td></tr>
-<tr><td>9~15년</td><td>+0.9%</td><td>+0.45%</td></tr>
-<tr><td>15~21년</td><td>+0.6%</td><td>+0.3%</td></tr>
-<tr><td>21년 이상</td><td>0%</td><td>0%</td></tr>
-</tbody>
-</table>
-<p style="margin-top:10px; font-size:0.9rem;">
-📌 <strong>TIP</strong><br>
-1️⃣ 주기형과 혼합형은 고정금리 기간이 길수록 스트레스 DSR 가산금리가 낮아집니다.<br>
-2️⃣ 변동형은 고정금리 기간과 관계없이 <strong>+1.5%</strong>가 항상 적용됩니다.
-</p>
-
-</div>
-<div id="dsr3Options" style="display: none; margin-bottom: 10px;">
-  <label>📌 대출 유형</label>
-  <div class="checkbox-label">
-    <input type="radio" name="loanType" value="mixed" onclick="updateDSR3Options()" checked> 혼합형
-  </div>
-  <div class="checkbox-label">
-    <input type="radio" name="loanType" value="periodic" onclick="updateDSR3Options()"> 주기형
-  </div>
-  <div class="checkbox-label">
-    <input type="radio" name="loanType" value="floating" onclick="updateDSR3Options()"> 변동형
-  </div>
-  <label>고정금리 기간 (30년 만기 기준)</label>
-  <select id="fixedRateTerm">
-    <option value="0">5년 미만</option>
-    <option value="7">5~9년</option>
-    <option value="12">9~15년</option>
-    <option value="18">15~21년</option>
-    <option value="25">21년 이상</option>
-  </select>
-</div>
-
+    <div id="stressDSR3Explain" style="display: none; margin: 10px 0; font-size: 0.9rem; background: #eef; padding: 10px; border-radius: 5px;">
+      📌 스트레스 DSR 3단계를 적용하면 대출 금리에 아래 표에 따라 가산 금리가 더해집니다.
+      <table style="width:100%; font-size: 0.9rem; margin: 10px 0;">
+        <thead>
+          <tr><th>고정금리 기간</th><th>혼합형 가산금리</th><th>주기형 가산금리</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>5년 미만</td><td>+1.5%</td><td>+1.5%</td></tr>
+          <tr><td>5~9년</td><td>+1.2%</td><td>+0.6%</td></tr>
+          <tr><td>9~15년</td><td>+0.9%</td><td>+0.45%</td></tr>
+          <tr><td>15~21년</td><td>+0.6%</td><td>+0.3%</td></tr>
+          <tr><td>21년 이상</td><td>0%</td><td>0%</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px; font-size:0.9rem;">
+        📌 <strong>TIP</strong><br>
+        1️⃣ 주기형과 혼합형은 고정금리 기간이 길수록 스트레스 DSR 가산금리가 낮아집니다.<br>
+        2️⃣ 변동형은 고정금리 기간과 관계없이 <strong>+1.5%</strong>가 항상 적용됩니다.
+      </p>
+    </div>
+    <div id="dsr3Options" style="display: none; margin-bottom: 10px;">
+      <label>📌 대출 유형</label>
+      <div class="checkbox-label">
+        <input type="radio" name="loanType" value="mixed" onclick="updateDSR3Options()" checked> 혼합형
+      </div>
+      <div class="checkbox-label">
+        <input type="radio" name="loanType" value="periodic" onclick="updateDSR3Options()"> 주기형
+      </div>
+      <div class="checkbox-label">
+        <input type="radio" name="loanType" value="floating" onclick="updateDSR3Options()"> 변동형
+      </div>
+      <label>고정금리 기간 (30년 만기 기준)</label>
+      <select id="fixedRateTerm">
+        <option value="0">5년 미만</option>
+        <option value="7">5~9년</option>
+        <option value="12">9~15년</option>
+        <option value="18">15~21년</option>
+        <option value="25">21년 이상</option>
+      </select>
+    </div>
   </div>
 
   <div class="section-title">📌 상환 방식 선택</div>
@@ -253,15 +251,18 @@
         document.getElementById("dsr3Options").style.display = dsr3.checked ? "block" : "none";
       }
     }
+    function updateDSR3Options() {
+      document.getElementById("stressDSR3").checked = true;
+      document.getElementById("stressDSR3Explain").style.display = "block";
+      document.getElementById("dsr3Options").style.display = "block";
+    }
 
     /* ---------- 상환공식 ---------- */
-    // 원리금균등 월상환금
     function calculateMonthlyPayment(principal, rate, months) {
       const monthlyRate = rate / 12;
-      if (monthlyRate === 0) return principal / months; // 0% 금리 안전 처리
+      if (monthlyRate === 0) return principal / months;
       return principal * monthlyRate * Math.pow(1 + monthlyRate, months) / (Math.pow(1 + monthlyRate, months) - 1);
     }
-    // 원금균등 첫달 상환금
     function calculateInitialEqualPrincipalPayment(principal, rate, months) {
       const monthlyPrincipal = principal / months;
       const monthlyInterest = principal * (rate / 12);
@@ -279,7 +280,7 @@
       let dsrLimit = 0;
       if (repayType === "equalPrincipalInterest") {
         if (monthlyRate === 0) {
-          dsrLimit = availableMonthlyPayment * months; // 0% 금리 안전 처리
+          dsrLimit = availableMonthlyPayment * months;
         } else {
           dsrLimit = availableMonthlyPayment * (1 - Math.pow(1 + monthlyRate, -months)) / monthlyRate;
         }
@@ -298,11 +299,6 @@
       if (term < 21) return type === 'mixed' ? 0.6 : 0.3;
       if (term >= 21) return 0;
       return 0;
-    }
-    function updateDSR3Options() {
-      document.getElementById("stressDSR3").checked = true;
-      document.getElementById("stressDSR3Explain").style.display = "block";
-      document.getElementById("dsr3Options").style.display = "block";
     }
 
     /* ---------- 메인 계산 ---------- */
@@ -341,7 +337,7 @@
 
       const months = term * 12;
 
-      // DTI 한도 (원래 금리의 연간 상환계수 사용)
+      // DTI 한도
       const monthlyRateForDTI = originalRate / 12;
       let annuity; // 월 상환계수
       if (monthlyRateForDTI === 0) annuity = 1 / months;
@@ -369,6 +365,13 @@
       const minLimit = limits.reduce((min, cur) => cur.amount < min.amount ? cur : min, limits[0]);
       const finalLoan = minLimit.amount;
       const reason = minLimit.type;
+
+      // ✅ ‘누가 발목 잡는지’ 문구 (사용자 가독성용)
+      const activeConstraintNote =
+        (reason === "DTI") ? "DTI가 제한"
+        : (reason === "DSR") ? "DSR이 제한"
+        : (reason.startsWith("정책상한")) ? "정책상한(6억)이 제한"
+        : "LTV가 제한";
 
       // 월 상환금 계산(표시용은 실제 금리 originalRate 사용)
       let monthlyPay, monthlyPrincipal, monthlyInterest;
@@ -402,10 +405,12 @@
         limitsHtml += `<strong>정책상한:</strong> 6억원 (2025-06-27) <span class="hint">수도권 체크 시 적용</span><br>`;
       }
 
-      document.getElementById("result").innerHTML = stressInfo +
+      document.getElementById("result").innerHTML =
+        stressInfo +
         limitsHtml +
         `<hr>` +
-        `💡 <strong>최종 대출 한도는 <u>${reason}</u> 기준으로 <u>${formatAmount(Math.floor(finalLoan))}</u>입니다.</strong><br><br>` +
+        `💡 <strong>최종 대출 한도는 <u>${reason}</u> 기준으로 <u>${formatAmount(Math.floor(finalLoan))}</u>입니다.</strong> ` +
+        `<span style="color:#1565c0">(${activeConstraintNote})</span><br><br>` +   <!-- ✅ 발목잡는 제약 표시 -->
         `<strong>투자가능 금액대:</strong> 자산 ${formatAmount(Math.floor(assets))} + 대출 ${formatAmount(Math.floor(finalLoan))} = <strong>${formatAmount(Math.floor(investable))}</strong><br>` +
         `<strong>공적 레버리지 이용률:</strong> ${leverageUtil.toFixed(1)}%<br><br>` +
         `<strong>월 상환금:</strong> ${formatAmount(Math.floor(monthlyPay))} (${repayType === "equalPrincipalInterest" ? "원리금 균등" : "원금 균등(첫달 기준)"})<br>` +
@@ -433,7 +438,7 @@
         let annuityFactor = (r_m === 0) ? (1 / n) : (r_m * pow) / (pow - 1);
         const monthlyByFormula = P * annuityFactor;
 
-        // 원금균등 추가 설명(첫달/둘째달)
+        // 원금균등 보조 설명
         const eqPrin_monthlyPrincipal = P / n;
         const eqPrin_interest1 = P * r_m;
         const eqPrin_pay1 = eqPrin_monthlyPrincipal + eqPrin_interest1;
@@ -480,6 +485,36 @@
           </div>
         `;
 
+        // ✅ 추가: LTV 산출 과정 설명 블록
+        const A = assets;                 // 만원
+        const L = ltv;                    // 비율
+        const P_LTV = (1 - L) > 0 ? (A / (1 - L)) : Infinity;           // LTV만 고려한 최대 매수가
+        const Loan_LTV = (1 - L) > 0 ? (A * L / (1 - L)) : Infinity;    // 그때 대출액
+        const P_DSR = A + dsrLimit;                                     // 참조: DSR만 고려한 매수가
+        const minEquityFor_P_DSR = (1 - L) * P_DSR;                     // P_DSR를 사려면 필요한 최소 자기자본
+
+        const ltvExplain = `
+          <h3>✅ LTV 한도 계산</h3>
+          <div class="mono">
+          LTV 요건: 대출 ≤ LTV × 매수가, 자기자본 ≥ (1−LTV) × 매수가<br>
+          내 자산 A로 LTV를 만족하며 살 수 있는 최대 매수가:<br>
+          &nbsp;&nbsp;P<sub>LTV</sub> = A / (1−LTV) = ${fmt(P_LTV,2)} 만원<br>
+          그때 대출액:<br>
+          &nbsp;&nbsp;Loan<sub>LTV</sub> = LTV × P<sub>LTV</sub> = A × LTV / (1−LTV) = ${fmt(Loan_LTV,2)} 만원
+          </div>
+          <details><summary>DSR 기준 매수가와의 정합성 체크</summary>
+            <div class="mono">
+            DSR만 고려한 매수가(참고): P<sub>DSR</sub> = A + DSR한도 = ${fmt(P_DSR,2)} 만원<br>
+            이 매수가를 LTV로 사려면 필요한 최소 자기자본:<br>
+            &nbsp;&nbsp;(1−LTV) × P<sub>DSR</sub> = ${fmt(minEquityFor_P_DSR,2)} 만원<br>
+            현재 자산 A = ${fmt(A,2)} 만원 → ${A >= minEquityFor_P_DSR ? '충분 ✅' : '부족 ❌'}
+            </div>
+            <p style="margin-top:6px">
+              ※ A &lt; (1−LTV)×P<sub>DSR</sub> 이면, DSR이 허용해도 LTV 최소 자기자본을 못 맞춰 해당 매수가를 살 수 없습니다.
+            </p>
+          </details>
+        `;
+
         const dsrExplain = `
           <h3>✅ DSR 한도 계산</h3>
           <div class="mono">
@@ -498,11 +533,13 @@
           <p>・ DSR 한도: ${formatAmount(Math.floor(dsrLimit))}</p>
           <p>・ LTV 한도: ${formatAmount(Math.floor(loanByLTV))}</p>
           ${isCapital ? `<p>・ 정책상한: 6억원 (2025-06-27)</p>` : ``}
-          <p>⇒ 최종 한도는 위 값 중 <strong>가장 작은 값</strong>입니다.</p>
+          <p>⇒ 최종 한도는 위 값 중 <strong>가장 작은 값</strong>입니다. <span style="color:#1565c0;">(제약: ${activeConstraintNote})</span></p>
           <hr>
           ${repayExplain}
           <hr>
           ${dtiExplain}
+          <hr>
+          ${ltvExplain}   <!-- ✅ LTV 설명 블록 삽입 -->
           <hr>
           ${dsrExplain}
         `;
