@@ -1,250 +1,235 @@
-<html lang="ko"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>부태리 신고가 알림 - 2025-09-18 08:25</title>
-<style>
-  :root {
-    --bg:#F2F2F7; --fg:#111; --sub:#6b7280; --card:#fff; --bd:#e5e7eb;
-    --primary:#007AFF; --primary-dark:#0051D2; --accent:#ff3b30;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    color:var(--fg); background:var(--bg);
-  }
-  .page { max-width: 720px; width: 92vw; margin: 24px auto 56px; }
-  .header {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color:#fff; border-radius:20px; padding:24px 20px; box-shadow: 0 8px 24px rgba(0,0,0,.08);
-  }
-  .title { font-size: 22px; font-weight: 800; margin:0 0 6px; }
-  .sub { font-size: 13px; opacity:.9; }
-  .summary {
-    margin-top: 12px; display:flex; gap:10px; flex-wrap:wrap;
-  }
-  .chip {
-    background: rgba(255,255,255,.15); color:#fff; padding:6px 10px; border-radius: 999px; font-size:12px;
-    border:1px solid rgba(255,255,255,.25);
-  }
-  .card {
-    background:var(--card); border:1px solid var(--bd); border-radius: 16px;
-    padding:16px; margin:14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.05);
-  }
-  .card-header { margin-bottom: 10px; }
-  .card-title { font-size: 18px; font-weight: 800; }
-  .card-sub { font-size: 12px; color:var(--sub); margin-top:2px; }
-  .row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; }
-  .row + .row { border-top:1px dashed var(--bd); }
-  .label { font-size: 13px; color: var(--sub); }
-  .label.strong { font-weight: 700; color:#111; }
-  .value { font-size: 16px; font-weight: 700; }
-  .value.muted { color: var(--sub); font-weight: 600; }
-  .value.strong { color: var(--accent); }
-  .highlight {
-    background: #ffeef0; border:1px solid #ffd5d9; border-radius: 12px;
-    padding:10px 12px; margin-top:10px; font-size: 13px; color:#8a1a1a;
-  }
-  .meta { margin-top:4px; color:#9b9b9b; font-size:12px; }
-  .footer { text-align:center; color:var(--sub); font-size:12px; margin-top:18px; }
-  .print-hint { margin-top:6px; font-size:11px; color:#9b9b9b; }
-  @media print {
-    .header { box-shadow:none; }
-    .card { break-inside: avoid; }
-  }
-</style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>부태리 계산기 허브 – 4개 탭</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #151822;
+      --text: #e8eaf0;
+      --muted: #96a0b5;
+      --accent: #4caf50;
+      --accent-weak: #3a8f40;
+      --tab: rgba(255,255,255,0.06);
+      --tab-active: linear-gradient(180deg, rgba(76,175,80,0.18), rgba(76,175,80,0.06));
+      --ring: rgba(76, 175, 80, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Helvetica, Arial, "Segoe UI Emoji";
+      background: linear-gradient(180deg, #0b0c10 0%, #0f1220 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(150%) blur(8px);
+      background: rgba(11,12,16,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 18px 16px; }
+    h1 { margin: 0; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -0.2px; }
+    .sub { color: var(--muted); font-size: 13px; }
+
+    /* 상단 타이틀 + 방문수 배지 한 줄 정렬 */
+    .header-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-bottom: 4px;
+    }
+    /* 방문수 배지(다크 테마) */
+    #daily-visitors{
+      display:inline-flex; align-items:center; gap:.45em;
+      padding:.38em .7em; border-radius:999px; font-size:12px; line-height:1;
+      color:#e6f6ea; background:rgba(88, 199, 120, .12); border:1px solid rgba(88,199,120,.28);
+    }
+    #daily-visitors .dot{ width:.5em; height:.5em; border-radius:50%; background:#58c778; box-shadow:0 0 0 3px rgba(88,199,120,.28); }
+
+    .tabs {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+    }
+    [role="tab"] {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--tab);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+    [role="tab"].active { background: var(--tab-active); border-color: var(--accent-weak); box-shadow: 0 0 0 3px var(--ring) inset; }
+    [role="tab"]:hover { transform: translateY(-1px); }
+
+    .panel {
+      margin: 18px auto 28px; background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 10px; /* keep slim; inner is iframe */
+      overflow: hidden;
+    }
+    .panel[hidden] { display: none; }
+
+    iframe {
+      width: 100% ; border: 0; border-radius: 12px;
+      background: #fff; /* calculators use light theme */
+      min-height: 1200px; /* fallback height */
+    }
+
+    footer.page {
+      text-align: center; color: var(--muted); font-size: 13px; padding: 28px 0 36px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer.page a { color: #cfe6ff; text-decoration: none; }
+  </style>
 </head>
 <body>
-  <main class="page">
-    <header class="header">
-      <div class="title">📱 부태리의 신고가</div>
-      <div class="sub">2025-09-18 08:25 기준 · 총 9개 아파트</div>
-      <div class="summary">
-
+  <header>
+    <div class="wrap">
+      <div class="header-top">
+        <div>
+          <h1>부태리 계산기 허브</h1>
+          <div class="sub">내 투자/대출/경비 계산 도구를 한 곳에서</div>
+        </div>
+        <div id="daily-visitors" aria-label="오늘 방문수">
+          <span class="dot" aria-hidden="true"></span>
+          <span>오늘 방문수</span>
+          <strong id="visitor-count">–</strong>
+        </div>
       </div>
-    </header>
-    
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 고덕아르테온</div>
-                <div class="card-sub">📐 59㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">165,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">170,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 5,000만원 상승 (3.0%)</div>
-                <div class="meta">📅 2025-09-08 | 8층</div>
-              </div>
-            </section>
-            
 
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 고덕센트럴IPARK</div>
-                <div class="card-sub">📐 84㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">172,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">175,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 3,000만원 상승 (1.7%)</div>
-                <div class="meta">📅 2025-09-02 | 13층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 e편한세상광진그랜드파크</div>
-                <div class="card-sub">📐 84㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">195,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">200,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 5,000만원 상승 (2.6%)</div>
-                <div class="meta">📅 2025-09-11 | 17층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 현대프라임</div>
-                <div class="card-sub">📐 59㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">141,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">150,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 9,000만원 상승 (6.4%)</div>
-                <div class="meta">📅 2025-09-03 | 15층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 태릉해링턴플레이스</div>
-                <div class="card-sub">📐 84㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">115,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">116,800만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 1,800만원 상승 (1.6%)</div>
-                <div class="meta">📅 2025-08-23 | 20층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 공덕자이</div>
-                <div class="card-sub">📐 59㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">189,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">195,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 6,000만원 상승 (3.2%)</div>
-                <div class="meta">📅 2025-08-26 | 9층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 홍제역해링턴플레이스</div>
-                <div class="card-sub">📐 59㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">120,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">122,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 2,000만원 상승 (1.7%)</div>
-                <div class="meta">📅 2025-09-13 | 12층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 방배그랑자이</div>
-                <div class="card-sub">📐 59㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">237,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">285,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 48,000만원 상승 (20.3%)</div>
-                <div class="meta">📅 2025-09-05 | 18층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 텐즈힐(1단지)</div>
-                <div class="card-sub">📐 72㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">167,700만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">180,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 12,300만원 상승 (7.3%)</div>
-                <div class="meta">📅 2025-09-05 | 11층</div>
-              </div>
-            </section>
-            
-    <div class="footer">
-
+      <div class="tabs" role="tablist" aria-label="계산기 선택">
+        <button id="tab-invest-loan" class="active" role="tab" aria-selected="true" aria-controls="panel-invest-loan">내 자산 + 연봉에 맞는 금액대</button>
+        <button id="tab-cost" role="tab" aria-selected="false" aria-controls="panel-cost">부동산 매수 경비 계산기</button>
+        <button id="tab-loan" role="tab" aria-selected="false" aria-controls="panel-loan">부동산 대출 계산기 </button>
+        <button id="tab-map" role="tab" aria-selected="false" aria-controls="panel-map">LTV+급여 투자맵</button>
+      </div>
+      <div class="help">💡 팁: 각 탭을 클릭하거나 주소 뒤에 <code>#invest-loan</code>, <code>#cost</code>, <code>#loan</code>, <code>#map</code>을 붙이면 바로 열 수 있어요.</div>
     </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Panel 1 -->
+    <section id="panel-invest-loan" class="panel" role="tabpanel" aria-labelledby="tab-invest-loan">
+      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자 가능 단지 찾기(대출계산기) r6.html" loading="eager"></iframe>
+    </section>
+
+    <!-- Panel 2 -->
+    <section id="panel-cost" class="panel" role="tabpanel" aria-labelledby="tab-cost" hidden>
+      <iframe title="부동산 매수 경비 계산기" data-file="1. 부동산 매수 경비 산출 계산기 -r2.html" loading="lazy"></iframe>
+    </section>
+
+    <!-- Panel 3 -->
+    <section id="panel-loan" class="panel" role="tabpanel" aria-labelledby="tab-loan" hidden>
+      <iframe title="부동산 대출 계산기" data-file="20250413대출계산기-r5.html" loading="lazy"></iframe>
+    </section>
+
+    <!-- Panel 4 -->
+    <section id="panel-map" class="panel" role="tabpanel" aria-labelledby="tab-map" hidden>
+      <iframe title="LTV+급여 투자맵" data-file="LTV+급여로 본 투자맵.html" loading="lazy"></iframe>
+    </section>
+
+    <footer class="page">
+      <div><strong>협업 및 수정 문의</strong> · <a href="https://litt.ly/richdadtechtree" target="_blank" rel="noopener">https://litt.ly/richdadtechtree</a></div>
+    </footer>
   </main>
 
-</body></html>
+  <script>
+    (function(){
+      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+      function encodeSrc(iframe){
+        if (iframe && !iframe.dataset.loaded) {
+          try {
+            iframe.src = encodeURI(iframe.dataset.file);
+          } catch (e) {
+            iframe.src = iframe.dataset.file; // fallback
+          }
+          iframe.dataset.loaded = 'true';
+        }
+      }
+
+      function resizeIframe(iframe){
+        // Same-origin에서만 동작
+        try {
+          const doc = iframe.contentDocument || iframe.contentWindow.document;
+          if (!doc) return;
+
+          const setHeight = () => {
+            const body = doc.body;
+            const html = doc.documentElement;
+            const h = Math.max(
+              body.scrollHeight, body.offsetHeight,
+              html.clientHeight, html.scrollHeight, html.offsetHeight
+            );
+            iframe.style.minHeight = Math.max(900, h + 24) + 'px';
+          };
+
+          const mo = new MutationObserver(() => setHeight());
+          mo.observe(doc.documentElement, { childList: true, subtree: true, attributes: true });
+
+          // 폰트 로딩/리사이즈 대응
+          iframe.contentWindow.addEventListener('load', setHeight);
+          window.addEventListener('resize', setHeight);
+        } catch (e) {
+          // 교차 출처면 고정 높이로 스크롤 사용
+          // console.warn('자동 높이조절은 동일 출처에서만 가능:', e);
+        }
+      }
+
+      function activateTab(tab){
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected','false');
+          const p = document.getElementById(t.getAttribute('aria-controls'));
+          if (p) p.hidden = true;
+        });
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected','true');
+        const panel = document.getElementById(tab.getAttribute('aria-controls'));
+        if (panel) {
+          panel.hidden = false;
+          const iframe = panel.querySelector('iframe');
+          encodeSrc(iframe);
+          resizeIframe(iframe);
+        }
+
+        // 해시 갱신 (예: #cost, #loan, #map)
+        history.replaceState(null, '', '#' + tab.id.replace('tab','').replace(/^-/,'')); 
+      }
+
+      tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
+
+      // 초기 로드: 해시에 따라 탭 선택
+      const hash = location.hash.replace('#','');
+      const initial = hash ? document.getElementById('tab-' + hash) : tabs[0];
+      activateTab(initial || tabs[0]);
+
+      // 접근성: 좌우 화살표로 이동
+      document.addEventListener('keydown', e => {
+        if (!['ArrowLeft','ArrowRight'].includes(e.key)) return;
+        const idx = tabs.findIndex(t => t.classList.contains('active'));
+        const next = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+        activateTab(tabs[next]);
+      });
+
+      // 방문자수(예시: 일단 localStorage 기반)
+      try {
+        const key = new Date().toISOString().slice(0,10);
+        const stored = JSON.parse(localStorage.getItem('visit-count') || '{}');
+        stored[key] = (stored[key]||0) + 1;
+        localStorage.setItem('visit-count', JSON.stringify(stored));
+        document.getElementById('visitor-count').textContent = stored[key];
+      } catch(e) {
+        document.getElementById('visitor-count').textContent = '–';
+      }
+    })();
+  </script>
+</body>
+</html>
