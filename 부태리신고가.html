@@ -1,137 +1,308 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>부태리 신고가 알림 - 2025-09-19 05:36</title>
-<style>
-  :root {
-    --bg:#F2F2F7; --fg:#111; --sub:#6b7280; --card:#fff; --bd:#e5e7eb;
-    --primary:#007AFF; --primary-dark:#0051D2; --accent:#ff3b30;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    color:var(--fg); background:var(--bg);
-  }
-  .page { max-width: 720px; width: 92vw; margin: 24px auto 56px; }
-  .header {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color:#fff; border-radius:20px; padding:24px 20px; box-shadow: 0 8px 24px rgba(0,0,0,.08);
-  }
-  .title { font-size: 22px; font-weight: 800; margin:0 0 6px; }
-  .sub { font-size: 13px; opacity:.9; }
-  .summary {
-    margin-top: 12px; display:flex; gap:10px; flex-wrap:wrap;
-  }
-  .chip {
-    background: rgba(255,255,255,.15); color:#fff; padding:6px 10px; border-radius: 999px; font-size:12px;
-    border:1px solid rgba(255,255,255,.25);
-  }
-  .card {
-    background:var(--card); border:1px solid var(--bd); border-radius: 16px;
-    padding:16px; margin:14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.05);
-  }
-  .card-header { margin-bottom: 10px; }
-  .card-title { font-size: 18px; font-weight: 800; }
-  .card-sub { font-size: 12px; color:var(--sub); margin-top:2px; }
-  .row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; }
-  .row + .row { border-top:1px dashed var(--bd); }
-  .label { font-size: 13px; color: var(--sub); }
-  .label.strong { font-weight: 700; color:#111; }
-  .value { font-size: 16px; font-weight: 700; }
-  .value.muted { color: var(--sub); font-weight: 600; }
-  .value.strong { color: var(--accent); }
-  .highlight {
-    background: #ffeef0; border:1px solid #ffd5d9; border-radius: 12px;
-    padding:10px 12px; margin-top:10px; font-size: 13px; color:#8a1a1a;
-  }
-  .meta { margin-top:4px; color:#9b9b9b; font-size:12px; }
-  .footer { text-align:center; color:var(--sub); font-size:12px; margin-top:18px; }
-  .print-hint { margin-top:6px; font-size:11px; color:#9b9b9b; }
-  @media print {
-    .header { box-shadow:none; }
-    .card { break-inside: avoid; }
-  }
-</style>
-</head>
-<body>
-  <main class="page">
-    <header class="header">
-      <div class="title">📱 부태리의 신고가</div>
-      <div class="sub">2025-09-19 05:36 기준 · 총 9개 아파트</div>
-      <div class="summary">
-
-      </div>
-    </header>
-    
+    <html lang="ko">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>부태리 신고가 알림 - 2025-09-20 07:19</title>
+    <style>
+      :root {
+        --bg:#F2F2F7; --fg:#111; --sub:#6b7280; --card:#fff; --bd:#e5e7eb;
+        --primary:#007AFF; --primary-dark:#0051D2; --accent:#ff3b30;
+        --chart-bg: #f8f9fa; --bar-color: #007AFF;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+        color:var(--fg); background:var(--bg);
+      }
+      .page { max-width: 720px; width: 92vw; margin: 24px auto 56px; }
+      .header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color:#fff; border-radius:20px; padding:24px 20px; box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      }
+      .title { font-size: 22px; font-weight: 800; margin:0 0 6px; }
+      .sub { font-size: 13px; opacity:.9; }
+      
+      /* 지역별 요약 섹션 스타일 */
+      .region-summary {
+        background: #fff; border-radius: 16px; padding: 20px; margin: 20px 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,.05);
+      }
+      .region-title {
+        font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #333;
+      }
+      .region-chips {
+        display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+      }
+      .region-chip {
+        background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 20px;
+        font-size: 13px; border: 1px solid #90caf9;
+      }
+      .region-chip strong {
+        font-weight: 700;
+      }
+      
+      /* 막대그래프 스타일 */
+      .chart-container {
+        margin-top: 20px;
+      }
+      .bar-item {
+        margin-bottom: 12px;
+      }
+      .bar-label {
+        font-size: 13px; color: #555; margin-bottom: 4px;
+      }
+      .bar-container {
+        background: var(--chart-bg); border-radius: 6px; height: 28px;
+        position: relative; overflow: hidden;
+      }
+      .bar-fill {
+        background: linear-gradient(90deg, var(--bar-color), #0051D2);
+        height: 100%; border-radius: 6px; display: flex; align-items: center;
+        padding: 0 10px; transition: width 0.3s ease;
+      }
+      .bar-value {
+        color: #fff; font-size: 12px; font-weight: 600;
+      }
+      
+      .card {
+        background:var(--card); border:1px solid var(--bd); border-radius: 16px;
+        padding:16px; margin:14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.05);
+      }
+      .card-header { margin-bottom: 10px; }
+      .card-title { font-size: 18px; font-weight: 800; }
+      .card-sub { font-size: 12px; color:var(--sub); margin-top:2px; }
+      .row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; }
+      .row + .row { border-top:1px dashed var(--bd); }
+      .label { font-size: 13px; color: var(--sub); }
+      .label.strong { font-weight: 700; color:#111; }
+      .value { font-size: 16px; font-weight: 700; }
+      .value.muted { color: var(--sub); font-weight: 600; }
+      .value.strong { color: var(--accent); }
+      .highlight {
+        background: #ffeef0; border:1px solid #ffd5d9; border-radius: 12px;
+        padding:10px 12px; margin-top:10px; font-size: 13px; color:#8a1a1a;
+      }
+      .meta { margin-top:4px; color:#9b9b9b; font-size:12px; }
+      .footer { text-align:center; color:var(--sub); font-size:12px; margin-top:18px; }
+      @media print {
+        .header { box-shadow:none; }
+        .card { break-inside: avoid; }
+      }
+    </style>
+    </head>
+    <body>
+      <main class="page">
+        <header class="header">
+          <div class="title">📱 부태리의 신고가</div>
+          <div class="sub">2025-09-20 07:19 기준 · 총 11개 아파트</div>
+        </header>
+        
+        <!-- 지역별 요약 섹션 -->
+        <div class="region-summary">
+          <div class="region-title">📊 지역별 신고가 현황</div>
+          <div class="region-chips">
+            <span class="region-chip">서울특별시 서초구 <strong>3건</strong></span> <span class="region-chip">서울특별시 강동구 <strong>2건</strong></span> <span class="region-chip">서울특별시 강남구 <strong>1건</strong></span> <span class="region-chip">서울특별시 성동구 <strong>1건</strong></span> <span class="region-chip">서울특별시 종로구 <strong>1건</strong></span> <span class="region-chip">서울특별시 동대문구 <strong>1건</strong></span> <span class="region-chip">서울특별시 강서구 <strong>1건</strong></span> <span class="region-chip">경기도 성남시 <strong>1건</strong></span>
+          </div>
+          <div class="chart-container">
+            
+                <div class="bar-item">
+                  <div class="bar-label">서울특별시 서초구</div>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: 100.0%">
+                      <span class="bar-value">3건</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bar-item">
+                  <div class="bar-label">서울특별시 강동구</div>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: 66.66666666666666%">
+                      <span class="bar-value">2건</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bar-item">
+                  <div class="bar-label">서울특별시 강남구</div>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: 33.33333333333333%">
+                      <span class="bar-value">1건</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bar-item">
+                  <div class="bar-label">서울특별시 성동구</div>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: 33.33333333333333%">
+                      <span class="bar-value">1건</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bar-item">
+                  <div class="bar-label">서울특별시 종로구</div>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: 33.33333333333333%">
+                      <span class="bar-value">1건</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bar-item">
+                  <div class="bar-label">서울특별시 동대문구</div>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: 33.33333333333333%">
+                      <span class="bar-value">1건</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bar-item">
+                  <div class="bar-label">서울특별시 강서구</div>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: 33.33333333333333%">
+                      <span class="bar-value">1건</span>
+                    </div>
+                  </div>
+                </div>
+                
+          </div>
+        </div>
+        
+        
             <section class="card">
               <div class="card-header">
-                <div class="card-title">🏢 디에이치자이개포</div>
-                <div class='card-sub'>📍 서울특별시 강남구 -</div>
-                <div class="card-sub">📐 76㎡</div>
+                <div class="card-title">🏢 신반포4</div>
+                <div class='card-sub'>📍 서울특별시 서초구 잠원동</div>
+                <div class="card-sub">📐 105㎡</div>
               </div>
               <div class="row">
                 <div class="label">이전 최고가</div>
-                <div class="value muted">342,500만원</div>
+                <div class="value muted">500,000만원</div>
               </div>
               <div class="row">
                 <div class="label strong">📈 신고가</div>
-                <div class="value strong">355,000만원</div>
+                <div class="value strong">550,000만원</div>
               </div>
               <div class="highlight">
-                <div>🔥 12,500만원 상승 (3.6%)</div>
-                <div class="meta">📅 2025-09-11 | 10층</div>
+                <div>🔥 50,000만원 상승 (10.0%)</div>
+                <div class="meta">📅 2025-09-04 | 12층</div>
               </div>
             </section>
             
 
             <section class="card">
               <div class="card-header">
-                <div class="card-title">🏢 래미안로이파크</div>
-                <div class='card-sub'>📍 서울특별시 동작구 -</div>
-                <div class="card-sub">📐 84㎡</div>
+                <div class="card-title">🏢 신반포4</div>
+                <div class='card-sub'>📍 서울특별시 서초구 잠원동</div>
+                <div class="card-sub">📐 106㎡</div>
               </div>
               <div class="row">
                 <div class="label">이전 최고가</div>
-                <div class="value muted">190,000만원</div>
+                <div class="value muted">500,000만원</div>
               </div>
               <div class="row">
                 <div class="label strong">📈 신고가</div>
-                <div class="value strong">195,000만원</div>
+                <div class="value strong">550,000만원</div>
               </div>
               <div class="highlight">
-                <div>🔥 5,000만원 상승 (2.6%)</div>
-                <div class="meta">📅 2025-09-06 | 7층</div>
+                <div>🔥 50,000만원 상승 (10.0%)</div>
+                <div class="meta">📅 2025-09-04 | 12층</div>
               </div>
             </section>
             
 
             <section class="card">
               <div class="card-header">
-                <div class="card-title">🏢 e편한세상상도노빌리티</div>
-                <div class='card-sub'>📍 서울특별시 동작구 -</div>
-                <div class="card-sub">📐 84㎡</div>
+                <div class="card-title">🏢 개포주공5단지</div>
+                <div class='card-sub'>📍 서울특별시 강남구 개포동</div>
+                <div class="card-sub">📐 83㎡</div>
               </div>
               <div class="row">
                 <div class="label">이전 최고가</div>
-                <div class="value muted">188,000만원</div>
+                <div class="value muted">352,000만원</div>
               </div>
               <div class="row">
                 <div class="label strong">📈 신고가</div>
-                <div class="value strong">189,500만원</div>
+                <div class="value strong">371,500만원</div>
               </div>
               <div class="highlight">
-                <div>🔥 1,500만원 상승 (0.8%)</div>
-                <div class="meta">📅 2025-09-03 | 21층</div>
+                <div>🔥 19,500만원 상승 (5.5%)</div>
+                <div class="meta">📅 2025-09-18 | 4층</div>
               </div>
             </section>
             
 
             <section class="card">
               <div class="card-header">
-                <div class="card-title">🏢 래미안밤섬리베뉴Ⅰ</div>
-                <div class='card-sub'>📍 서울특별시 마포구 -</div>
+                <div class="card-title">🏢 래미안 리더스원</div>
+                <div class='card-sub'>📍 서울특별시 서초구 서초동</div>
+                <div class="card-sub">📐 59㎡</div>
+              </div>
+              <div class="row">
+                <div class="label">이전 최고가</div>
+                <div class="value muted">288,000만원</div>
+              </div>
+              <div class="row">
+                <div class="label strong">📈 신고가</div>
+                <div class="value strong">322,000만원</div>
+              </div>
+              <div class="highlight">
+                <div>🔥 34,000만원 상승 (11.8%)</div>
+                <div class="meta">📅 2025-09-19 | 16층</div>
+              </div>
+            </section>
+            
+
+            <section class="card">
+              <div class="card-header">
+                <div class="card-title">🏢 옥수파크힐스101동~116동</div>
+                <div class='card-sub'>📍 서울특별시 성동구 옥수동</div>
+                <div class="card-sub">📐 59㎡</div>
+              </div>
+              <div class="row">
+                <div class="label">이전 최고가</div>
+                <div class="value muted">225,000만원</div>
+              </div>
+              <div class="row">
+                <div class="label strong">📈 신고가</div>
+                <div class="value strong">229,000만원</div>
+              </div>
+              <div class="highlight">
+                <div>🔥 4,000만원 상승 (1.8%)</div>
+                <div class="meta">📅 2025-09-13 | 12층</div>
+              </div>
+            </section>
+            
+
+            <section class="card">
+              <div class="card-header">
+                <div class="card-title">🏢 경희궁자이(3단지)</div>
+                <div class='card-sub'>📍 서울특별시 종로구 평동</div>
+                <div class="card-sub">📐 59㎡</div>
+              </div>
+              <div class="row">
+                <div class="label">이전 최고가</div>
+                <div class="value muted">198,000만원</div>
+              </div>
+              <div class="row">
+                <div class="label strong">📈 신고가</div>
+                <div class="value strong">219,000만원</div>
+              </div>
+              <div class="highlight">
+                <div>🔥 21,000만원 상승 (10.6%)</div>
+                <div class="meta">📅 2025-09-16 | 8층</div>
+              </div>
+            </section>
+            
+
+            <section class="card">
+              <div class="card-header">
+                <div class="card-title">🏢 래미안힐스테이트고덕</div>
+                <div class='card-sub'>📍 서울특별시 강동구 고덕동</div>
                 <div class="card-sub">📐 84㎡</div>
               </div>
               <div class="row">
@@ -140,122 +311,101 @@
               </div>
               <div class="row">
                 <div class="label strong">📈 신고가</div>
-                <div class="value strong">215,000만원</div>
+                <div class="value strong">205,000만원</div>
               </div>
               <div class="highlight">
-                <div>🔥 12,000만원 상승 (5.9%)</div>
-                <div class="meta">📅 2025-08-23 | 16층</div>
+                <div>🔥 2,000만원 상승 (1.0%)</div>
+                <div class="meta">📅 2025-09-05 | 29층</div>
               </div>
             </section>
             
 
             <section class="card">
               <div class="card-header">
-                <div class="card-title">🏢 신촌푸르지오</div>
-                <div class='card-sub'>📍 서울특별시 서대문구 -</div>
+                <div class="card-title">🏢 래미안힐스테이트고덕</div>
+                <div class='card-sub'>📍 서울특별시 강동구 고덕동</div>
                 <div class="card-sub">📐 59㎡</div>
               </div>
               <div class="row">
                 <div class="label">이전 최고가</div>
-                <div class="value muted">150,000만원</div>
+                <div class="value muted">169,700만원</div>
               </div>
               <div class="row">
                 <div class="label strong">📈 신고가</div>
-                <div class="value strong">162,000만원</div>
+                <div class="value strong">170,000만원</div>
               </div>
               <div class="highlight">
-                <div>🔥 12,000만원 상승 (8.0%)</div>
-                <div class="meta">📅 2025-09-17 | 7층</div>
+                <div>🔥 300만원 상승 (0.2%)</div>
+                <div class="meta">📅 2025-09-09 | 5층</div>
               </div>
             </section>
             
 
             <section class="card">
               <div class="card-header">
-                <div class="card-title">🏢 센트라스</div>
-                <div class='card-sub'>📍 서울특별시 성동구 -</div>
-                <div class="card-sub">📐 84㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">210,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">214,000만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 4,000만원 상승 (1.9%)</div>
-                <div class="meta">📅 2025-09-13 | 21층</div>
-              </div>
-            </section>
-            
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 롯데캐슬클라시아</div>
-                <div class='card-sub'>📍 서울특별시 성북구 -</div>
+                <div class="card-title">🏢 래미안위브</div>
+                <div class='card-sub'>📍 서울특별시 동대문구 답십리동</div>
                 <div class="card-sub">📐 59㎡</div>
               </div>
               <div class="row">
                 <div class="label">이전 최고가</div>
-                <div class="value muted">124,500만원</div>
+                <div class="value muted">130,000만원</div>
+              </div>
+              <div class="row">
+                <div class="label strong">📈 신고가</div>
+                <div class="value strong">132,000만원</div>
+              </div>
+              <div class="highlight">
+                <div>🔥 2,000만원 상승 (1.5%)</div>
+                <div class="meta">📅 2025-09-11 | 11층</div>
+              </div>
+            </section>
+            
+
+            <section class="card">
+              <div class="card-header">
+                <div class="card-title">🏢 우장산힐스테이트</div>
+                <div class='card-sub'>📍 서울특별시 강서구(서) 내발산동</div>
+                <div class="card-sub">📐 59㎡</div>
+              </div>
+              <div class="row">
+                <div class="label">이전 최고가</div>
+                <div class="value muted">124,000만원</div>
               </div>
               <div class="row">
                 <div class="label strong">📈 신고가</div>
                 <div class="value strong">125,000만원</div>
               </div>
               <div class="highlight">
-                <div>🔥 500만원 상승 (0.4%)</div>
-                <div class="meta">📅 2025-09-12 | 23층</div>
+                <div>🔥 1,000만원 상승 (0.8%)</div>
+                <div class="meta">📅 2025-09-18 | 10층</div>
               </div>
             </section>
             
 
             <section class="card">
               <div class="card-header">
-                <div class="card-title">🏢 리센츠</div>
-                <div class='card-sub'>📍 서울특별시 송파구 -</div>
+                <div class="card-title">🏢 e편한세상금빛그랑메종1단지</div>
+                <div class='card-sub'>📍 경기도 성남시(경) 금광동</div>
                 <div class="card-sub">📐 84㎡</div>
               </div>
               <div class="row">
                 <div class="label">이전 최고가</div>
-                <div class="value muted">344,000만원</div>
+                <div class="value muted">109,000만원</div>
               </div>
               <div class="row">
                 <div class="label strong">📈 신고가</div>
-                <div class="value strong">346,000만원</div>
+                <div class="value strong">110,000만원</div>
               </div>
               <div class="highlight">
-                <div>🔥 2,000만원 상승 (0.6%)</div>
-                <div class="meta">📅 2025-09-02 | 9층</div>
+                <div>🔥 1,000만원 상승 (0.9%)</div>
+                <div class="meta">📅 2025-08-30 | 15층</div>
               </div>
             </section>
             
-
-            <section class="card">
-              <div class="card-header">
-                <div class="card-title">🏢 한강맨숀</div>
-                <div class='card-sub'>📍 서울특별시 용산구 -</div>
-                <div class="card-sub">📐 87㎡</div>
-              </div>
-              <div class="row">
-                <div class="label">이전 최고가</div>
-                <div class="value muted">420,000만원</div>
-              </div>
-              <div class="row">
-                <div class="label strong">📈 신고가</div>
-                <div class="value strong">439,940만원</div>
-              </div>
-              <div class="highlight">
-                <div>🔥 19,940만원 상승 (4.7%)</div>
-                <div class="meta">📅 2025-08-22 | 4층</div>
-              </div>
-            </section>
-            
-    <div class="footer">
-
-    </div>
-  </main>
-</body>
-</html>
+        <div class="footer">
+    
+        </div>
+      </main>
+    </body>
+    </html>
