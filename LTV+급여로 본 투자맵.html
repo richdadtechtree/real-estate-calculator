@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title> 수도권 DSR40% 한도 & LTV/전세 표</title>
+<title> LTV + 급여 투자맵</title>
 <style>
   :root{--fg:#222;--bg:#f9f9f9;--card:#fff;--accent:#4CAF50;--muted:#666;}
   *{box-sizing:border-box}
@@ -90,6 +90,13 @@
         <label>표 간격 (억)</label>
         <input id="stepEok" type="number" value="1" oninput="renderAll()"/>
       </div>
+
+      <!-- ✅ 전세가율 간격 입력 추가 -->
+      <div class="wide">
+        <label>전세가율 간격 (%)</label>
+        <input id="jeonseStepPct" type="number" min="1" max="30" step="1" value="10" oninput="renderAll()"/>
+        <div class="hint">70%부터 40%까지, 간격만 조정합니다. 예: 5 → 70, 65, 60, 55, 50, 45, 40</div>
+      </div>
     </div>
 
     <div style="margin-top:12px">
@@ -116,17 +123,7 @@
     </div>
     <div style="max-height: 60vh; overflow:auto; border:1px solid #eee; border-radius:10px">
       <table id="resultTable">
-        <thead>
-          <tr>
-            <th rowspan="2">가격</th>
-            <th class="sep" colspan="3">대출액 (LTV, 6억 상한 표기)</th>
-            <th colspan="4">전세금 (전세가율)</th>
-          </tr>
-          <tr>
-            <th>70%</th><th>50%</th><th class="sep">40%</th>
-            <th>70%</th><th>60%</th><th>50%</th><th>40%</th>
-          </tr>
-        </thead>
+        <thead id="thead"></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
@@ -151,11 +148,67 @@
     return monthlyPay * (1 - Math.pow(1+r, -n)) / r; // 만원
   }
 
-  function buildTable(minEok, maxEok, stepEok, investEok, dsrLimitEok){
+  // ✅ 70% → 40%까지 전세가율을 간격(step%)로 생성
+  function buildJeonseRates(stepPct){
+    let step = Number(stepPct);
+    if(!isFinite(step) || step <= 0) step = 10;
+    if(step > 30) step = 30; // 안전상한
+    const rates = [];
+    for(let p = 70; p >= 40 - 1e-9; p -= step){
+      // 40% 아래로 내려가면 강제로 40%를 마지막에 포함
+      if(p < 40 && rates[rates.length-1] !== 40) { rates.push(40); break; }
+      rates.push(Math.round(p * 100) / 100); // 소수 입력 대비 반올림
+      if(p === 40) break;
+    }
+    // 중복/정렬 보정
+    const uniq = [...new Set(rates.map(v=>Math.max(40, Math.min(70, v))))];
+    uniq.sort((a,b)=>b-a);
+    if(uniq[uniq.length-1] !== 40) uniq.push(40);
+    return uniq.map(v=>v/100); // 소수(0.7, 0.65...)로 반환
+  }
+
+  // ✅ 동적 테이블 헤더 구성
+  function renderHeader(jeonseRates){
+    const thead = document.getElementById('thead');
+    thead.innerHTML = '';
+
+    const tr1 = document.createElement('tr');
+    const thPrice = document.createElement('th');
+    thPrice.rowSpan = 2; thPrice.textContent = '가격';
+    tr1.appendChild(thPrice);
+
+    const thLtvGrp = document.createElement('th');
+    thLtvGrp.colSpan = 3; thLtvGrp.classList.add('sep');
+    thLtvGrp.textContent = '대출액 (LTV, 6억 상한 표기)';
+    tr1.appendChild(thLtvGrp);
+
+    const thJeonseGrp = document.createElement('th');
+    thJeonseGrp.colSpan = jeonseRates.length;
+    thJeonseGrp.textContent = '전세금 (전세가율)';
+    tr1.appendChild(thJeonseGrp);
+
+    const tr2 = document.createElement('tr');
+    ['70%','50%','40%'].forEach((txt, idx)=>{
+      const th = document.createElement('th');
+      th.textContent = txt;
+      if(idx === 2) th.classList.add('sep');
+      tr2.appendChild(th);
+    });
+
+    jeonseRates.forEach(r=>{
+      const th = document.createElement('th');
+      th.textContent = Math.round(r*100) + '%';
+      tr2.appendChild(th);
+    });
+
+    thead.appendChild(tr1);
+    thead.appendChild(tr2);
+  }
+
+  function buildTable(minEok, maxEok, stepEok, investEok, dsrLimitEok, jeonseRates){
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
     const ltvRates = [0.70, 0.50, 0.40];
-    const jeonseRates = [0.70, 0.60, 0.50, 0.40];
 
     // 보정
     if(maxEok < minEok){ const t=minEok; minEok=maxEok; maxEok=t; }
@@ -216,14 +269,18 @@
     const maxEok = parseFloat(document.getElementById('maxEok').value) || 20;
     const stepEok = parseFloat(document.getElementById('stepEok').value) || 1;
 
+    const jeonseStepPct = parseFloat(document.getElementById('jeonseStepPct').value) || 10;
+    const jeonseRates = buildJeonseRates(jeonseStepPct); // ✅ 동적 생성 (0.70→0.40)
+
     // DSR 한도 (만원 -> 억)
     const dsrLimitManwon = calcDSRLimitManwon(income, rate, years);
     const dsrLimitEok = toEok(dsrLimitManwon);
     document.getElementById('dsrLimitDisplay').textContent =
       dsrLimitManwon > 0 ? `${fmtEok(dsrLimitEok)} (연 ${isFinite(rate)?rate.toFixed(2):'-'}%, ${years||'-'}년)` : '연봉·금리·기간을 입력하세요';
 
-    // 표 렌더
-    buildTable(minEok, maxEok, stepEok, investEok, dsrLimitEok);
+    // 헤더 & 표 렌더
+    renderHeader(jeonseRates);
+    buildTable(minEok, maxEok, stepEok, investEok, dsrLimitEok, jeonseRates);
   }
 
   // 초기 렌더
