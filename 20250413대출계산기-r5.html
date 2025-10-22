@@ -32,7 +32,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding-bottom: 12px;           /* 트리거↔툴팁 사이 공중 구간 제거 */
+    padding-bottom: 12px;
   }
   .tip-trigger{ display:inline-flex; align-items:center; gap:6px; cursor:help; }
   .tip-trigger .text{ border-bottom: 1px dotted #94a3b8; }
@@ -53,14 +53,12 @@
   .tip-box ul{ margin:6px 0 0 16px; padding:0; }
   .tip-box li{ margin:2px 0; }
 
-  /* 데스크톱 hover, 키보드 focus, 모바일 click(open 클래스) 모두 지원 */
   .tip-wrap:hover .tip-box,
   .tip-wrap:focus-within .tip-box,
   .tip-wrap.open .tip-box{
     opacity:1; visibility:visible; pointer-events:auto;
   }
 
-  /* 작은 화면에서 툴팁이 화면 밖으로 나갈 때 우측 정렬 보정 */
   @media (max-width: 480px){
     .tip-box{ left:auto; right:0; }
   }
@@ -123,7 +121,6 @@
   <div class="checkbox-label"><input type="radio" name="bankBorrower" value="first" onclick="applyBankPreset()" /> 생애최초</div>
   <div class="checkbox-label"><input type="radio" name="bankBorrower" value="seomin" onclick="applyBankPreset()" /> 서민·실수요자 <span class="hint">연소득 9천↓, 주택가격 8억↓, 무주택</span></div>
 
-  <!-- 첫 줄: 금융권 구분 (단독 줄) -->
   <div class="row-1">
     <div>
       <label>금융권 구분</label>
@@ -134,7 +131,6 @@
     </div>
   </div>
 
-  <!-- 다음 줄: 투기과열지구 + 수도권 여부(같은 줄) -->
   <div class="row" style="margin-top:4px;">
     <label class="checkbox-label" style="margin-bottom:0;">
       <input type="checkbox" id="speculativeArea" onchange="applyBankPreset()"/>
@@ -274,6 +270,40 @@
     document.getElementById(fieldId + 'Text').innerText = isNaN(value) ? '' : '→ ' + numberToKorean(value) + '원';
   }
 
+  /* === 정책성 대출: 연봉 → 부부합산 연소득 자동 동기화 === */
+  let didimIncomeEdited = false;
+  let bogumIncomeEdited = false;
+
+  function syncPolicyIncome(force = false) {
+    const domain = document.querySelector('input[name="loanDomain"]:checked')?.value;
+    if (domain !== 'policy') return;
+
+    const incomeVal = document.getElementById('income')?.value ?? '';
+    const didimEl = document.getElementById('didimIncome');
+    const bogumEl = document.getElementById('bogumIncome');
+
+    if (didimEl) {
+      if (force || !didimIncomeEdited) didimEl.value = incomeVal;
+    }
+    if (bogumEl) {
+      if (force || !bogumIncomeEdited) bogumEl.value = incomeVal;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const didimEl = document.getElementById('didimIncome');
+    const bogumEl = document.getElementById('bogumIncome');
+    if (didimEl) didimEl.addEventListener('input', () => { didimIncomeEdited = true; });
+    if (bogumEl) bogumEl.addEventListener('input', () => { bogumIncomeEdited = true; });
+
+    const incomeEl = document.getElementById('income');
+    if (incomeEl) {
+      incomeEl.addEventListener('input', () => {
+        syncPolicyIncome(false); // 정책성 상태일 때만 반영
+      });
+    }
+  });
+
   /* ---------- UI 스위치 ---------- */
   function switchDomain() {
     const domain = document.querySelector('input[name="loanDomain"]:checked').value;
@@ -282,7 +312,11 @@
     if (domain === 'bank') applyBankPreset();
     if (domain === 'policy') switchPolicy();
     updatePriceCaps();
+
+    // ✅ 정책성으로 전환 시 상단 연봉 -> 하단 연봉 1회 강제 동기화
+    if (domain === 'policy') syncPolicyIncome(true);
   }
+
   function switchPolicy() {
     const p = document.querySelector('input[name="policyType"]:checked').value;
     document.getElementById('didimPanel').classList.toggle('hide', p !== 'didim');
@@ -295,6 +329,9 @@
       document.getElementById('dsrInput').value = 0;
     }
     updatePriceCaps();
+
+    // ✅ 정책성 내부 탭 전환 시에도 1회 동기화
+    syncPolicyIncome(true);
   }
 
   /* ---------- 핵심: 금융권 규칙 프리셋 ---------- */
@@ -395,7 +432,7 @@
     const yearlyRepaymentPerLoan = annuityFactor * 12;
     const dtiLimit = (income * dti) / yearlyRepaymentPerLoan;
 
-    // DSR 한도
+    // DSR 한도 (정책성은 dsr=0 이므로 비적용)
     const stressMonthly = stressInterestRate / 12;
     const noStressMonthly = originalInterestRate / 12;
 
@@ -403,7 +440,7 @@
     const availableMonthlyDSR = maxDSRMonthly - existingLoanMonthly;
 
     let dsrLimit = Infinity;
-    let dsrLimitNoStress = Infinity; // 병기용
+    let dsrLimitNoStress = Infinity;
 
     if (dsr > 0) {
       if (availableMonthlyDSR > 0) {
@@ -425,7 +462,7 @@
       { type: "DSR", amount: dsrLimit }
     ];
 
-    // 금융권: 가격구간별 정책 한도(만원)
+    // 금융권 가격 구간 한도
     if (domain === 'bank') {
       if (propertyPrice > 150000 && propertyPrice <= 250000) {
         limits.push({ type: "가격구간 정책한도(15~25억: 4억)", amount: 40000 });
@@ -434,7 +471,7 @@
       }
     }
 
-    // 하단 경고값(자격 확인)
+    // 자격 경고
     const eligDiv = document.getElementById('eligibility');
     eligDiv.classList.add('hide');
     eligDiv.innerHTML = '';
@@ -504,7 +541,7 @@
     const finalLoan = minLoan.amount;
     const reason = minLoan.type;
 
-    // 월 상환액
+    // 월 상환액 계산
     const r = originalInterestRate / 12;
     const N = months;
     let monthlyPayment, monthlyPrincipal, monthlyInterest;
@@ -522,13 +559,13 @@
     const monthlyGap = avgMonthlyIncome - monthlyPayment;
     const repaymentRatio = (monthlyPayment / avgMonthlyIncome) * 100;
 
-    // 표시
+    // 스트레스 라인 (수도권 +3%일 때만 표시)
     let stressLine = '';
     if (domain === 'bank' && isCapital) {
       stressLine = `<div class="pill">DSR 스트레스 금리: ${(stressInterestRate*100).toFixed(2)}% (수도권 자동 +3%)</div>`;
     }
 
-    // DSR 한도 문구 (스트레스 비적용 병기)
+    // DSR 한도 문구
     const dsrLine = (dsr === 0)
       ? '비적용'
       : `${convertToEok(dsrLimit)}억원${(domain === 'bank' && isCapital) ? ` <span class="subtle">(스트레스 미적용시 ${convertToEok(dsrLimitNoStress)}억원)</span>` : ''}`;
@@ -541,10 +578,11 @@
     limits.filter(x => x.type.includes('정책한도') || x.type.includes('상품한도'))
       .forEach(x => { limitsHtml += `<strong>${x.type}:</strong> ${convertToEok(x.amount)}억원<br>`; });
 
-document.getElementById('result').innerHTML =
-  `${limitsHtml}
-   ${stressLine}
-   <hr>
+    // ✅ 스트레스 금리를 DSR 한도 아래로 배치
+    document.getElementById('result').innerHTML =
+      `${limitsHtml}
+       ${stressLine}
+       <hr>
        💡 <strong>최종 대출 한도는 <u>${reason}</u> 기준으로 <u>${convertToEok(finalLoan)}억원</u>입니다.</strong><br><br>
        <strong>월 상환금:</strong> ${Math.floor(monthlyPayment)}만원 (${repaymentType === "equalPrincipalInterest" ? "원리금 균등" : "원금 균등(첫달)"})<br>
        - 월 원금: <strong>${Math.floor(monthlyPrincipal)}만원</strong><br>
@@ -555,13 +593,12 @@ document.getElementById('result').innerHTML =
        - 상환 비율: <strong>${repaymentRatio.toFixed(1)}%</strong>`;
   }
 
-  /* === 툴팁: 모바일/데스크탑 공통 토글(깜빡임 방지) === */
+  /* === 툴팁: 모바일/데스크탑 공통 토글 === */
   (function tooltipInit(){
     const wrap = document.getElementById('tipSpecWrap');
     const btn  = document.getElementById('tipBtn');
     if (!wrap || !btn) return;
 
-    // 아이콘 클릭/Enter/Space로 열고 닫기
     const toggle = (force) => {
       const willOpen = (typeof force === 'boolean') ? force : !wrap.classList.contains('open');
       wrap.classList.toggle('open', willOpen);
@@ -572,12 +609,10 @@ document.getElementById('result').innerHTML =
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
     });
 
-    // 바깥을 누르면 닫힘
     document.addEventListener('click', (e)=>{
       if (!wrap.contains(e.target)) toggle(false);
     });
 
-    // 스크롤/리사이즈 시 자동 닫힘
     window.addEventListener('scroll', ()=> toggle(false), { passive:true });
     window.addEventListener('resize', ()=> toggle(false));
   })();
