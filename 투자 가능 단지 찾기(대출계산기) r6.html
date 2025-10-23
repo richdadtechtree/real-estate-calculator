@@ -24,20 +24,28 @@
       --shadow:0 2px 8px rgba(0,0,0,.06);
       --radius:12px;
     }
+
+    /* ✅ 부드러운 스크롤 UX */
+    html{ scroll-behavior:smooth; }
     html,body{height:100%;}
     body{
+      overscroll-behavior-y:contain;
+      -webkit-overflow-scrolling:touch;
+
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
       color:var(--text);
       background:var(--bg);
       max-width: 760px;
       width: 100%;
       margin: 0 auto;
-      padding: 16px;
+      padding: 18px; /* 살짝 증가 */
       box-sizing: border-box;
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
+      line-height: 1.55;
     }
-    h2{ text-align:center; margin: 8px 0 16px; font-weight:800; }
+
+    h2{ text-align:center; margin: 8px 0 18px; font-weight:800; }
     label{ font-weight: 700; margin-top: 10px; display:block; }
     input, select, button{
       width: 100%;
@@ -48,20 +56,47 @@
       border:1px solid var(--border);
       border-radius: 10px;
       background: #fff;
+      outline: none;
     }
+    input:focus, select:focus, button:focus{ box-shadow: 0 0 0 3px rgba(79,70,229,.18); }
     input[type="checkbox"], input[type="radio"]{ width:auto; margin-right: 6px; }
-    .checkbox-label{ display:flex; align-items:center; gap:8px; margin:6px 0; font-size:0.97rem; }
+    .checkbox-label{ display:flex; align-items:center; gap:8px; margin:6px 0; font-size:0.97rem; flex-wrap: wrap; }
+
     .row{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
     .row-1{ display:grid; grid-template-columns: 1fr; gap:10px; }
 
     .box{
+      position: relative;       /* 섹션 그라데이션 고정용 */
       background:var(--card);
       border-radius: var(--radius);
-      padding: 14px;
-      margin: 12px 0;
+      padding: 16px;            /* ↑ */
+      margin: 14px 0 18px;      /* ↑ 섹션 간격 */
       border:1px solid var(--border);
       box-shadow: var(--shadow);
+      scroll-margin-top: 14px;  /* 앵커 이동 시 상단 여백 */
+      overflow: visible;
     }
+
+    /* ✅ 섹션 하단 그라데이션 + 화살표 (기본 숨김, JS로 토글) */
+    .section-fade{
+      position:absolute;
+      left:-1px; right:-1px; bottom:-1px;
+      height:40px;
+      background: linear-gradient(to top, var(--card) 70%, rgba(255,255,255,0));
+      pointer-events:none;
+      display:none;
+      border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+    }
+    .section-fade svg{
+      position:absolute;
+      left:50%; transform:translateX(-50%);
+      bottom:6px;
+      width:20px; height:20px; opacity:.45;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,.15));
+    }
+    .section-fade.show{ display:block; }
+
     .result{
       background:var(--card);
       border-radius: var(--radius);
@@ -71,6 +106,7 @@
       line-height: 1.65;
       border:1px solid var(--border);
       box-shadow: var(--shadow);
+      overflow-wrap:anywhere;
     }
     .subtle{ font-size: 0.92rem; color: var(--sub); }
     .hangul{ font-size: 0.92rem; color: var(--sub); display:block; margin-top:-6px; margin-bottom:8px; }
@@ -133,7 +169,7 @@
 
     /* ✅ 모바일 최적화 */
     @media (max-width: 480px){
-      body{ padding: 12px 12px 76px; } /* 하단 고정바 공간 확보 */
+      body{ padding: 14px; }
       .row{ grid-template-columns: 1fr; gap:8px; }
       input, select, button{ font-size:1.02rem; padding: 16px 12px; }
       .box{ padding:14px; }
@@ -144,36 +180,33 @@
       .result{ font-size:1rem; }
     }
 
-    /* ✅ 하단 고정 계산바 (모바일 전용) */
-    .mobile-calc-bar{
+    /* ✅ 기본 버튼 */
+    .btn-primary{
+      background:#4f46e5; color:#fff; border: none; font-weight: 900; letter-spacing:.2px;
+      padding: 14px 16px; border-radius: 12px; cursor: pointer; margin-top: 4px;
+      box-shadow: 0 6px 18px rgba(79,70,229,.18);
+    }
+    .btn-primary:active{ transform: translateY(1px); }
+
+    /* ✅ 페이지 하단 스크롤 힌트(고정) */
+    .scroll-hint{
       position: fixed;
       left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,.94);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid var(--border);
-      padding: 10px 14px calc(env(safe-area-inset-bottom, 0) + 10px);
-      display: none; /* 기본 비표시 */
-      z-index: 999;
+      height: 56px;
+      background: linear-gradient(to top, var(--bg) 70%, rgba(248,250,252,0));
+      padding-bottom: env(safe-area-inset-bottom, 0);
+      pointer-events: none;
+      z-index: 9999;
+      display: block;
     }
-    @media (max-width: 480px){
-      .mobile-calc-bar{ display:flex; gap:10px; align-items:center; }
-    }
-    .mobile-calc-bar .bar-btn{
-      flex:1;
-      padding: 14px;
-      font-weight:900;
-      border:none;
-      border-radius: 12px;
-      background: var(--brand);
-      color:#fff;
-      font-size:1.05rem;
-      box-shadow: 0 6px 18px rgba(79,70,229,.25);
-    }
-    .mobile-calc-bar .bar-tip{
-      white-space:nowrap;
-      font-size:.9rem;
-      color:#374151;
-      font-weight:700;
+    .scroll-hint.hide{ display:none; }
+    .scroll-hint svg{
+      position: absolute;
+      left: 50%;
+      bottom: calc(8px + env(safe-area-inset-bottom, 0));
+      transform: translateX(-50%);
+      width: 22px; height: 22px; opacity: .55;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,.15));
     }
   </style>
 </head>
@@ -203,12 +236,26 @@
 
     <label>기존 대출 월 상환금 (만원)</label>
     <input type="number" id="existingLoanMonthly" inputmode="numeric" pattern="[0-9]*" value="0">
+
+    <!-- 섹션 그라데이션 -->
+    <div class="section-fade" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M6 9l6 6 6-6" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </div>
 
   <div class="box">
     <div class="section-title">② 대출 구분</div>
     <div class="checkbox-label"><input type="radio" name="loanDomain" value="bank" checked onclick="switchDomain()"> 금융권 대출</div>
     <div class="checkbox-label"><input type="radio" name="loanDomain" value="policy" onclick="switchDomain()"> 정책성 대출(디딤돌/보금자리론)</div>
+
+    <!-- 섹션 그라데이션 -->
+    <div class="section-fade" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M6 9l6 6 6-6" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </div>
 
   <!-- 금융권 옵션 -->
@@ -241,6 +288,13 @@
       </label>
     </div>
     <div id="stressAutoInfo" class="ok hide" style="margin:8px 0;">수도권으로 판단되어 DSR 스트레스 금리 <b>+3%</b>가 자동 적용됩니다.</div>
+
+    <!-- 섹션 그라데이션 -->
+    <div class="section-fade" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M6 9l6 6 6-6" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </div>
 
   <!-- 정책성 옵션 -->
@@ -249,7 +303,7 @@
     <div class="checkbox-label"><input type="radio" name="policyType" value="didim" checked onclick="switchPolicy()"> 디딤돌 대출</div>
     <div class="checkbox-label"><input type="radio" name="policyType" value="bogum" onclick="switchPolicy()"> 보금자리론</div>
 
-    <div id="didimPanel" class="box">
+    <div id="didimPanel" class="box" style="margin:10px 0 0;">
       <div class="section-title">디딤돌 세부</div>
       <div class="checkbox-label"><input type="radio" name="didimKind" value="normal" checked> 일반(LTV 70%, 한도 2억, 가격 ≤5억)</div>
       <div class="checkbox-label"><input type="radio" name="didimKind" value="first"> 생애최초(LTV 70%, 한도 2.4억, 가격 ≤5억)</div>
@@ -258,9 +312,15 @@
       <div class="checkbox-label"><input type="radio" name="didimKind" value="twokids"> 2자녀(LTV 70%, 한도 3.2억, 가격 ≤6억, 소득 ≤7,000만원)</div>
       <div class="checkbox-label"><input type="radio" name="didimKind" value="newborn"> 신생아(LTV 70%, 한도 4억, 가격 ≤5억)</div>
       <div class="subtle">소득·순자산 요건(요약): 일반 6천, 생애최초 7천, <b>신혼 8.5천</b>, <b>2자녀 7천</b>, 신생아 7천 / 순자산 4.88억↓</div>
+
+      <div class="section-fade" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M6 9l6 6 6-6" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
     </div>
 
-    <div id="bogumPanel" class="box hide">
+    <div id="bogumPanel" class="box hide" style="margin:10px 0 0;">
       <div class="section-title">보금자리론 세부</div>
       <div class="checkbox-label"><input type="radio" name="bogumKind" value="normal" checked> 일반(LTV 60%, 한도 3.6억, 가격 ≤6억)</div>
       <div class="checkbox-label"><input type="radio" name="bogumKind" value="first"> 생애최초(LTV 70%, 한도 4.2억, 가격 ≤6억)</div>
@@ -274,23 +334,38 @@
         </div>
       </div>
       <div class="subtle">소득 요건: 부부합산 연 7천만원 이하, 무주택 또는 1주택</div>
+
+      <div class="section-fade" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M6 9l6 6 6-6" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="section-fade" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M6 9l6 6 6-6" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </div>
   </div>
 
-  <button onclick="calculate()">계산하기</button>
+  <!-- 기본(비-고정) 버튼 -->
+  <button class="btn-primary" onclick="calculate()">계산하기</button>
+
   <div id="eligibility"></div>
   <div id="result" class="result hide"></div>
   <div id="calculationSteps" class="calculation-steps hide"></div>
 
-  <!-- ✅ 모바일 하단 고정 계산바 -->
-  <div class="mobile-calc-bar" role="toolbar" aria-label="모바일 계산 도구막대">
-    <div class="bar-tip">입력값을 채운 뒤</div>
-    <button class="bar-btn" onclick="calculate()" aria-label="계산하기">계산하기</button>
-  </div>
-
   <footer>
     <a href="https://blog.naver.com/landlover333" target="_blank">부태리 블로그</a> | Made by 부태리 (2025)
   </footer>
+
+  <!-- ✅ 페이지 하단 스크롤 힌트(고정) -->
+  <div class="scroll-hint" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M6 9l6 6 6-6" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
 
   <script>
     // ---- 유틸 ----
@@ -302,7 +377,7 @@
     function eok(n){ return (n/10000).toFixed(2); }
     function updateHangulAmount(id){
       const v=parseFloat(document.getElementById(id).value||0);
-      document.getElementById(id+'Text').textContent = v>0 ? formatAmount(v) : '';
+      document.getElementById(id+'Text').textContent = v>0 ? formatAmount(Math.floor(v)) : '';
     }
     function monthlyPayment(principal, annualRate, months){
       const r=annualRate/12;
@@ -318,11 +393,17 @@
       document.getElementById('bankPanel').classList.toggle('hide',d!=='bank');
       document.getElementById('policyPanel').classList.toggle('hide',d!=='policy');
       if(d==='policy') switchPolicy();
+      // 섹션 힌트 다시 평가
+      requestAnimationFrame(updateSectionFades);
     }
     function switchPolicy(){
-      const p=document.querySelector('input[name="policyType"]:checked').value;
+      const p=document.querySelector('input[name="loanDomain"]:checked')?.value==='policy'
+        ? document.querySelector('input[name="policyType"]:checked').value
+        : null;
+      if(!p) return;
       document.getElementById('didimPanel').classList.toggle('hide',p!=='didim');
       document.getElementById('bogumPanel').classList.toggle('hide',p!=='bogum');
+      requestAnimationFrame(updateSectionFades);
     }
 
     // ---- 메인 계산 ----
@@ -379,7 +460,7 @@
       let dsrLimit = Infinity, dsrLimitNoStress = Infinity;
       if(dsr>0){
         const stressRate = isCapital ? (rate+0.03) : rate;
-        const maxMo = (income/12) * dsr - existMo;
+        const maxMo = (income/12) * dsr - (existMo||0);
         if(maxMo>0){
           const f = (r,m) => (r===0)? maxMo*m : maxMo*(1-Math.pow(1+r, -m))/r;
           dsrLimit       = f(stressRate/12, months);
@@ -558,10 +639,63 @@
          <p><b>Step 4</b> 정책성: 상품캡/가격한도 내에서 대출 최대·자산 최소</p>`}
          <p><b>Result</b> 대출 ${eok(finalLoan)}억 / 자산 ${eok(usedAssets)}억 → 투자 ${eok(investable)}억</p>`;
       steps.classList.remove('hide');
+
+      // 스크롤 힌트 재평가
+      requestAnimationFrame(()=>{
+        updateSectionFades();
+        updateBottomHint();
+      });
     }
 
+    /* ✅ 섹션/하단 스크롤 힌트 로직 */
+    function updateSectionFades(){
+      const boxes = document.querySelectorAll('.box');
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+
+      boxes.forEach((box, idx)=>{
+        const fade = box.querySelector('.section-fade');
+        if(!fade) return;
+
+        // 보이는지/끝에 가까운지 판단
+        const r = box.getBoundingClientRect();
+        const inView = r.top < vh && r.bottom > 80;       // 일부라도 화면과 겹침
+        const hasMoreBelow = r.bottom > (vh + 16);        // 화면 아래로 더 내용이 남음
+        const notLast = idx !== (boxes.length - 1);       // 마지막 박스는 덜 표시
+
+        // 너무 작은 섹션은 숨김
+        const tallEnough = (r.height || 0) > 120;
+
+        const show = inView && hasMoreBelow && tallEnough && notLast;
+        fade.classList.toggle('show', show);
+      });
+    }
+
+    function updateBottomHint(){
+      const hint = document.querySelector('.scroll-hint');
+      if(!hint) return;
+      const THRESHOLD = 120; // 바닥 근처 여유(px)
+      const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - THRESHOLD);
+      hint.classList.toggle('hide', nearBottom);
+    }
+
+    // 이벤트 연결
+    window.addEventListener('scroll', ()=>{
+      updateSectionFades();
+      updateBottomHint();
+    }, {passive:true});
+    window.addEventListener('resize', ()=>{
+      updateSectionFades();
+      updateBottomHint();
+    });
+
     // 초기화
-    switchDomain();
+    document.addEventListener('DOMContentLoaded', ()=>{
+      switchDomain();  // 패널 표시상태 정리
+      updateSectionFades();
+      updateBottomHint();
+      // 약간 지연 후 한 번 더 (폰 가상 키보드/폰트 로딩 대응)
+      setTimeout(()=>{ updateSectionFades(); updateBottomHint(); }, 80);
+    });
   </script>
 </body>
 </html>
