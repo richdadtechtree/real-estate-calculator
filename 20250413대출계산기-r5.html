@@ -455,7 +455,7 @@
     let dsr = parseFloat(document.getElementById('dsrInput').value) / 100;
 
     const domain = document.querySelector('input[name="loanDomain"]:checked').value;
-    const repaymentType = document.querySelector('input[name="repaymentType"]:checked").value;
+    const repaymentType = document.querySelector('input[name="repaymentType"]:checked').value;
 
     if ([income, propertyPrice, originalInterestRate, loanTerm, ltv, dti, dsr].some(x => isNaN(x))) {
       document.getElementById('eligibility').classList.add('hide');
