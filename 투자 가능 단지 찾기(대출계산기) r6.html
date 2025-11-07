@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -491,10 +492,11 @@
       let usedAssets = Math.max(0, investable - finalLoan);
       let reason = minHard.t;
 
-      // (A) 금융권: 가격구간별 대출캡(6/4/2억)
+      // (A) 금융권: 가격구간별 대출캡(6/4/2억) - 투기과열지구 선택 시에만 적용
       let priceBandNote = '';
       let wasBandCapped = false;
-      if(domain==='bank'){
+      const spec=document.getElementById('speculativeArea').checked;
+      if(domain==='bank' && spec){
         const bands = [
           {name:'≤15억', capLoan:60000,  pMin:0,      pMax:150000},
           {name:'15~25억', capLoan:40000, pMin:150001, pMax:250000},
