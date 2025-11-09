@@ -816,7 +816,12 @@
     }
 
     // 투자 가능 금액 = 가진 자산 + 대출 한도
-    const investableEok = investEok + finalLoanLimitEok;
+    let investableEok = investEok + finalLoanLimitEok;
+
+    // 정책성 대출: 가격 한도 적용 (디딤돌/보금자리론)
+    if(domain === 'policy' && isFinite(maxPrice)){
+      investableEok = Math.min(investableEok, maxPrice);
+    }
 
     // 표시 업데이트
     // 1. 대출 조건 표시
