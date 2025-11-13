@@ -3,7 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>부태리 계산기 허브  – 4개 탭</title>
+  <title>부태리 계산기 허브 – 4개 탭</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-75SPDY6N8V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-75SPDY6N8V');
+  </script>
   <style>
     :root{
       --bg:#0b0c10; --card:#151822; --text:#e8eaf0; --muted:#96a0b5;
@@ -100,19 +110,19 @@
       </div>
 
       <div class="tabs" role="tablist" aria-label="계산기 선택">
-        <button id="tab-loan" class="active" role="tab" aria-selected="true" aria-controls="panel-loan">부동산 대출 계산기</button>
+        <button id="tab-invest-loan" class="active" role="tab" aria-selected="true" aria-controls="panel-invest-loan">내 자산 + 연봉에 맞는 금액대</button>
         <button id="tab-cost" role="tab" aria-selected="false" aria-controls="panel-cost">부동산 매수 경비 계산기</button>
-        <button id="tab-invest-loan" role="tab" aria-selected="false" aria-controls="panel-invest-loan">내 자산 + 연봉에 맞는 금액대</button>
+        <button id="tab-loan" role="tab" aria-selected="false" aria-controls="panel-loan">부동산 대출 계산기 </button>
         <button id="tab-map" role="tab" aria-selected="false" aria-controls="panel-map">LTV+급여 투자맵</button>
       </div>
-      <div class="help">💡 팁: 각 탭을 클릭하거나 주소 뒤에 <code>#loan</code>, <code>#cost</code>, <code>#invest-loan</code>, <code>#map</code>을 붙이면 바로 열 수 있어요.</div>
+      <div class="help">💡 팁: 각 탭을 클릭하거나 주소 뒤에 <code>#invest-loan</code>, <code>#cost</code>, <code>#loan</code>, <code>#map</code>을 붙이면 바로 열 수 있어요.</div>
     </div>
   </header>
 
   <main class="wrap">
     <!-- Panel 1 -->
-    <section id="panel-loan" class="panel" role="tabpanel" aria-labelledby="tab-loan">
-      <iframe title="부동산 대출 계산기" data-file="20250413대출계산기-r5.html" loading="eager"></iframe>
+    <section id="panel-invest-loan" class="panel" role="tabpanel" aria-labelledby="tab-invest-loan">
+      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자 가능 단지 찾기(대출계산기) r6.html" loading="eager"></iframe>
     </section>
 
     <!-- Panel 2 -->
@@ -121,8 +131,8 @@
     </section>
 
     <!-- Panel 3 -->
-    <section id="panel-invest-loan" class="panel" role="tabpanel" aria-labelledby="tab-invest-loan" hidden>
-      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자 가능 단지 찾기(대출계산기) r6.html" loading="lazy"></iframe>
+    <section id="panel-loan" class="panel" role="tabpanel" aria-labelledby="tab-loan" hidden>
+      <iframe title="부동산 대출 계산기" data-file="20250413대출계산기-r5.html" loading="lazy"></iframe>
     </section>
 
     <!-- Panel 4 -->
