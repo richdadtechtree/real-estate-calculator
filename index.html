@@ -52,6 +52,14 @@
     footer.page{border-top:1px solid rgba(255,255,255,.06); text-align:center; color:var(--muted); font-size:13px; padding:28px 0 36px}
     footer.page a{color:#cfe6ff; text-decoration:none}
 
+    /* 방문자 카운터 스타일 */
+    .visitor-badge{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 14px;
+      background:rgba(76,175,80,.12); border:1px solid rgba(76,175,80,.25);
+      border-radius:999px; font-size:13px; font-weight:600; color:var(--text)
+    }
+    .visitor-badge span{color:var(--accent); font-weight:700}
+
     /* === 팝업(모달) === */
     .modal-backdrop[hidden]{display:none}
     .modal-backdrop{
@@ -106,7 +114,12 @@
           <h1>부태리 계산기 허브</h1>
           <div class="sub">내 투자/대출/경비 계산 도구를 한 곳에서</div>
         </div>
-        <!-- 방문자수 배지 제거됨 -->
+        <!-- 방문자 카운터 -->
+        <div class="visitor-badge">
+          <a href="https://www.hitwebcounter.com" target="_blank" style="text-decoration:none; color:inherit;">
+            👥 총 <span><img src="https://hitwebcounter.com/counter/counter.php?page=17080326&style=0007&nbdigits=5&type=page&initCount=0" title="방문자 카운터" Alt="방문자 수" border="0" style="vertical-align:middle; height:16px;"/></span> | 오늘 <span><img src="https://hitwebcounter.com/counter/counter.php?page=17080327&style=0007&nbdigits=4&type=ip&initCount=0" title="오늘 방문자" Alt="오늘 방문자" border="0" style="vertical-align:middle; height:16px;"/></span>
+          </a>
+        </div>
       </div>
 
       <div class="tabs" role="tablist" aria-label="계산기 선택">
