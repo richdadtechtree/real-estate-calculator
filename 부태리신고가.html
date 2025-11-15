@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
         <html lang="ko">
         <head>
         <meta charset="utf-8"/>
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
-        <title>부태리 신고가 알림 - 2025-11-15 09:08</title>
+        <title>부태리 신고가 알림 - 2025-11-15 09:52</title>
         <style>
           :root {
             --bg:#F2F2F7; --fg:#111; --sub:#6b7280; --card:#fff; --bd:#e5e7eb;
@@ -116,7 +117,7 @@
           <div class="page">
             <header class="header">
               <h1>부태리 신고가 알림</h1>
-              <p class="sub">2025-11-15 09:08 기준 · 총 105개 아파트</p>
+              <p class="sub">2025-11-15 09:52 기준 · 총 105개 아파트</p>
 
               <!-- 상단 칩: 연식별 필터 -->
               <div class="chips">
@@ -2619,7 +2620,7 @@
                 if(isPermit){
                   const permitBadge = document.createElement('span');
                   permitBadge.className = 'badge-speculation permit';
-                  permitBadge.textContent = ⚠️ 토지거래허가';
+                  permitBadge.textContent = '⚠️ 토지거래허가';
                   badgesDiv.appendChild(permitBadge);
                 }
 
@@ -2987,47 +2988,6 @@
           applyFilter();
         })();
 
-        // ===== 소스 보기 방지 =====
-        // 마우스 오른쪽 클릭 방지
-        document.addEventListener('contextmenu', (e) => {
-          e.preventDefault();
-          return false;
-        });
-
-        // 키보드 단축키 방지 (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U 등)
-        document.addEventListener('keydown', (e) => {
-          // F12
-          if(e.key === 'F12') {
-            e.preventDefault();
-            return false;
-          }
-          // Ctrl+Shift+I (개발자 도구)
-          if(e.ctrlKey && e.shiftKey && e.key === 'I') {
-            e.preventDefault();
-            return false;
-          }
-          // Ctrl+Shift+J (콘솔)
-          if(e.ctrlKey && e.shiftKey && e.key === 'J') {
-            e.preventDefault();
-            return false;
-          }
-          // Ctrl+Shift+C (요소 검사)
-          if(e.ctrlKey && e.shiftKey && e.key === 'C') {
-            e.preventDefault();
-            return false;
-          }
-          // Ctrl+U (페이지 소스 보기)
-          if(e.ctrlKey && e.key === 'u') {
-            e.preventDefault();
-            return false;
-          }
-        });
-
-        // 텍스트 드래그 선택 방지 (선택적으로 사용)
-        // document.addEventListener('selectstart', (e) => {
-        //   e.preventDefault();
-        //   return false;
-        // });
         </script>
         </body>
         </html>
