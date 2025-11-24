@@ -4,7 +4,7 @@
         <head>
         <meta charset="utf-8"/>
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
-        <title>부태리 신고가 알림 - 2025-11-23 18:25</title>
+        <title>부태리 신고가 알림 - 2025-11-25 07:31</title>
         <style>
           :root {
             --bg:#F2F2F7; --fg:#111; --sub:#6b7280; --card:#fff; --bd:#e5e7eb;
@@ -44,19 +44,6 @@
           .region-chip:hover{ background:#f3f4f6 }
           .region-chip.active{ background:#1976d2; color:#fff; border-color:#1976d2 }
           .region-chip.zero{ opacity:.45; }
-
-          .recent-search{
-            margin:8px 0 0; padding:8px 12px; background:rgba(255,255,255,0.15); border-radius:8px;
-            font-size:12px; color:rgba(255,255,255,0.85); display:none;
-          }
-          .recent-search.show{ display:block; }
-          .recent-search-label{ opacity:0.7; margin-right:6px; }
-          .recent-search-items{ display:inline-flex; flex-wrap:wrap; gap:6px; }
-          .recent-search-item{
-            display:inline-flex; align-items:center; padding:3px 8px; background:rgba(255,255,255,0.25);
-            border-radius:999px; font-size:11px; cursor:pointer; transition: all 0.2s ease;
-          }
-          .recent-search-item:hover{ background:rgba(255,255,255,0.4); }
 
           .cards{ display:grid; grid-template-columns:repeat(12,1fr); gap:12px; margin-top:16px }
           .card{
@@ -130,25 +117,19 @@
           <div class="page">
             <header class="header">
               <h1>부태리 신고가 알림</h1>
-              <p class="sub">2025-11-23 18:25 기준 · 총 11개 아파트</p>
+              <p class="sub">2025-11-25 07:31 기준 · 총 147개 아파트</p>
 
               <!-- 상단 칩: 연식별 필터 -->
               <div class="chips">
-                <span class="chip" id="chip-old">2000년대 미만 6건</span>
-                <span class="chip" id="chip-very-young">입주 5년 이하 1건</span>
-                <span class="chip" id="chip-young">입주 10년 이하 2건</span>
+                <span class="chip" id="chip-old">2000년대 미만 64건</span>
+                <span class="chip" id="chip-very-young">입주 5년 이하 25건</span>
+                <span class="chip" id="chip-young">입주 10년 이하 38건</span>
               </div>
 
               <!-- 지역 칩 (동적) -->
               <div class="region-chips" id="regionChips"></div>
               <!-- 하위 지역 칩 (동적) -->
               <div class="region-chips" id="subRegionChips" style="margin-top:8px;"></div>
-
-              <!-- 최근 검색 지역 -->
-              <div class="recent-search" id="recentSearch">
-                <span class="recent-search-label">최근 검색:</span>
-                <div class="recent-search-items" id="recentSearchItems"></div>
-              </div>
             </header>
 
             <!-- 상승률 필터 툴바 -->
@@ -192,18 +173,207 @@
 
             <section class="cards" id="cards">
               
-            <section class="card" data-region="서울특별시 서초구"
-                     data-build-year="1979" data-young="0"
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="1976" data-young="0"
+                     data-very-young="0" data-old="1" data-area="161">
+              <h3>현대2차(10,11,20,23,24,25동) <span class='year-badge old'>1976년</span> <span class="tag">161㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 압구정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">940,000만원</span> (2025-11-01 | 14층)</div>
+                <div class="k">직전 최고가</div>
+                <div>900,000만원 (2025-04-24 | 10층)</div>
+                <div class="k">변화</div>
+                <div class="rise">40,000만원 상승 (4.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="1986" data-young="0"
+                     data-very-young="0" data-old="1" data-area="143">
+              <h3>목동신시가지5 <span class='year-badge old'>1986년</span> <span class="tag">143㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 목동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">392,000만원</span> (2025-11-21 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>370,000만원 (2025-06-27 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">22,000만원 상승 (5.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="1986" data-young="0"
+                     data-very-young="0" data-old="1" data-area="142">
+              <h3>목동신시가지5 <span class='year-badge old'>1986년</span> <span class="tag">142㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 목동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">392,000만원</span> (2025-11-21 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>350,000만원 (2025-05-17 | 10층)</div>
+                <div class="k">변화</div>
+                <div class="rise">42,000만원 상승 (12.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="2001" data-young="0"
+                     data-very-young="0" data-old="0" data-area="149">
+              <h3>현대까르띠에710 <span class='year-badge'>2001년</span> <span class="tag">149㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 역삼동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">390,000만원</span> (2025-11-03 | 14층)</div>
+                <div class="k">직전 최고가</div>
+                <div>342,000만원 (2025-10-25 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">48,000만원 상승 (14.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="1975" data-young="0"
+                     data-very-young="0" data-old="1" data-area="77">
+              <h3>삼부 <span class='year-badge old'>1975년</span> <span class="tag">77㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 여의도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">390,000만원</span> (2025-11-06 | 10층)</div>
+                <div class="k">직전 최고가</div>
+                <div>360,000만원 (2025-07-08 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">30,000만원 상승 (8.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 광진구"
+                     data-build-year="1978" data-young="0"
+                     data-very-young="0" data-old="1" data-area="196">
+              <h3>워커힐 <span class='year-badge old'>1978년</span> <span class="tag">196㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 광진구 광장동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">390,000만원</span> (2025-10-10 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>350,000만원 (2022-04-08 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">40,000만원 상승 (11.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="2008" data-young="0"
+                     data-very-young="0" data-old="0" data-area="125">
+              <h3>여의도자이 <span class='year-badge'>2008년</span> <span class="tag">125㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 여의도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">365,000만원</span> (2025-10-15 | 37층)</div>
+                <div class="k">직전 최고가</div>
+                <div>358,000만원 (2025-09-24 | 27층)</div>
+                <div class="k">변화</div>
+                <div class="rise">7,000만원 상승 (2.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 용산구"
+                     data-build-year="1977" data-young="0"
+                     data-very-young="0" data-old="1" data-area="136">
+              <h3>반도 <span class='year-badge old'>1977년</span> <span class="tag">136㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 용산구 이촌동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">350,000만원</span> (2025-11-08 | 6층)</div>
+                <div class="k">직전 최고가</div>
+                <div>349,000만원 (2025-07-05 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,000만원 상승 (0.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="2006" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>개나리래미안 <span class='year-badge'>2006년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 역삼동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">350,000만원</span> (2025-11-08 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>310,000만원 (2025-03-15 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">40,000만원 상승 (12.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="1988" data-young="0"
                      data-very-young="0" data-old="1" data-area="100">
-              <h3>신반포4 <span class='year-badge old'>1979년</span> <span class="tag">100㎡</span></h3>
-              <div class="card-sub">📍 서울특별시 서초구 잠원동</div>
+              <h3>올림픽선수기자촌3단지 <span class='year-badge old'>1988년</span> <span class="tag">100㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 방이동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">505,000만원</span> (2025-10-20 | 7층)</div>
+                <div><span class="highlight">345,000만원</span> (2025-10-29 | 11층)</div>
                 <div class="k">직전 최고가</div>
-                <div>460,000만원 (2025-05-12 | 5층)</div>
+                <div>315,000만원 (2025-09-29 | 14층)</div>
                 <div class="k">변화</div>
-                <div class="rise">45,000만원 상승 (9.8%)</div>
+                <div class="rise">30,000만원 상승 (9.5%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -213,39 +383,123 @@
             </section>
             
 
-            <section class="card" data-region="서울특별시 서초구"
-                     data-build-year="2023" data-young="1"
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="1975" data-young="0"
+                     data-very-young="0" data-old="1" data-area="109">
+              <h3>한양 <span class='year-badge old'>1975년</span> <span class="tag">109㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 여의도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">340,000만원</span> (2025-10-28 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>295,000만원 (2025-06-27 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">45,000만원 상승 (15.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="1983" data-young="0"
+                     data-very-young="0" data-old="1" data-area="60">
+              <h3>개포주공7단지 <span class='year-badge old'>1983년</span> <span class="tag">60㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 개포동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">340,000만원</span> (2025-11-05 | 11층)</div>
+                <div class="k">직전 최고가</div>
+                <div>330,000만원 (2025-11-03 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">10,000만원 상승 (3.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    <span class="badge-rank rank-59">강남구 59타입 NO.3 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="1986" data-young="0"
+                     data-very-young="0" data-old="1" data-area="120">
+              <h3>목동신시가지2 <span class='year-badge old'>1986년</span> <span class="tag">120㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 목동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">338,000만원</span> (2025-10-25 | 1층)</div>
+                <div class="k">직전 최고가</div>
+                <div>250,000만원 (2023-09-26 | 1층)</div>
+                <div class="k">변화</div>
+                <div class="rise">88,000만원 상승 (35.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="2025" data-young="1"
                      data-very-young="1" data-old="0" data-area="59">
-              <h3>래미안원베일리 <span class='year-badge very-young'>2023년</span> <span class="tag">59㎡</span></h3>
-              <div class="card-sub">📍 서울특별시 서초구 반포동</div>
+              <h3>잠실 르엘 <span class='year-badge new'>분양</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 신천동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">470,000만원</span> (2025-11-01 | 25층)</div>
+                <div><span class="highlight">330,000만원</span> (2025-11-20 | 16층)</div>
                 <div class="k">직전 최고가</div>
-                <div>445,000만원 (2025-06-07 | 25층)</div>
+                <div>305,000만원 (2025-09-26 | 13층)</div>
                 <div class="k">변화</div>
-                <div class="rise">25,000만원 상승 (5.6%)</div>
+                <div class="rise">25,000만원 상승 (8.2%)</div>
                 <div class="k">특이사항</div>
                 <div>
-                    <span class="badge-rank rank-84">서초구 84타입 NO.1 단지</span>
-                    <span class="badge-rank rank-59">서초구 59타입 NO.1 단지</span>
+                    
+                    <span class="badge-rank rank-59">송파구 59타입 NO.1 단지</span>
                 </div>
               </div>
             </section>
             
 
-            <section class="card" data-region="서울특별시 서초구"
-                     data-build-year="2003" data-young="0"
-                     data-very-young="0" data-old="0" data-area="111">
-              <h3>서초래미안 <span class='year-badge'>2003년</span> <span class="tag">111㎡</span></h3>
-              <div class="card-sub">📍 서울특별시 서초구 서초동</div>
+            <section class="card" data-region="서울특별시 광진구"
+                     data-build-year="1978" data-young="0"
+                     data-very-young="0" data-old="1" data-area="162">
+              <h3>워커힐 <span class='year-badge old'>1978년</span> <span class="tag">162㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 광진구 광장동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">345,000만원</span> (2025-10-31 | 18층)</div>
+                <div><span class="highlight">320,000만원</span> (2025-10-14 | 6층)</div>
                 <div class="k">직전 최고가</div>
-                <div>295,000만원 (2025-05-31 | 19층)</div>
+                <div>300,000만원 (2025-07-26 | 2층)</div>
                 <div class="k">변화</div>
-                <div class="rise">50,000만원 상승 (16.9%)</div>
+                <div class="rise">20,000만원 상승 (6.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="1974" data-young="0"
+                     data-very-young="0" data-old="1" data-area="121">
+              <h3>은하 <span class='year-badge old'>1974년</span> <span class="tag">121㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 여의도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">320,000만원</span> (2025-10-13 | 10층)</div>
+                <div class="k">직전 최고가</div>
+                <div>305,000만원 (2025-10-02 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">15,000만원 상승 (4.9%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -257,16 +511,16 @@
 
             <section class="card" data-region="서울특별시 서초구"
                      data-build-year="1987" data-young="0"
-                     data-very-young="0" data-old="1" data-area="84">
-              <h3>강변 <span class='year-badge old'>1987년</span> <span class="tag">84㎡</span></h3>
+                     data-very-young="0" data-old="1" data-area="66">
+              <h3>강변 <span class='year-badge old'>1987년</span> <span class="tag">66㎡</span></h3>
               <div class="card-sub">📍 서울특별시 서초구 잠원동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">340,000만원</span> (2025-10-30 | 8층)</div>
+                <div><span class="highlight">310,000만원</span> (2025-10-25 | 13층)</div>
                 <div class="k">직전 최고가</div>
-                <div>293,000만원 (2025-06-24 | 10층)</div>
+                <div>273,000만원 (2025-09-10 | 5층)</div>
                 <div class="k">변화</div>
-                <div class="rise">47,000만원 상승 (16.0%)</div>
+                <div class="rise">37,000만원 상승 (13.6%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -277,15 +531,708 @@
             
 
             <section class="card" data-region="서울특별시 서초구"
-                     data-build-year="2000" data-young="0"
-                     data-very-young="0" data-old="0" data-area="74">
-              <h3>방배씨티(보성) <span class='year-badge'>2000년</span> <span class="tag">74㎡</span></h3>
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="114">
+              <h3>방배1차현대홈타운 <span class='year-badge old'>1999년</span> <span class="tag">114㎡</span></h3>
               <div class="card-sub">📍 서울특별시 서초구 방배동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">136,000만원</span> (2025-11-08 | 8층)</div>
+                <div><span class="highlight">300,000만원</span> (2025-10-29 | 11층)</div>
                 <div class="k">직전 최고가</div>
-                <div>135,000만원 (2025-10-28 | 4층)</div>
+                <div>295,000만원 (2025-09-24 | 3층)</div>
+                <div class="k">변화</div>
+                <div class="rise">5,000만원 상승 (1.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="2005" data-young="0"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>e-편한세상 <span class='year-badge'>2005년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 역삼동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">298,000만원</span> (2025-11-13 | 12층)</div>
+                <div class="k">직전 최고가</div>
+                <div>290,000만원 (2025-10-17 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,000만원 상승 (2.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="2005" data-young="0"
+                     data-very-young="0" data-old="0" data-area="156">
+              <h3>롯데캐슬엠파이어 <span class='year-badge'>2005년</span> <span class="tag">156㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 여의도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">297,000만원</span> (2025-10-18 | 22층)</div>
+                <div class="k">직전 최고가</div>
+                <div>268,000만원 (2025-06-14 | 30층)</div>
+                <div class="k">변화</div>
+                <div class="rise">29,000만원 상승 (10.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="1983" data-young="0"
+                     data-very-young="0" data-old="1" data-area="115">
+              <h3>우성4차 <span class='year-badge old'>1983년</span> <span class="tag">115㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 잠실동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">279,000만원</span> (2025-11-22 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>278,000만원 (2025-11-12 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,000만원 상승 (0.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="2018" data-young="1"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>헬리오시티 <span class='year-badge young'>2018년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 가락동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">278,000만원</span> (2025-11-03 | 21층)</div>
+                <div class="k">직전 최고가</div>
+                <div>270,000만원 (2025-10-27 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,000만원 상승 (3.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="1978" data-young="0"
+                     data-very-young="0" data-old="1" data-area="92">
+              <h3>미성 <span class='year-badge old'>1978년</span> <span class="tag">92㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 여의도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">277,000만원</span> (2025-10-31 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>269,000만원 (2025-06-12 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,000만원 상승 (3.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 서초구"
+                     data-build-year="2005" data-young="0"
+                     data-very-young="0" data-old="0" data-area="158">
+              <h3>서초3차e편한세상 <span class='year-badge'>2005년</span> <span class="tag">158㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 서초구 서초동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">255,000만원</span> (2025-11-15 | 3층)</div>
+                <div class="k">직전 최고가</div>
+                <div>248,000만원 (2025-01-18 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">7,000만원 상승 (2.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="99">
+              <h3>삼환(101동) <span class='year-badge old'>1999년</span> <span class="tag">99㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 청담동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">255,000만원</span> (2025-11-11 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>198,000만원 (2022-04-13 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">57,000만원 상승 (28.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 용산구"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>대림 <span class='year-badge old'>1994년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 용산구 이촌동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">250,000만원</span> (2025-11-04 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>240,000만원 (2025-10-23 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">10,000만원 상승 (4.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 용산구"
+                     data-build-year="1974" data-young="0"
+                     data-very-young="0" data-old="1" data-area="177">
+              <h3>점보 <span class='year-badge old'>1974년</span> <span class="tag">177㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 용산구 이촌동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">248,000만원</span> (2025-10-31 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>217,000만원 (2021-11-03 | 6층)</div>
+                <div class="k">변화</div>
+                <div class="rise">31,000만원 상승 (14.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 서초구"
+                     data-build-year="1975" data-young="0"
+                     data-very-young="0" data-old="1" data-area="81">
+              <h3>삼호1동~3동 <span class='year-badge old'>1975년</span> <span class="tag">81㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 서초구 방배동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">240,000만원</span> (2025-11-15 | 10층)</div>
+                <div class="k">직전 최고가</div>
+                <div>215,000만원 (2025-06-27 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">25,000만원 상승 (11.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 용산구"
+                     data-build-year="2001" data-young="0"
+                     data-very-young="0" data-old="0" data-area="173">
+              <h3>리버티하우스 <span class='year-badge'>2001년</span> <span class="tag">173㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 용산구 한남동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">240,000만원</span> (2025-11-08 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>225,000만원 (2024-08-07 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">15,000만원 상승 (6.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="2006" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>현대그린1 <span class='year-badge'>2006년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 도곡동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">225,000만원</span> (2025-11-03 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>200,000만원 (2025-08-25 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">25,000만원 상승 (12.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 서초구"
+                     data-build-year="1975" data-young="0"
+                     data-very-young="0" data-old="1" data-area="80">
+              <h3>삼호1동~3동 <span class='year-badge old'>1975년</span> <span class="tag">80㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 서초구 방배동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">220,000만원</span> (2025-11-21 | 11층)</div>
+                <div class="k">직전 최고가</div>
+                <div>175,000만원 (2025-02-27 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">45,000만원 상승 (25.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="2004" data-young="0"
+                     data-very-young="0" data-old="0" data-area="120">
+              <h3>문정래미안 <span class='year-badge'>2004년</span> <span class="tag">120㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 문정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">210,000만원</span> (2025-11-22 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>188,500만원 (2021-07-30 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">21,500만원 상승 (11.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 중구"
+                     data-build-year="2017" data-young="1"
+                     data-very-young="0" data-old="0" data-area="72">
+              <h3>서울역센트럴자이 <span class='year-badge young'>2017년</span> <span class="tag">72㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 중구(서) 만리동2가</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">208,000만원</span> (2025-11-15 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>193,000만원 (2025-09-27 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">15,000만원 상승 (7.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    <span class="badge-rank rank-84">중구 84타입 NO.1 단지</span>
+                    <span class="badge-rank rank-59">중구 59타입 NO.1 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 중구"
+                     data-build-year="2017" data-young="1"
+                     data-very-young="0" data-old="0" data-area="73">
+              <h3>서울역센트럴자이 <span class='year-badge young'>2017년</span> <span class="tag">73㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 중구(서) 만리동2가</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">208,000만원</span> (2025-11-15 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>193,000만원 (2025-09-27 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">15,000만원 상승 (7.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    <span class="badge-rank rank-84">중구 84타입 NO.1 단지</span>
+                    <span class="badge-rank rank-59">중구 59타입 NO.1 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 서초구"
+                     data-build-year="2006" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>방배브라운가 <span class='year-badge'>2006년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 서초구 방배동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">195,000만원</span> (2025-11-02 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>169,000만원 (2025-11-04 | 13층)</div>
+                <div class="k">변화</div>
+                <div class="rise">26,000만원 상승 (15.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 마포구"
+                     data-build-year="2011" data-young="0"
+                     data-very-young="0" data-old="0" data-area="103">
+              <h3>펜트라우스 <span class='year-badge'>2011년</span> <span class="tag">103㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 마포구 신공덕동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">193,000만원</span> (2025-11-21 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>180,000만원 (2025-06-28 | 20층)</div>
+                <div class="k">변화</div>
+                <div class="rise">13,000만원 상승 (7.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 마포구"
+                     data-build-year="2011" data-young="0"
+                     data-very-young="0" data-old="0" data-area="104">
+              <h3>펜트라우스 <span class='year-badge'>2011년</span> <span class="tag">104㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 마포구 신공덕동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">193,000만원</span> (2025-11-21 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>180,000만원 (2025-06-28 | 20층)</div>
+                <div class="k">변화</div>
+                <div class="rise">13,000만원 상승 (7.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="2019" data-young="1"
+                     data-very-young="0" data-old="0" data-area="94">
+              <h3>목동파크자이(101동~108동) <span class='year-badge young'>2019년</span> <span class="tag">94㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 신정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">184,000만원</span> (2025-11-21 | 1층)</div>
+                <div class="k">직전 최고가</div>
+                <div>100,065만원 (2019-06-06 | 1층)</div>
+                <div class="k">변화</div>
+                <div class="rise">83,935만원 상승 (83.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="1992" data-young="0"
+                     data-very-young="0" data-old="1" data-area="39">
+              <h3>신동아 <span class='year-badge old'>1992년</span> <span class="tag">39㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 수서동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">180,000만원</span> (2025-10-23 | 13층)</div>
+                <div class="k">직전 최고가</div>
+                <div>172,000만원 (2025-10-23 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,000만원 상승 (4.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 용산구"
+                     data-build-year="2001" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>삼성래미안 <span class='year-badge'>2001년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 용산구 도원동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">175,000만원</span> (2025-11-10 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>170,000만원 (2025-11-06 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">5,000만원 상승 (2.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 성남시"
+                     data-build-year="1993" data-young="0"
+                     data-very-young="0" data-old="1" data-area="131">
+              <h3>탑마을(기산)1 <span class='year-badge old'>1993년</span> <span class="tag">131㎡</span></h3>
+              <div class="card-sub">📍 경기도 성남시(경) 야탑동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">169,000만원</span> (2025-11-19 | 13층)</div>
+                <div class="k">직전 최고가</div>
+                <div>165,000만원 (2025-09-25 | 6층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,000만원 상승 (2.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강동구"
+                     data-build-year="1984" data-young="0"
+                     data-very-young="0" data-old="1" data-area="117">
+              <h3>삼익가든 <span class='year-badge old'>1984년</span> <span class="tag">117㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강동구 명일동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">168,500만원</span> (2025-11-07 | 1층)</div>
+                <div class="k">직전 최고가</div>
+                <div>149,500만원 (2025-06-21 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">19,000만원 상승 (12.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="1995" data-young="0"
+                     data-very-young="0" data-old="1" data-area="114">
+              <h3>한강극동 <span class='year-badge old'>1995년</span> <span class="tag">114㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 풍납동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">168,000만원</span> (2025-11-09 | 16층)</div>
+                <div class="k">직전 최고가</div>
+                <div>158,000만원 (2025-09-19 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">10,000만원 상승 (6.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="2015" data-young="1"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>래미안영등포프레비뉴 <span class='year-badge young'>2015년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 신길동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">166,000만원</span> (2025-10-18 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>163,000만원 (2025-10-11 | 13층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,000만원 상승 (1.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 서초구"
+                     data-build-year="2006" data-young="0"
+                     data-very-young="0" data-old="0" data-area="134">
+              <h3>세양아르비채102동 <span class='year-badge'>2006년</span> <span class="tag">134㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 서초구 방배동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">165,000만원</span> (2025-10-31 | 9층)</div>
+                <div class="k">직전 최고가</div>
+                <div>120,000만원 (2019-10-06 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">45,000만원 상승 (37.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 동대문구"
+                     data-build-year="2014" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>래미안위브 <span class='year-badge'>2014년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 동대문구 답십리동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">164,000만원</span> (2025-11-22 | 16층)</div>
+                <div class="k">직전 최고가</div>
+                <div>159,200만원 (2025-10-15 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,800만원 상승 (3.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    <span class="badge-rank rank-59">동대문구 59타입 NO.4 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 강남구"
+                     data-build-year="2011" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>강남데시앙파크 <span class='year-badge'>2011년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 강남구 세곡동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">154,000만원</span> (2025-11-24 | 10층)</div>
+                <div class="k">직전 최고가</div>
+                <div>152,500만원 (2025-10-23 | 4층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,500만원 상승 (1.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="2004" data-young="0"
+                     data-very-young="0" data-old="0" data-area="120">
+              <h3>금호어울림 <span class='year-badge'>2004년</span> <span class="tag">120㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 목동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">152,000만원</span> (2025-11-12 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>132,000만원 (2025-09-24 | 1층)</div>
+                <div class="k">변화</div>
+                <div class="rise">20,000만원 상승 (15.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 하남시"
+                     data-build-year="2016" data-young="1"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>위례롯데캐슬 <span class='year-badge young'>2016년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 하남시 학암동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">151,500만원</span> (2025-11-19 | 2층)</div>
+                <div class="k">직전 최고가</div>
+                <div>150,000만원 (2025-10-14 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,500만원 상승 (1.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    <span class="badge-rank rank-84">하남시 84타입 NO.1 단지</span>
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 성남시"
+                     data-build-year="1992" data-young="0"
+                     data-very-young="0" data-old="1" data-area="83">
+              <h3>탑마을(선경)1 <span class='year-badge old'>1992년</span> <span class="tag">83㎡</span></h3>
+              <div class="card-sub">📍 경기도 성남시(경) 야탑동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">149,000만원</span> (2025-11-21 | 9층)</div>
+                <div class="k">직전 최고가</div>
+                <div>141,000만원 (2025-10-01 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,000만원 상승 (5.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="1997" data-young="0"
+                     data-very-young="0" data-old="1" data-area="134">
+              <h3>거여2단지효성아파트 <span class='year-badge old'>1997년</span> <span class="tag">134㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 거여동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">147,000만원</span> (2025-11-10 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>146,000만원 (2021-04-16 | 12층)</div>
                 <div class="k">변화</div>
                 <div class="rise">1,000만원 상승 (0.7%)</div>
                 <div class="k">특이사항</div>
@@ -297,18 +1244,984 @@
             </section>
             
 
+            <section class="card" data-region="서울특별시 동대문구"
+                     data-build-year="2019" data-young="1"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>답십리파크자이 <span class='year-badge young'>2019년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 동대문구 답십리동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">144,000만원</span> (2025-11-24 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>141,000만원 (2021-01-09 | 17층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,000만원 상승 (2.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 성남시"
+                     data-build-year="2008" data-young="0"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>산운마을8단지(부영사랑으로) <span class='year-badge'>2008년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 성남시(경) 운중동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">142,000만원</span> (2025-11-19 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>130,000만원 (2025-09-17 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">12,000만원 상승 (9.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 송파구"
+                     data-build-year="2023" data-young="1"
+                     data-very-young="1" data-old="0" data-area="70">
+              <h3>송파파밀리에더퍼스트 <span class='year-badge very-young'>2023년</span> <span class="tag">70㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 송파구 송파동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">142,000만원</span> (2025-11-07 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>128,000만원 (2025-05-23 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">14,000만원 상승 (10.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 동작구"
+                     data-build-year="2003" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>삼성래미안 <span class='year-badge'>2003년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 동작구 사당동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">139,000만원</span> (2025-11-15 | 11층)</div>
+                <div class="k">직전 최고가</div>
+                <div>135,000만원 (2025-10-15 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,000만원 상승 (3.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 광진구"
+                     data-build-year="1998" data-young="0"
+                     data-very-young="0" data-old="1" data-area="76">
+              <h3>자양현대5 <span class='year-badge old'>1998년</span> <span class="tag">76㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 광진구 자양동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">130,000만원</span> (2025-10-18 | 2층)</div>
+                <div class="k">직전 최고가</div>
+                <div>128,000만원 (2025-06-19 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (1.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 용산구"
+                     data-build-year="2005" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>세방리버하이빌 <span class='year-badge'>2005년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 용산구 신창동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">124,300만원</span> (2025-11-19 | 2층)</div>
+                <div class="k">직전 최고가</div>
+                <div>115,700만원 (2025-03-10 | 10층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,600만원 상승 (7.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 연수구"
+                     data-build-year="2011" data-young="0"
+                     data-very-young="0" data-old="0" data-area="104">
+              <h3>더샵센트럴파크2 <span class='year-badge'>2011년</span> <span class="tag">104㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 연수구 송도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">123,000만원</span> (2025-11-18 | 21층)</div>
+                <div class="k">직전 최고가</div>
+                <div>106,500만원 (2025-08-23 | 22층)</div>
+                <div class="k">변화</div>
+                <div class="rise">16,500만원 상승 (15.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 연수구"
+                     data-build-year="2011" data-young="0"
+                     data-very-young="0" data-old="0" data-area="105">
+              <h3>더샵센트럴파크2 <span class='year-badge'>2011년</span> <span class="tag">105㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 연수구 송도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">123,000만원</span> (2025-11-18 | 21층)</div>
+                <div class="k">직전 최고가</div>
+                <div>116,000만원 (2025-01-17 | 21층)</div>
+                <div class="k">변화</div>
+                <div class="rise">7,000만원 상승 (6.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 서초구"
+                     data-build-year="2004" data-young="0"
+                     data-very-young="0" data-old="0" data-area="73">
+              <h3>프리우스 <span class='year-badge'>2004년</span> <span class="tag">73㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 서초구 방배동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">121,000만원</span> (2025-11-19 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>120,000만원 (2024-02-24 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,000만원 상승 (0.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 중랑구"
+                     data-build-year="2025" data-young="1"
+                     data-very-young="1" data-old="0" data-area="59">
+              <h3>리버센 SK VIEW 롯데캐슬 <span class='year-badge new'>분양</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 중랑구 중화동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">118,000만원</span> (2025-11-20 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>110,000만원 (2025-10-13 | 21층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,000만원 상승 (7.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    <span class="badge-rank rank-84">중랑구 84타입 NO.5 단지</span>
+                    <span class="badge-rank rank-59">중랑구 59타입 NO.1 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 연수구"
+                     data-build-year="2022" data-young="1"
+                     data-very-young="1" data-old="0" data-area="107">
+              <h3>더샵송도프라임뷰20BL <span class='year-badge very-young'>2022년</span> <span class="tag">107㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 연수구 송도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">116,500만원</span> (2025-11-07 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>114,500만원 (2025-10-16 | 18층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (1.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 구로구"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="131">
+              <h3>신도림롯데아파트 <span class='year-badge old'>1999년</span> <span class="tag">131㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 구로구 구로동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">114,000만원</span> (2025-11-18 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>105,000만원 (2024-10-26 | 17층)</div>
+                <div class="k">변화</div>
+                <div class="rise">9,000만원 상승 (8.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="1983" data-young="0"
+                     data-very-young="0" data-old="1" data-area="62">
+              <h3>우창 <span class='year-badge old'>1983년</span> <span class="tag">62㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 신길동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">114,000만원</span> (2025-10-18 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>97,500만원 (2025-03-23 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">16,500만원 상승 (16.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="2002" data-young="0"
+                     data-very-young="0" data-old="0" data-area="121">
+              <h3>진달래마을(효성써미트빌) <span class='year-badge'>2002년</span> <span class="tag">121㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 상동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">108,700만원</span> (2025-11-12 | 14층)</div>
+                <div class="k">직전 최고가</div>
+                <div>96,000만원 (2025-11-10 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">12,700만원 상승 (13.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 영등포구"
+                     data-build-year="2005" data-young="0"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>보라매경남아너스빌 <span class='year-badge'>2005년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 영등포구 신길동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">107,000만원</span> (2025-11-03 | 16층)</div>
+                <div class="k">직전 최고가</div>
+                <div>97,000만원 (2021-08-20 | 16층)</div>
+                <div class="k">변화</div>
+                <div class="rise">10,000만원 상승 (10.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 안양시"
+                     data-build-year="2025" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>e편한세상 평촌 어반밸리 <span class='year-badge new'>분양</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 안양시(경) 호계동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">104,388만원</span> (2025-11-21 | 14층)</div>
+                <div class="k">직전 최고가</div>
+                <div>102,314만원 (2025-10-15 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,074만원 상승 (2.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 안양시"
+                     data-build-year="2002" data-young="0"
+                     data-very-young="0" data-old="0" data-area="113">
+              <h3>호계1차현대홈타운 <span class='year-badge'>2002년</span> <span class="tag">113㎡</span></h3>
+              <div class="card-sub">📍 경기도 안양시(경) 호계동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">100,000만원</span> (2025-11-15 | 15층)</div>
+                <div class="k">직전 최고가</div>
+                <div>92,000만원 (2021-06-22 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">8,000만원 상승 (8.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 용인시"
+                     data-build-year="1997" data-young="0"
+                     data-very-young="0" data-old="1" data-area="134">
+              <h3>동성1차 <span class='year-badge old'>1997년</span> <span class="tag">134㎡</span></h3>
+              <div class="card-sub">📍 경기도 용인시(경) 죽전동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">100,000만원</span> (2025-11-06 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>89,000만원 (2025-10-04 | 4층)</div>
+                <div class="k">변화</div>
+                <div class="rise">11,000만원 상승 (12.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 동작구"
+                     data-build-year="2003" data-young="0"
+                     data-very-young="0" data-old="0" data-area="55">
+              <h3>롯데낙천대 <span class='year-badge'>2003년</span> <span class="tag">55㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 동작구 신대방동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">97,000만원</span> (2025-11-22 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>94,000만원 (2025-09-18 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,000만원 상승 (3.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 하남시"
+                     data-build-year="2014" data-young="0"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>미사강변파밀리에 <span class='year-badge'>2014년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 하남시 망월동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">96,500만원</span> (2025-11-20 | 14층)</div>
+                <div class="k">직전 최고가</div>
+                <div>94,500만원 (2021-09-13 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (2.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 용인시"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>현대성우8차 <span class='year-badge old'>1999년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 용인시(경) 풍덕천동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">94,000만원</span> (2025-11-15 | 14층)</div>
+                <div class="k">직전 최고가</div>
+                <div>92,000만원 (2025-10-15 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (2.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
             <section class="card" data-region="경기도 구리시"
                      data-build-year="2001" data-young="0"
-                     data-very-young="0" data-old="0" data-area="54">
-              <h3>장자마을금호1-2 <span class='year-badge'>2001년</span> <span class="tag">54㎡</span></h3>
-              <div class="card-sub">📍 경기도 구리시 교문동</div>
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>한일 <span class='year-badge'>2001년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 구리시 토평동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">84,500만원</span> (2025-10-31 | 8층)</div>
+                <div><span class="highlight">90,000만원</span> (2025-11-08 | 6층)</div>
                 <div class="k">직전 최고가</div>
-                <div>84,000만원 (2025-10-26 | 14층)</div>
+                <div>84,000만원 (2025-10-11 | 9층)</div>
                 <div class="k">변화</div>
-                <div class="rise">500만원 상승 (0.6%)</div>
+                <div class="rise">6,000만원 상승 (7.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    <span class="badge-rank rank-59">구리시 59타입 NO.4 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 관악구"
+                     data-build-year="2003" data-young="0"
+                     data-very-young="0" data-old="0" data-area="107">
+              <h3>벽산타운II <span class='year-badge'>2003년</span> <span class="tag">107㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 관악구 봉천동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">87,500만원</span> (2025-11-24 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>78,000만원 (2020-06-26 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">9,500만원 상승 (12.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 수원시"
+                     data-build-year="2019" data-young="1"
+                     data-very-young="0" data-old="0" data-area="75">
+              <h3>영통아이파크캐슬2단지 <span class='year-badge young'>2019년</span> <span class="tag">75㎡</span></h3>
+              <div class="card-sub">📍 경기도 수원시(경) 망포동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">85,000만원</span> (2025-11-21 | 21층)</div>
+                <div class="k">직전 최고가</div>
+                <div>82,700만원 (2025-10-13 | 19층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,300만원 상승 (2.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 부평구"
+                     data-build-year="2004" data-young="0"
+                     data-very-young="0" data-old="0" data-area="118">
+              <h3>서해그랑블5단지 <span class='year-badge'>2004년</span> <span class="tag">118㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 부평구 삼산동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">84,000만원</span> (2025-11-22 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>49,000만원 (2025-07-25 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">35,000만원 상승 (71.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 수원시"
+                     data-build-year="2019" data-young="1"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>영통아이파크캐슬1단지 <span class='year-badge young'>2019년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 수원시(경) 망포동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">82,500만원</span> (2025-11-15 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>80,600만원 (2025-10-13 | 24층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,900만원 상승 (2.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="2002" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>진달래마을(대림) <span class='year-badge'>2002년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 상동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">82,000만원</span> (2025-11-21 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>78,300만원 (2025-10-21 | 16층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,700만원 상승 (4.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 연수구"
+                     data-build-year="2020" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>힐스테이트레이크송도2차 <span class='year-badge very-young'>2020년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 연수구 송도동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">78,000만원</span> (2025-11-15 | 37층)</div>
+                <div class="k">직전 최고가</div>
+                <div>73,500만원 (2025-07-05 | 17층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,500만원 상승 (6.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>포도마을(영남) <span class='year-badge old'>1994년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 중동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">75,000만원</span> (2025-11-10 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>71,000만원 (2025-08-24 | 19층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,000만원 상승 (5.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="2012" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>부천위브트레지움1단지 <span class='year-badge'>2012년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 약대동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">74,500만원</span> (2025-11-10 | 23층)</div>
+                <div class="k">직전 최고가</div>
+                <div>74,000만원 (2025-10-28 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">500만원 상승 (0.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    <span class="badge-rank rank-59">부천시 59타입 NO.5 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="2012" data-young="0"
+                     data-very-young="0" data-old="0" data-area="75">
+              <h3>삼송리슈빌센트럴파크 <span class='year-badge'>2012년</span> <span class="tag">75㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 원흥동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">70,000만원</span> (2025-11-22 | 13층)</div>
+                <div class="k">직전 최고가</div>
+                <div>69,500만원 (2025-06-06 | 14층)</div>
+                <div class="k">변화</div>
+                <div class="rise">500만원 상승 (0.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 성동구"
+                     data-build-year="1975" data-young="0"
+                     data-very-young="0" data-old="1" data-area="78">
+              <h3>홍익한신 <span class='year-badge old'>1975년</span> <span class="tag">78㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 성동구 홍익동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">69,000만원</span> (2025-11-14 | 2층)</div>
+                <div class="k">직전 최고가</div>
+                <div>62,000만원 (2023-09-08 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">7,000만원 상승 (11.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>건영 <span class='year-badge old'>1994년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 목동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">68,900만원</span> (2025-11-20 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>67,000만원 (2025-09-27 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,900만원 상승 (2.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 도봉구"
+                     data-build-year="2004" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>이에스에이아파트3 <span class='year-badge'>2004년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 도봉구 방학동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">68,000만원</span> (2025-11-21 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>65,000만원 (2024-10-07 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,000만원 상승 (4.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
+                     data-build-year="2025" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>곤지암역 제일풍경채 <span class='year-badge new'>분양</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 곤지암읍 곤지암리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">65,290만원</span> (2025-11-13 | 22층)</div>
+                <div class="k">직전 최고가</div>
+                <div>64,125만원 (2025-07-01 | 10층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,165만원 상승 (1.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="2022" data-young="1"
+                     data-very-young="1" data-old="0" data-area="70">
+              <h3>e편한세상일산어반스카이 <span class='year-badge very-young'>2022년</span> <span class="tag">70㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 일산동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">65,000만원</span> (2025-11-02 | 35층)</div>
+                <div class="k">직전 최고가</div>
+                <div>64,700만원 (2025-11-14 | 49층)</div>
+                <div class="k">변화</div>
+                <div class="rise">300만원 상승 (0.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 김포시"
+                     data-build-year="2021" data-young="1"
+                     data-very-young="1" data-old="0" data-area="90">
+              <h3>메트로타워예미지 <span class='year-badge very-young'>2021년</span> <span class="tag">90㎡</span></h3>
+              <div class="card-sub">📍 경기도 김포시 구래동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">65,000만원</span> (2025-11-19 | 45층)</div>
+                <div class="k">직전 최고가</div>
+                <div>64,900만원 (2025-10-28 | 39층)</div>
+                <div class="k">변화</div>
+                <div class="rise">100만원 상승 (0.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 평택시"
+                     data-build-year="2021" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>고덕국제신도시리슈빌레이크파크 <span class='year-badge very-young'>2021년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 평택시 고덕동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">65,000만원</span> (2025-11-22 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>55,000만원 (2025-08-23 | 20층)</div>
+                <div class="k">변화</div>
+                <div class="rise">10,000만원 상승 (18.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="101">
+              <h3>사랑마을(벽산,선경,삼익) <span class='year-badge old'>1994년</span> <span class="tag">101㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 상동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">64,500만원</span> (2025-11-15 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>64,000만원 (2025-11-05 | 16층)</div>
+                <div class="k">변화</div>
+                <div class="rise">500만원 상승 (0.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 수원시"
+                     data-build-year="2022" data-young="1"
+                     data-very-young="1" data-old="0" data-area="59">
+              <h3>수원하늘채더퍼스트1단지 <span class='year-badge very-young'>2022년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 수원시(경) 곡반정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">64,200만원</span> (2025-11-18 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>62,900만원 (2025-04-03 | 13층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,300만원 상승 (2.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 용인시"
+                     data-build-year="2001" data-young="0"
+                     data-very-young="0" data-old="0" data-area="116">
+              <h3>하마비마을동일하이빌1 <span class='year-badge'>2001년</span> <span class="tag">116㎡</span></h3>
+              <div class="card-sub">📍 경기도 용인시(경) 언남동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">64,000만원</span> (2025-11-24 | 16층)</div>
+                <div class="k">직전 최고가</div>
+                <div>59,900만원 (2025-11-05 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,100만원 상승 (6.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
+                     data-build-year="2024" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>오포자이오브제 <span class='year-badge very-young'>2024년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 고산동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">63,500만원</span> (2025-11-17 | 23층)</div>
+                <div class="k">직전 최고가</div>
+                <div>56,515만원 (2025-02-12 | 20층)</div>
+                <div class="k">변화</div>
+                <div class="rise">6,985만원 상승 (12.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광명시"
+                     data-build-year="2025" data-young="1"
+                     data-very-young="1" data-old="0" data-area="59">
+              <h3>광명 소하 신원아침도시2 <span class='year-badge new'>분양</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 광명시 소하동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">63,002만원</span> (2025-11-17 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>56,128만원 (2025-06-24 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">6,874만원 상승 (12.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 용인시"
+                     data-build-year="2025" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>힐스테이트몬테로이2단지 <span class='year-badge very-young'>2025년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 용인시(경) 모현읍 왕산리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">61,000만원</span> (2025-11-13 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>55,800만원 (2025-07-19 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">5,200만원 상승 (9.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
+                     data-build-year="2017" data-young="1"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>힐스테이트태전6(1615동~1620동) <span class='year-badge young'>2017년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 태전동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">61,000만원</span> (2025-11-22 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>59,500만원 (2025-09-13 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,500만원 상승 (2.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="1993" data-young="0"
+                     data-very-young="0" data-old="1" data-area="64">
+              <h3>미리내마을(롯데2) <span class='year-badge old'>1993년</span> <span class="tag">64㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 중동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">59,000만원</span> (2025-11-22 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>54,000만원 (2025-09-07 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">5,000만원 상승 (9.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="1997" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>대림2 <span class='year-badge old'>1997년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 토당동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">57,900만원</span> (2025-11-18 | 2층)</div>
+                <div class="k">직전 최고가</div>
+                <div>52,500만원 (2025-09-03 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">5,400만원 상승 (10.3%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -319,17 +2232,353 @@
             
 
             <section class="card" data-region="경기도 구리시"
-                     data-build-year="2016" data-young="1"
-                     data-very-young="0" data-old="0" data-area="74">
-              <h3>한라비발디 <span class='year-badge young'>2016년</span> <span class="tag">74㎡</span></h3>
-              <div class="card-sub">📍 경기도 구리시 갈매동</div>
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="72">
+              <h3>건영 <span class='year-badge old'>1994년</span> <span class="tag">72㎡</span></h3>
+              <div class="card-sub">📍 경기도 구리시 인창동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">68,500만원</span> (2025-11-15 | 10층)</div>
+                <div><span class="highlight">57,500만원</span> (2025-11-14 | 11층)</div>
                 <div class="k">직전 최고가</div>
-                <div>67,500만원 (2025-11-06 | 17층)</div>
+                <div>55,800만원 (2021-03-01 | 12층)</div>
                 <div class="k">변화</div>
-                <div class="rise">1,000만원 상승 (1.5%)</div>
+                <div class="rise">1,700만원 상승 (3.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>나이아가라 <span class='year-badge old'>1999년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 신월동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">57,500만원</span> (2025-11-22 | 6층)</div>
+                <div class="k">직전 최고가</div>
+                <div>42,500만원 (2020-10-26 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">15,000만원 상승 (35.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 양주시"
+                     data-build-year="2023" data-young="1"
+                     data-very-young="1" data-old="0" data-area="101">
+              <h3>양주옥정신도시제일풍경채레이크시티2단지 <span class='year-badge very-young'>2023년</span> <span class="tag">101㎡</span></h3>
+              <div class="card-sub">📍 경기도 양주시 옥정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">57,500만원</span> (2025-11-21 | 21층)</div>
+                <div class="k">직전 최고가</div>
+                <div>57,350만원 (2025-09-04 | 22층)</div>
+                <div class="k">변화</div>
+                <div class="rise">150만원 상승 (0.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="2011" data-young="0"
+                     data-very-young="0" data-old="0" data-area="121">
+              <h3>하이파크시티일산파밀리에3단지 <span class='year-badge'>2011년</span> <span class="tag">121㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 덕이동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">56,500만원</span> (2025-11-04 | 20층)</div>
+                <div class="k">직전 최고가</div>
+                <div>53,500만원 (2025-06-27 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,000만원 상승 (5.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
+                     data-build-year="2025" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>힐스테이트초월역2블록 <span class='year-badge new'>분양</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 초월읍 쌍동리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">55,800만원</span> (2025-11-18 | 6층)</div>
+                <div class="k">직전 최고가</div>
+                <div>55,500만원 (2025-10-17 | 17층)</div>
+                <div class="k">변화</div>
+                <div class="rise">300만원 상승 (0.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 평택시"
+                     data-build-year="2022" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>e편한세상지제역 <span class='year-badge very-young'>2022년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 평택시 동삭동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">51,900만원</span> (2025-11-21 | 24층)</div>
+                <div class="k">직전 최고가</div>
+                <div>51,500만원 (2025-09-06 | 19층)</div>
+                <div class="k">변화</div>
+                <div class="rise">400만원 상승 (0.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    <span class="badge-rank rank-59">평택시 59타입 NO.4 단지</span>
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 안양시"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>삼성 <span class='year-badge old'>1994년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 안양시(경) 안양동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">51,000만원</span> (2025-11-12 | 19층)</div>
+                <div class="k">직전 최고가</div>
+                <div>49,000만원 (2025-11-07 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (4.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
+                     data-build-year="2025" data-young="1"
+                     data-very-young="1" data-old="0" data-area="59">
+              <h3>광주탄벌서희스타힐스1단지 <span class='year-badge very-young'>2025년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 탄벌동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">50,000만원</span> (2025-11-21 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>46,000만원 (2025-11-06 | 17층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,000만원 상승 (8.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 평택시"
+                     data-build-year="2020" data-young="1"
+                     data-very-young="1" data-old="0" data-area="74">
+              <h3>더샵지제역센트럴파크2BL <span class='year-badge very-young'>2020년</span> <span class="tag">74㎡</span></h3>
+              <div class="card-sub">📍 경기도 평택시 동삭동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">49,000만원</span> (2025-11-22 | 27층)</div>
+                <div class="k">직전 최고가</div>
+                <div>47,000만원 (2025-09-23 | 25층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (4.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="2004" data-young="0"
+                     data-very-young="0" data-old="0" data-area="63">
+              <h3>춘의동우민늘사랑 <span class='year-badge'>2004년</span> <span class="tag">63㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 춘의동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">48,500만원</span> (2025-11-23 | 13층)</div>
+                <div class="k">직전 최고가</div>
+                <div>44,200만원 (2025-08-30 | 16층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,300만원 상승 (9.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 의정부시"
+                     data-build-year="2021" data-young="1"
+                     data-very-young="1" data-old="0" data-area="59">
+              <h3>장암더샵포레스트 <span class='year-badge very-young'>2021년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 의정부시 장암동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">48,000만원</span> (2025-11-23 | 12층)</div>
+                <div class="k">직전 최고가</div>
+                <div>45,000만원 (2025-11-10 | 4층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,000만원 상승 (6.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 양주시"
+                     data-build-year="2023" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>양주옥정신도시제일풍경채레이크시티2단지 <span class='year-badge very-young'>2023년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 양주시 옥정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">47,800만원</span> (2025-11-23 | 14층)</div>
+                <div class="k">직전 최고가</div>
+                <div>47,500만원 (2025-10-09 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">300만원 상승 (0.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
+                     data-build-year="2018" data-young="1"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>광주역우방아이유쉘1단지 <span class='year-badge young'>2018년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 양벌동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">47,200만원</span> (2025-11-07 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>44,500만원 (2025-09-10 | 1층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,700만원 상승 (6.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 양주시"
+                     data-build-year="2024" data-young="1"
+                     data-very-young="1" data-old="0" data-area="84">
+              <h3>회천파밀리에더퍼스트 <span class='year-badge very-young'>2024년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 양주시 덕계동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">46,500만원</span> (2025-11-21 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>44,500만원 (2025-10-13 | 16층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (4.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 화성시"
+                     data-build-year="2008" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>향남지구우미린아파트 <span class='year-badge'>2008년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 화성시 향남읍 행정리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">46,000만원</span> (2025-11-16 | 12층)</div>
+                <div class="k">직전 최고가</div>
+                <div>41,500만원 (2025-11-07 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">4,500만원 상승 (10.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="1995" data-young="0"
+                     data-very-young="0" data-old="1" data-area="122">
+              <h3>탄현마을(경남) <span class='year-badge old'>1995년</span> <span class="tag">122㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 탄현동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">45,500만원</span> (2025-11-22 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>42,000만원 (2025-09-24 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,500만원 상승 (8.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="서울특별시 양천구"
+                     data-build-year="1998" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>대림(주상복합) <span class='year-badge old'>1998년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 서울특별시 양천구 신월동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">45,500만원</span> (2025-11-18 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>36,450만원 (2020-06-16 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">9,050만원 상승 (24.8%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -340,17 +2589,374 @@
             
 
             <section class="card" data-region="경기도 구리시"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>아름마을성원 <span class='year-badge old'>1999년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 구리시 인창동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">43,900만원</span> (2025-11-17 | 3층)</div>
+                <div class="k">직전 최고가</div>
+                <div>43,200만원 (2025-07-25 | 4층)</div>
+                <div class="k">변화</div>
+                <div class="rise">700만원 상승 (1.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 연수구"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>삼용 <span class='year-badge old'>1994년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 연수구 청학동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">43,500만원</span> (2025-11-08 | 10층)</div>
+                <div class="k">직전 최고가</div>
+                <div>40,000만원 (2025-09-25 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,500만원 상승 (8.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 화성시"
+                     data-build-year="2023" data-young="1"
+                     data-very-young="1" data-old="0" data-area="59">
+              <h3>에듀시티파라곤 <span class='year-badge very-young'>2023년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 화성시 봉담읍 동화리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">42,500만원</span> (2025-11-22 | 20층)</div>
+                <div class="k">직전 최고가</div>
+                <div>41,800만원 (2025-07-05 | 23층)</div>
+                <div class="k">변화</div>
+                <div class="rise">700만원 상승 (1.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 파주시"
+                     data-build-year="2011" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>한빛마을7단지(한신휴플러스) <span class='year-badge'>2011년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 파주시 야당동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">42,200만원</span> (2025-11-18 | 11층)</div>
+                <div class="k">직전 최고가</div>
+                <div>42,000만원 (2025-11-14 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">200만원 상승 (0.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 시흥시"
+                     data-build-year="2017" data-young="1"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>시흥배곧신도시이지더원1차더퍼스트 <span class='year-badge young'>2017년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 시흥시 배곧동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">42,000만원</span> (2025-11-08 | 25층)</div>
+                <div class="k">직전 최고가</div>
+                <div>41,500만원 (2025-08-30 | 13층)</div>
+                <div class="k">변화</div>
+                <div class="rise">500만원 상승 (1.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 안양시"
+                     data-build-year="1995" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>성원1 <span class='year-badge old'>1995년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 안양시(경) 안양동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">40,200만원</span> (2025-11-22 | 16층)</div>
+                <div class="k">직전 최고가</div>
+                <div>40,000만원 (2025-08-04 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">200만원 상승 (0.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 의정부시"
+                     data-build-year="2022" data-young="1"
+                     data-very-young="1" data-old="0" data-area="55">
+              <h3>고산더라피니엘 <span class='year-badge very-young'>2022년</span> <span class="tag">55㎡</span></h3>
+              <div class="card-sub">📍 경기도 의정부시 산곡동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">39,500만원</span> (2025-11-23 | 16층)</div>
+                <div class="k">직전 최고가</div>
+                <div>37,500만원 (2025-11-02 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (5.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 부평구"
+                     data-build-year="2021" data-young="1"
+                     data-very-young="1" data-old="0" data-area="59">
+              <h3>서희스타힐스부평센트럴 <span class='year-badge very-young'>2021년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 부평구 십정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">38,700만원</span> (2025-11-11 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>38,000만원 (2025-07-12 | 10층)</div>
+                <div class="k">변화</div>
+                <div class="rise">700만원 상승 (1.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 의정부시"
+                     data-build-year="2005" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>금오풍림 <span class='year-badge'>2005년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 의정부시 신곡동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">38,500만원</span> (2025-11-24 | 8층)</div>
+                <div class="k">직전 최고가</div>
+                <div>37,500만원 (2025-10-30 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,000만원 상승 (2.7%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
+                     data-build-year="2007" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>초월e-편한세상1 <span class='year-badge'>2007년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 초월읍 쌍동리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">36,500만원</span> (2025-11-17 | 11층)</div>
+                <div class="k">직전 최고가</div>
+                <div>32,800만원 (2025-09-04 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,700만원 상승 (11.3%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 의정부시"
+                     data-build-year="2008" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>브라운스톤흥선 <span class='year-badge'>2008년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 의정부시 가능동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">35,700만원</span> (2025-11-22 | 18층)</div>
+                <div class="k">직전 최고가</div>
+                <div>35,500만원 (2025-08-28 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">200만원 상승 (0.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 수원시"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>삼익 <span class='year-badge old'>1999년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 수원시(경) 세류동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">35,000만원</span> (2025-11-19 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>33,400만원 (2025-11-15 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,600만원 상승 (4.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="1995" data-young="0"
+                     data-very-young="0" data-old="1" data-area="101">
+              <h3>중산마을7(코오롱) <span class='year-badge old'>1995년</span> <span class="tag">101㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 중산동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">33,750만원</span> (2025-11-12 | 6층)</div>
+                <div class="k">직전 최고가</div>
+                <div>32,500만원 (2025-06-02 | 7층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,250만원 상승 (3.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="1993" data-young="0"
+                     data-very-young="0" data-old="1" data-area="58">
+              <h3>신원당(대명5) <span class='year-badge old'>1993년</span> <span class="tag">58㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 성사동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">33,500만원</span> (2025-11-11 | 12층)</div>
+                <div class="k">직전 최고가</div>
+                <div>32,900만원 (2025-09-10 | 12층)</div>
+                <div class="k">변화</div>
+                <div class="rise">600만원 상승 (1.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 시흥시"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>진말삼환한진아파트 <span class='year-badge old'>1999년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 시흥시 장곡동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">33,000만원</span> (2025-11-21 | 20층)</div>
+                <div class="k">직전 최고가</div>
+                <div>31,800만원 (2025-11-08 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,200만원 상승 (3.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 평택시"
+                     data-build-year="2017" data-young="1"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>평택센트럴자이2단지 <span class='year-badge young'>2017년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 평택시 동삭동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">32,700만원</span> (2025-10-31 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>32,500만원 (2025-09-30 | 9층)</div>
+                <div class="k">변화</div>
+                <div class="rise">200만원 상승 (0.6%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 고양시"
+                     data-build-year="2000" data-young="0"
+                     data-very-young="0" data-old="0" data-area="84">
+              <h3>탄현마을주은 <span class='year-badge'>2000년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 고양시(경) 탄현동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">32,500만원</span> (2025-11-20 | 16층)</div>
+                <div class="k">직전 최고가</div>
+                <div>32,200만원 (2025-08-20 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">300만원 상승 (0.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 광주시"
                      data-build-year="1996" data-young="0"
                      data-very-young="0" data-old="1" data-area="59">
-              <h3>주공1 <span class='year-badge old'>1996년</span> <span class="tag">59㎡</span></h3>
-              <div class="card-sub">📍 경기도 구리시 인창동</div>
+              <h3>동보 <span class='year-badge old'>1996년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 광주시 탄벌동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">60,000만원</span> (2025-10-31 | 7층)</div>
+                <div><span class="highlight">31,000만원</span> (2025-10-30 | 10층)</div>
                 <div class="k">직전 최고가</div>
-                <div>59,000만원 (2025-11-08 | 14층)</div>
+                <div>29,000만원 (2025-10-27 | 12층)</div>
                 <div class="k">변화</div>
-                <div class="rise">1,000만원 상승 (1.7%)</div>
+                <div class="rise">2,000만원 상승 (6.9%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -360,18 +2966,39 @@
             </section>
             
 
-            <section class="card" data-region="경기도 구리시"
+            <section class="card" data-region="인천광역시 연수구"
+                     data-build-year="1993" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>럭키송도 <span class='year-badge old'>1993년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 연수구 옥련동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">29,000만원</span> (2025-11-01 | 1층)</div>
+                <div class="k">직전 최고가</div>
+                <div>27,500만원 (2025-08-08 | 15층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,500만원 상승 (5.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 남양주시"
                      data-build-year="1996" data-young="0"
-                     data-very-young="0" data-old="1" data-area="39">
-              <h3>주공6 <span class='year-badge old'>1996년</span> <span class="tag">39㎡</span></h3>
-              <div class="card-sub">📍 경기도 구리시 인창동</div>
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>미라보 <span class='year-badge old'>1996년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 남양주시 금곡동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">42,000만원</span> (2025-11-22 | 6층)</div>
+                <div><span class="highlight">25,800만원</span> (2025-11-22 | 10층)</div>
                 <div class="k">직전 최고가</div>
-                <div>40,500만원 (2025-10-17 | 8층)</div>
+                <div>25,000만원 (2025-10-30 | 14층)</div>
                 <div class="k">변화</div>
-                <div class="rise">1,500만원 상승 (3.7%)</div>
+                <div class="rise">800만원 상승 (3.2%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -381,18 +3008,18 @@
             </section>
             
 
-            <section class="card" data-region="경기도 구리시"
-                     data-build-year="1998" data-young="0"
-                     data-very-young="0" data-old="1" data-area="57">
-              <h3>보성 <span class='year-badge old'>1998년</span> <span class="tag">57㎡</span></h3>
-              <div class="card-sub">📍 경기도 구리시 수택동</div>
+            <section class="card" data-region="경기도 화성시"
+                     data-build-year="1997" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>한신 <span class='year-badge old'>1997년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 화성시 봉담읍 상리</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">42,000만원</span> (2025-11-06 | 3층)</div>
+                <div><span class="highlight">25,000만원</span> (2025-11-24 | 7층)</div>
                 <div class="k">직전 최고가</div>
-                <div>40,500만원 (2024-05-24 | 5층)</div>
+                <div>24,700만원 (2025-07-14 | 10층)</div>
                 <div class="k">변화</div>
-                <div class="rise">1,500만원 상승 (3.7%)</div>
+                <div class="rise">300만원 상승 (1.2%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -402,18 +3029,228 @@
             </section>
             
 
-            <section class="card" data-region="경기도 구리시"
-                     data-build-year="1998" data-young="0"
-                     data-very-young="0" data-old="1" data-area="56">
-              <h3>보성 <span class='year-badge old'>1998년</span> <span class="tag">56㎡</span></h3>
-              <div class="card-sub">📍 경기도 구리시 수택동</div>
+            <section class="card" data-region="인천광역시 부평구"
+                     data-build-year="1992" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>경남3차 <span class='year-badge old'>1992년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 부평구 산곡동</div>
               <div class="grid">
                 <div class="k">이번 실거래</div>
-                <div><span class="highlight">42,000만원</span> (2025-11-06 | 3층)</div>
+                <div><span class="highlight">25,000만원</span> (2025-11-12 | 20층)</div>
                 <div class="k">직전 최고가</div>
-                <div>19,500만원 (2020-10-25 | 4층)</div>
+                <div>24,800만원 (2025-07-14 | 20층)</div>
                 <div class="k">변화</div>
-                <div class="rise">22,500만원 상승 (115.4%)</div>
+                <div class="rise">200만원 상승 (0.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 부천시"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="29">
+              <h3>반달마을(극동신라) <span class='year-badge old'>1994년</span> <span class="tag">29㎡</span></h3>
+              <div class="card-sub">📍 경기도 부천시(경) 상동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">20,500만원</span> (2025-11-19 | 11층)</div>
+                <div class="k">직전 최고가</div>
+                <div>14,100만원 (2025-10-30 | 18층)</div>
+                <div class="k">변화</div>
+                <div class="rise">6,400만원 상승 (45.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 평택시"
+                     data-build-year="1999" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>참이슬 <span class='year-badge old'>1999년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 평택시 합정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">19,500만원</span> (2025-11-22 | 13층)</div>
+                <div class="k">직전 최고가</div>
+                <div>18,900만원 (2025-11-09 | 6층)</div>
+                <div class="k">변화</div>
+                <div class="rise">600만원 상승 (3.2%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="인천광역시 부평구"
+                     data-build-year="1990" data-young="0"
+                     data-very-young="0" data-old="1" data-area="62">
+              <h3>삼보 <span class='year-badge old'>1990년</span> <span class="tag">62㎡</span></h3>
+              <div class="card-sub">📍 인천광역시 부평구 삼산동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">19,000만원</span> (2025-11-22 | 4층)</div>
+                <div class="k">직전 최고가</div>
+                <div>18,900만원 (2025-08-19 | 6층)</div>
+                <div class="k">변화</div>
+                <div class="rise">100만원 상승 (0.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 평택시"
+                     data-build-year="1994" data-young="0"
+                     data-very-young="0" data-old="1" data-area="44">
+              <h3>비전현대 <span class='year-badge old'>1994년</span> <span class="tag">44㎡</span></h3>
+              <div class="card-sub">📍 경기도 평택시 비전동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">16,400만원</span> (2025-11-19 | 11층)</div>
+                <div class="k">직전 최고가</div>
+                <div>15,500만원 (2025-10-24 | 16층)</div>
+                <div class="k">변화</div>
+                <div class="rise">900만원 상승 (5.8%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 화성시"
+                     data-build-year="1996" data-young="0"
+                     data-very-young="0" data-old="1" data-area="59">
+              <h3>기산 <span class='year-badge old'>1996년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 화성시 우정읍 조암리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">15,000만원</span> (2025-11-22 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>12,000만원 (2025-08-28 | 5층)</div>
+                <div class="k">변화</div>
+                <div class="rise">3,000만원 상승 (25.0%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 남양주시"
+                     data-build-year="1991" data-young="0"
+                     data-very-young="0" data-old="1" data-area="61">
+              <h3>현대1 <span class='year-badge old'>1991년</span> <span class="tag">61㎡</span></h3>
+              <div class="card-sub">📍 경기도 남양주시 화도읍 창현리</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">15,000만원</span> (2025-11-07 | 2층)</div>
+                <div class="k">직전 최고가</div>
+                <div>14,000만원 (2024-10-04 | 1층)</div>
+                <div class="k">변화</div>
+                <div class="rise">1,000만원 상승 (7.1%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 김포시"
+                     data-build-year="1992" data-young="0"
+                     data-very-young="0" data-old="1" data-area="44">
+              <h3>신한 <span class='year-badge old'>1992년</span> <span class="tag">44㎡</span></h3>
+              <div class="card-sub">📍 경기도 김포시 감정동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">12,800만원</span> (2025-11-13 | 5층)</div>
+                <div class="k">직전 최고가</div>
+                <div>10,500만원 (2025-11-08 | 4층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,300만원 상승 (21.9%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 용인시 처인구"
+                     data-build-year="1997" data-young="0"
+                     data-very-young="0" data-old="1" data-area="84">
+              <h3>그랜드맨션(2동) <span class='year-badge old'>1997년</span> <span class="tag">84㎡</span></h3>
+              <div class="card-sub">📍 경기도 용인시(경) 고림동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">12,500만원</span> (2025-10-28 | 1층)</div>
+                <div class="k">직전 최고가</div>
+                <div>12,200만원 (2020-04-22 | 2층)</div>
+                <div class="k">변화</div>
+                <div class="rise">300만원 상승 (2.5%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 동두천시"
+                     data-build-year="2000" data-young="0"
+                     data-very-young="0" data-old="0" data-area="59">
+              <h3>대방노블랜드1차 <span class='year-badge'>2000년</span> <span class="tag">59㎡</span></h3>
+              <div class="card-sub">📍 경기도 동두천시 생연동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">11,800만원</span> (2025-11-15 | 17층)</div>
+                <div class="k">직전 최고가</div>
+                <div>9,800만원 (2025-09-15 | 11층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,000만원 상승 (20.4%)</div>
+                <div class="k">특이사항</div>
+                <div>
+                    
+                    
+                </div>
+              </div>
+            </section>
+            
+
+            <section class="card" data-region="경기도 안성시"
+                     data-build-year="1998" data-young="0"
+                     data-very-young="0" data-old="1" data-area="58">
+              <h3>동남 <span class='year-badge old'>1998년</span> <span class="tag">58㎡</span></h3>
+              <div class="card-sub">📍 경기도 안성시 금석동</div>
+              <div class="grid">
+                <div class="k">이번 실거래</div>
+                <div><span class="highlight">9,300만원</span> (2025-11-20 | 7층)</div>
+                <div class="k">직전 최고가</div>
+                <div>7,000만원 (2025-10-31 | 8층)</div>
+                <div class="k">변화</div>
+                <div class="rise">2,300만원 상승 (32.9%)</div>
                 <div class="k">특이사항</div>
                 <div>
                     
@@ -436,8 +3273,6 @@
           const headerSub = $('.header .sub');
           const chipsWrap = $('#regionChips');
           const subRegionChipsWrap = $('#subRegionChips');
-          const recentSearchDiv = $('#recentSearch');
-          const recentSearchItems = $('#recentSearchItems');
 
           /* === 날짜/상승률/면적 필터 요소 === */
           const dateFrom = $('#dateFrom');
@@ -470,64 +3305,6 @@
           let filterYoung = false;
           let filterVeryYoung = false;
           let filterOld = false;
-
-          /* ===== 최근 검색 지역 관리 ===== */
-          const RECENT_SEARCH_KEY = 'recentRegionSearches';
-          const MAX_RECENT_SEARCHES = 5;
-
-          function getRecentSearches(){
-            try{
-              const stored = localStorage.getItem(RECENT_SEARCH_KEY);
-              return stored ? JSON.parse(stored) : [];
-            } catch(e){
-              return [];
-            }
-          }
-
-          function addRecentSearch(regionName){
-            if(!regionName || regionName === '__ALL__' || regionName.startsWith('__SIDO__')) return;
-
-            let searches = getRecentSearches();
-            // 중복 제거
-            searches = searches.filter(s => s !== regionName);
-            // 맨 앞에 추가
-            searches.unshift(regionName);
-            // 최대 개수 제한
-            searches = searches.slice(0, MAX_RECENT_SEARCHES);
-
-            try{
-              localStorage.setItem(RECENT_SEARCH_KEY, JSON.stringify(searches));
-              renderRecentSearches();
-            } catch(e){
-              console.error('Failed to save recent searches:', e);
-            }
-          }
-
-          function renderRecentSearches(){
-            const searches = getRecentSearches();
-            if(searches.length === 0){
-              recentSearchDiv.classList.remove('show');
-              return;
-            }
-
-            recentSearchDiv.classList.add('show');
-            recentSearchItems.innerHTML = '';
-
-            searches.forEach(regionName => {
-              const item = document.createElement('span');
-              item.className = 'recent-search-item';
-              item.textContent = regionName;
-              item.dataset.region = regionName;
-              item.addEventListener('click', () => {
-                // 해당 지역 칩 찾아서 클릭
-                const chip = $$('.region-chip', subRegionChipsWrap).find(c => c.dataset.region === regionName);
-                if(chip){
-                  chip.click();
-                }
-              });
-              recentSearchItems.appendChild(item);
-            });
-          }
 
           /* ===== 유틸 ===== */
           function toInputValue(d){
@@ -1056,8 +3833,6 @@
               selectedRegions.delete(region);
             } else {
               selectedRegions.add(region);
-              // 최근 검색에 추가
-              addRecentSearch(region);
             }
 
             // 칩 활성화 상태 업데이트
@@ -1176,8 +3951,7 @@
             applyFilter();
           });
 
-          // 최초 렌더 시 숫자 세팅 및 최근 검색 표시
-          renderRecentSearches();
+          // 최초 렌더 시 필터 적용
           applyFilter();
         })();
 
