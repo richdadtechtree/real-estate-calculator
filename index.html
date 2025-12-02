@@ -128,8 +128,10 @@
         <button id="tab-cost" role="tab" aria-selected="false" aria-controls="panel-cost">부동산 매수 경비 계산기</button>
         <button id="tab-loan" role="tab" aria-selected="false" aria-controls="panel-loan">부동산 대출 계산기 </button>
         <button id="tab-map" role="tab" aria-selected="false" aria-controls="panel-map">LTV+급여 투자맵</button>
+        <button id="tab-84" role="tab" aria-selected="false" aria-controls="panel-84">84타입 신고가</button>
+        <button id="tab-59" role="tab" aria-selected="false" aria-controls="panel-59">59타입 신고가</button>
       </div>
-      <div class="help">💡 팁: 각 탭을 클릭하거나 주소 뒤에 <code>#invest-loan</code>, <code>#cost</code>, <code>#loan</code>, <code>#map</code>을 붙이면 바로 열 수 있어요.</div>
+      <div class="help">💡 팁: 각 탭을 클릭하거나 주소 뒤에 <code>#invest-loan</code>, <code>#cost</code>, <code>#loan</code>, <code>#map</code>, <code>#84</code>, <code>#59</code>를 붙이면 바로 열 수 있어요.</div>
     </div>
   </header>
 
@@ -152,6 +154,16 @@
     <!-- Panel 4 -->
     <section id="panel-map" class="panel" role="tabpanel" aria-labelledby="tab-map" hidden>
       <iframe title="LTV+급여 투자맵" data-file="LTV+급여로 본 투자맵.html" loading="lazy"></iframe>
+    </section>
+
+    <!-- Panel 5 -->
+    <section id="panel-84" class="panel" role="tabpanel" aria-labelledby="tab-84" hidden>
+      <iframe title="84타입 신고가" data-file="84.html" loading="lazy"></iframe>
+    </section>
+
+    <!-- Panel 6 -->
+    <section id="panel-59" class="panel" role="tabpanel" aria-labelledby="tab-59" hidden>
+      <iframe title="59타입 신고가" data-file="59.html" loading="lazy"></iframe>
     </section>
 
     <footer class="page">
