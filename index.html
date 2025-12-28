@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>부태리 계산기 허브 – 4개 탭</title>
+  <title>부태리 계산기 허브 – 7개 탭</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-75SPDY6N8V"></script>
@@ -18,7 +18,8 @@
     :root{
       --bg:#0b0c10; --card:#151822; --text:#e8eaf0; --muted:#96a0b5;
       --accent:#4caf50; --accent-weak:#3a8f40; --tab:rgba(255,255,255,.06);
-      --tab-active:linear-gradient(180deg, rgba(76,175,80,.18), rgba(76,175,80,
+      --tab-active:linear-gradient(180deg, rgba(76,175,80,.18), rgba(76,175,80,.06));
+      --ring:rgba(76,175,80,.35);
     }
     *{box-sizing:border-box}
     body{
@@ -94,9 +95,29 @@
     }
     .modal-x:active{transform:scale(.98)}
 
+    /* === 거래량 페이지용 연도 버튼 스타일 === */
+    .year-buttons{
+      display:flex; gap:12px; justify-content:center; align-items:center; padding:24px 0;
+    }
+    .year-btn{
+      appearance:none; border:1px solid rgba(76,175,80,.35); background:var(--tab); color:var(--text);
+      padding:14px 28px; border-radius:12px; font-weight:700; font-size:16px; cursor:pointer;
+      transition:all .2s ease; box-shadow:0 2px 8px rgba(0,0,0,.2);
+    }
+    .year-btn:hover{
+      transform:translateY(-2px);
+      background:var(--tab-active);
+      box-shadow:0 4px 16px rgba(76,175,80,.3);
+    }
+    .year-btn:active{
+      transform:scale(.98);
+    }
+
     @media (max-width:640px){
       .modal{width:100vw; height:100vh; max-height:100vh; border-radius:0}
       .modal-footer{padding:12px 14px calc(12px + env(safe-area-inset-bottom))}
+      .year-buttons{flex-direction:column; padding:16px 0;}
+      .year-btn{width:100%; max-width:280px;}
     }
     @supports (height:100dvh){
       @media (max-width:640px){
@@ -129,30 +150,31 @@
         <button id="tab-map" role="tab" aria-selected="false" aria-controls="panel-map">LTV+급여 투자맵</button>
         <button id="tab-84" role="tab" aria-selected="false" aria-controls="panel-84">84타입 신고가</button>
         <button id="tab-59" role="tab" aria-selected="false" aria-controls="panel-59">59타입 신고가</button>
+        <button id="tab-volume" role="tab" aria-selected="false" aria-controls="panel-volume">부동산 거래량</button>
       </div>
-      <div class="help">💡 팁: 각 탭을 클릭하거나 주소 뒤에 <code>#invest-loan</code>, <code>#cost</code>, <code>#loan</code>, <code>#map</code>, <code>#84</code>, <code>#59</code>를 붙이면 바로 열 수 있어요.</div>
+      <div class="help">💡 팁: 각 탭을 클릭하거나 주소 뒤에 <code>#invest-loan</code>, <code>#cost</code>, <code>#loan</code>, <code>#map</code>, <code>#84</code>, <code>#59</code>, <code>#volume</code>을 붙이면 바로 열 수 있어요.</div>
     </div>
   </header>
 
   <main class="wrap">
     <!-- Panel 1 -->
     <section id="panel-invest-loan" class="panel" role="tabpanel" aria-labelledby="tab-invest-loan">
-      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자 가능 단지 찾기(대출계산기) r6.html" loading="eager"></iframe>
+      <iframe title="내 자산 + 연봉에 맞는 금액대" data-file="투자가능단지 찾기 r0.html" loading="eager"></iframe>
     </section>
 
     <!-- Panel 2 -->
     <section id="panel-cost" class="panel" role="tabpanel" aria-labelledby="tab-cost" hidden>
-      <iframe title="부동산 매수 경비 계산기" data-file="1. 부동산 매수 경비 산출 계산기 -r2.html" loading="lazy"></iframe>
+      <iframe title="부동산 매수 경비 계산기" data-file="부동산경비산출기 r0.html" loading="lazy"></iframe>
     </section>
 
     <!-- Panel 3 -->
     <section id="panel-loan" class="panel" role="tabpanel" aria-labelledby="tab-loan" hidden>
-      <iframe title="부동산 대출 계산기" data-file="20250413대출계산기-r5.html" loading="lazy"></iframe>
+      <iframe title="부동산 대출 계산기" data-file="대출계산기 r0.html" loading="lazy"></iframe>
     </section>
 
     <!-- Panel 4 -->
     <section id="panel-map" class="panel" role="tabpanel" aria-labelledby="tab-map" hidden>
-      <iframe title="LTV+급여 투자맵" data-file="LTV+급여로 본 투자맵.html" loading="lazy"></iframe>
+      <iframe title="LTV+급여 투자맵" data-file="투자맵 r2.html" loading="lazy"></iframe>
     </section>
 
     <!-- Panel 5 -->
@@ -163,6 +185,15 @@
     <!-- Panel 6 -->
     <section id="panel-59" class="panel" role="tabpanel" aria-labelledby="tab-59" hidden>
       <iframe title="59타입 신고가" data-file="59.html" loading="lazy"></iframe>
+    </section>
+
+    <!-- Panel 7 - 부동산 거래량 -->
+    <section id="panel-volume" class="panel" role="tabpanel" aria-labelledby="tab-volume" hidden>
+      <div class="year-buttons">
+        <button class="year-btn" onclick="openYearPopup('2025거래량.html')">2025년 거래량</button>
+        <button class="year-btn" onclick="openYearPopup('2024거래량.html')">2024년 거래량</button>
+        <button class="year-btn" onclick="openYearPopup('2023거래량.html')">2023년 거래량</button>
+      </div>
     </section>
 
     <footer class="page">
@@ -186,6 +217,22 @@
         </label>
         <div style="display:flex; gap:8px; align-items:center;">
           <button class="btn" id="intro-close">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- === 거래량 연도별 팝업 === -->
+  <div id="year-modal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="부동산 거래량">
+      <button class="modal-x" id="year-close-x" aria-label="닫기" title="닫기">✕</button>
+      <div class="modal-body">
+        <iframe id="year-iframe" title="부동산 거래량"></iframe>
+      </div>
+      <div class="modal-footer">
+        <div style="flex:1"></div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn" id="year-close">닫기</button>
         </div>
       </div>
     </div>
@@ -235,7 +282,7 @@
           encodeSrc(iframe);
           resizeIframe(iframe);
         }
-        history.replaceState(null, '', '#' + tab.id.replace('tab','').replace(/^-/,'')); 
+        history.replaceState(null, '', '#' + tab.id.replace('tab','').replace(/^-/,''));
       }
       tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
       const hash = location.hash.replace('#','');
@@ -336,6 +383,36 @@
       if (linkReopen) linkReopen.addEventListener('click', function(e){
         e.preventDefault(); try{ localStorage.removeItem(HIDE_KEY); }catch(_){}
         if (chkDont) chkDont.checked = false; openIntro();
+      });
+
+      /* ====== 거래량 연도별 팝업 ====== */
+      const yearModal = document.getElementById('year-modal');
+      const yearIframe = document.getElementById('year-iframe');
+      const yearCloseBtn = document.getElementById('year-close');
+      const yearCloseX = document.getElementById('year-close-x');
+
+      window.openYearPopup = function(filename) {
+        try {
+          yearIframe.src = encodeURI(filename);
+        } catch (e) {
+          yearIframe.src = filename;
+        }
+        yearModal.hidden = false;
+        lockScroll(true);
+      };
+
+      function closeYearPopup() {
+        yearModal.hidden = true;
+        lockScroll(false);
+      }
+
+      if (yearCloseBtn) yearCloseBtn.addEventListener('click', closeYearPopup);
+      if (yearCloseX) yearCloseX.addEventListener('click', closeYearPopup);
+      yearModal.addEventListener('click', function(e){
+        if (e.target === yearModal) closeYearPopup();
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && !yearModal.hidden) closeYearPopup();
       });
     })();
   </script>
