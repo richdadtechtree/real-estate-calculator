@@ -191,11 +191,30 @@
             </div>
             <div>
                 <label class="highlight-label">1주택 비과세 여부</label>
-                <select id="isExempt">
-                    <option value="y">적용 (12억 이하)</option>
+                <select id="isExempt" onchange="toggleResidenceField()">
+                    <option value="y">적용 (12억 이하 비과세)</option>
                     <option value="n">미적용 (일반 과세)</option>
                 </select>
             </div>
+        </div>
+        <!-- 거주기간 입력 (비과세 미적용 시에만 표시) -->
+        <div class="row" id="residenceRow" style="display:none;">
+            <div>
+                <label>거주기간 (년)</label>
+                <input type="number" id="residencePeriod" step="0.1" value="0" placeholder="실거주 기간">
+                <span class="korean-unit" style="color:var(--blue);">보유기간은 투자기간 사용</span>
+            </div>
+            <div>
+                <label>필요경비 (중개비 외 추가)</label>
+                <input type="number" id="additionalExpense" value="0" oninput="updateKorean('additionalExpense', 'korAddExp')">
+                <span id="korAddExp" class="korean-unit"></span>
+            </div>
+        </div>
+        <div id="residenceInfo" class="info-box" style="display:none;">
+            <strong>장기보유특별공제 (3년 이상 보유 시 적용):</strong><br>
+            • 2년 이상 거주: 보유 4%/년(최대40%) + 거주 4%/년(최대40%) = 최대 80%<br>
+            • 2년 미만 거주: 보유 2%/년 = 최대 30%<br>
+            • 3년 미만 보유 시: 공제 없음
         </div>
     </div>
 
@@ -299,6 +318,12 @@
     let currentInvestType = 'realestate';
     let isTargetNetMode = false;
 
+    function toggleResidenceField() {
+        const isExempt = document.getElementById('isExempt').value === 'y';
+        document.getElementById('residenceRow').style.display = isExempt ? 'none' : 'flex';
+        document.getElementById('residenceInfo').style.display = isExempt ? 'none' : 'block';
+    }
+
     function toggleTargetMode() {
         isTargetNetMode = document.getElementById('isTargetNet').checked;
         const label = document.getElementById('profitLabel');
@@ -351,6 +376,7 @@
         if (type === 'realestate') {
             document.getElementById('reFields').style.display = 'block';
             document.getElementById('loanSection').style.display = 'flex';
+            toggleResidenceField(); // 비과세 여부에 따라 거주기간 필드 표시
         } else if (type === 'stock-kr') {
             document.getElementById('stockKrFields').style.display = 'block';
         } else if (type === 'stock-us') {
@@ -366,31 +392,143 @@
         document.getElementById('reverseCalcResult').style.display = 'none';
     }
 
-    function calculateTax(gain, period, isExempt, salePrice) {
-        if (gain <= 0) return { tax: 0, label: "수익 없음" };
-        let netGain = gain - 2500000;
-        if (netGain <= 0) return { tax: 0, label: "기본공제 이하" };
-        let tax = 0; let label = "";
+    // 장기보유특별공제율 계산 (3년 이상 보유 시에만 적용)
+    function calculateLongTermDeduction(holdingPeriod, residencePeriod) {
+        // 3년 미만 보유 시 공제 없음
+        if (holdingPeriod < 3) return 0;
 
-        if (period < 1) { tax = netGain * 0.7; label = "70% 단기"; }
-        else if (period < 2) { tax = netGain * 0.6; label = "60% 단기"; }
-        else {
-            if (isExempt) {
-                if (salePrice <= 12e8) return { tax: 0, label: "비과세" };
-                netGain = netGain * ((salePrice - 12e8) / salePrice);
-                label = "12억 초과분";
-            } else { label = "일반세율"; }
+        let rate = 0;
 
-            if (netGain <= 14e6) tax = netGain * 0.06;
-            else if (netGain <= 50e6) tax = netGain * 0.15 - 1.26e6;
-            else if (netGain <= 88e6) tax = netGain * 0.24 - 5.76e6;
-            else if (netGain <= 150e6) tax = netGain * 0.35 - 15.44e6;
-            else if (netGain <= 300e6) tax = netGain * 0.38 - 19.94e6;
-            else if (netGain <= 500e6) tax = netGain * 0.40 - 25.94e6;
-            else if (netGain <= 1000e6) tax = netGain * 0.42 - 35.94e6;
-            else tax = netGain * 0.45 - 65.94e6;
+        if (residencePeriod >= 2) {
+            // 2년 이상 거주: 보유 4%/년(최대40%) + 거주 4%/년(최대40%) = 최대 80%
+            const holdingRate = Math.min(Math.floor(holdingPeriod) * 0.04, 0.40);
+            const residenceRate = Math.min(Math.floor(residencePeriod) * 0.04, 0.40);
+            rate = holdingRate + residenceRate;
+        } else {
+            // 2년 미만 거주: 보유 2%/년 = 최대 30%
+            rate = Math.min(Math.floor(holdingPeriod) * 0.02, 0.30);
         }
-        return { tax: Math.floor(tax * 1.1), label: label };
+
+        return Math.min(rate, 0.80); // 최대 80%
+    }
+
+    // 소득세 세율 및 누진공제 적용 (2026년 기준)
+    function applyTaxRate(taxableIncome) {
+        if (taxableIncome <= 0) return { tax: 0, rate: 0, deduction: 0 };
+
+        let tax = 0, rate = 0, deduction = 0;
+
+        if (taxableIncome <= 14e6) {
+            rate = 6; deduction = 0;
+            tax = taxableIncome * 0.06;
+        } else if (taxableIncome <= 50e6) {
+            rate = 15; deduction = 126;
+            tax = taxableIncome * 0.15 - 1.26e6;
+        } else if (taxableIncome <= 88e6) {
+            rate = 24; deduction = 576;
+            tax = taxableIncome * 0.24 - 5.76e6;
+        } else if (taxableIncome <= 150e6) {
+            rate = 35; deduction = 1544;
+            tax = taxableIncome * 0.35 - 15.44e6;
+        } else if (taxableIncome <= 300e6) {
+            rate = 38; deduction = 1994;
+            tax = taxableIncome * 0.38 - 19.94e6;
+        } else if (taxableIncome <= 500e6) {
+            rate = 40; deduction = 2594;
+            tax = taxableIncome * 0.40 - 25.94e6;
+        } else if (taxableIncome <= 1000e6) {
+            rate = 42; deduction = 3594;
+            tax = taxableIncome * 0.42 - 35.94e6;
+        } else {
+            rate = 45; deduction = 6594;
+            tax = taxableIncome * 0.45 - 65.94e6;
+        }
+
+        return { tax, rate, deduction };
+    }
+
+    function calculateTax(gain, period, isExempt, salePrice, additionalExp = 0, residencePeriod = 0) {
+        if (gain <= 0) return { tax: 0, label: "수익 없음", details: null };
+
+        let details = {
+            totalGain: gain,
+            taxableGain: 0,
+            longTermRate: 0,
+            incomeAmount: 0,
+            taxBase: 0,
+            taxBeforeLocal: 0,
+            taxRate: 0,        // 적용 세율 (%)
+            taxDeduction: 0    // 누진공제액 (만원)
+        };
+
+        // 단기 양도 (1년 미만: 70%, 1~2년: 60%)
+        if (period < 1) {
+            const netGain = gain - 2500000;
+            if (netGain <= 0) return { tax: 0, label: "기본공제 이하", details: null };
+            const tax = netGain * 0.7;
+            return { tax: Math.floor(tax * 1.1), label: "70% 단기", details: null };
+        } else if (period < 2) {
+            const netGain = gain - 2500000;
+            if (netGain <= 0) return { tax: 0, label: "기본공제 이하", details: null };
+            const tax = netGain * 0.6;
+            return { tax: Math.floor(tax * 1.1), label: "60% 단기", details: null };
+        }
+
+        // 2년 이상 보유 시
+        if (isExempt) {
+            // 비과세 적용
+            if (salePrice <= 12e8) return { tax: 0, label: "비과세", details: null };
+
+            // 12억 초과 고가주택: 초과분만 과세 (장특공 80% 적용)
+            details.taxableGain = gain * ((salePrice - 12e8) / salePrice);
+            details.longTermRate = 0.80; // 비과세 요건 충족 시 최대 공제
+            details.incomeAmount = details.taxableGain * (1 - details.longTermRate);
+            details.taxBase = Math.max(details.incomeAmount - 2500000, 0);
+
+            const taxResult = applyTaxRate(details.taxBase);
+            details.taxBeforeLocal = taxResult.tax;
+            details.taxRate = taxResult.rate;
+            details.taxDeduction = taxResult.deduction;
+
+            return {
+                tax: Math.floor(details.taxBeforeLocal * 1.1),
+                label: "12억초과 비과세",
+                details: details
+            };
+        } else {
+            // 비과세 미적용 (일반 과세)
+            // 1. 12억 초과분만 과세
+            if (salePrice <= 12e8) {
+                // 12억 이하면 전체 과세
+                details.taxableGain = gain;
+            } else {
+                // 12억 초과분만 과세
+                details.taxableGain = gain * ((salePrice - 12e8) / salePrice);
+            }
+
+            // 2. 장기보유특별공제 적용
+            details.longTermRate = calculateLongTermDeduction(period, residencePeriod);
+
+            // 3. 양도소득금액 = 과세대상양도차익 × (1 - 장특공율)
+            details.incomeAmount = details.taxableGain * (1 - details.longTermRate);
+
+            // 4. 과세표준 = 양도소득금액 - 기본공제(250만원)
+            details.taxBase = Math.max(details.incomeAmount - 2500000, 0);
+
+            // 5. 세액 계산 (누진세율 적용)
+            const taxResult = applyTaxRate(details.taxBase);
+            details.taxBeforeLocal = taxResult.tax;
+            details.taxRate = taxResult.rate;
+            details.taxDeduction = taxResult.deduction;
+
+            // 6. 지방세 포함 (×1.1)
+            const finalTax = Math.floor(details.taxBeforeLocal * 1.1);
+
+            let label = salePrice > 12e8 ? "12억초과 장특공" : "일반 장특공";
+            label += ` ${Math.round(details.longTermRate * 100)}%`;
+
+            return { tax: finalTax, label: label, details: details };
+        }
     }
 
     function calculateUsStockTax(gain) {
@@ -413,6 +551,8 @@
             const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
             const isExempt = document.getElementById('isExempt').value === 'y';
             const salePrice = buyPrice + profit;
+            const additionalExp = parseFloat(document.getElementById('additionalExpense').value) || 0;
+            const residencePeriod = parseFloat(document.getElementById('residencePeriod').value) || 0;
 
             interest = loan * rate * period;
 
@@ -423,9 +563,9 @@
             const brokerBuy = (buyPrice <= 9e8) ? buyPrice * 0.004 * 1.1 : buyPrice * 0.005 * 1.1;
             const buyExp = acq + edu + legalFees + brokerBuy;
 
-            const taxObj = calculateTax(profit, period, isExempt, salePrice);
+            const taxObj = calculateTax(profit, period, isExempt, salePrice, additionalExp, residencePeriod);
             const brokerSell = brokerBuy;
-            totalExp = buyExp + brokerSell + taxObj.tax;
+            totalExp = buyExp + brokerSell + additionalExp + taxObj.tax;
 
         } else if (currentInvestType === 'stock-kr') {
             const feeRate = (parseFloat(document.getElementById('krFeeRate').value) || 0) / 100;
@@ -540,6 +680,8 @@
             const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
             const isExempt = document.getElementById('isExempt').value === 'y';
             const salePrice = buyPrice + profit;
+            const additionalExp = parseFloat(document.getElementById('additionalExpense').value) || 0;
+            const residencePeriod = parseFloat(document.getElementById('residencePeriod').value) || 0;
 
             interest = loan * rate * period;
 
@@ -548,17 +690,39 @@
             const edu = Math.floor(acq * 0.1);
             const legalFees = 880000 + 150000 + 18000;
             const brokerBuy = (buyPrice <= 9e8) ? buyPrice * 0.004 * 1.1 : buyPrice * 0.005 * 1.1;
+            const brokerSell = brokerBuy;
             const buyExp = acq + edu + legalFees + brokerBuy;
 
-            const taxObj = calculateTax(profit, period, isExempt, salePrice);
-            const brokerSell = brokerBuy;
-            totalExp = buyExp + brokerSell + taxObj.tax;
+            // 양도세 계산 (필요경비 = 중개비 + 추가비용)
+            const necessaryExpenses = brokerBuy + brokerSell + additionalExp;
+            const taxObj = calculateTax(profit, period, isExempt, salePrice, additionalExp, residencePeriod);
+            totalExp = buyExp + brokerSell + additionalExp + taxObj.tax;
 
             rows += `<tr class="row-group"><td colspan="2">1. 부동산 거래 경비 명세</td></tr>`;
             rows += `<tr><td>취득세 및 교육세</td><td>${(acq + edu).toLocaleString()}원</td></tr>`;
             rows += `<tr><td>법무사 및 부대비용</td><td>${legalFees.toLocaleString()}원</td></tr>`;
             rows += `<tr><td>부동산 중개수수료</td><td>${(brokerBuy + brokerSell).toLocaleString()}원 (2회)</td></tr>`;
-            rows += `<tr class="row-tax"><td>양도소득세 (${taxObj.label})</td><td>${taxObj.tax.toLocaleString()}원</td></tr>`;
+            if (additionalExp > 0) {
+                rows += `<tr><td>추가 필요경비</td><td>${additionalExp.toLocaleString()}원</td></tr>`;
+            }
+
+            // 양도세 상세 내역 표시
+            if (taxObj.details) {
+                const d = taxObj.details;
+                rows += `<tr class="row-group"><td colspan="2">2. 양도소득세 계산 내역</td></tr>`;
+                rows += `<tr><td>전체 양도차익</td><td>${Math.round(d.totalGain).toLocaleString()}원</td></tr>`;
+                if (salePrice > 12e8) {
+                    rows += `<tr><td>과세대상 양도차익 (12억 초과분)</td><td>${Math.round(d.taxableGain).toLocaleString()}원</td></tr>`;
+                }
+                rows += `<tr><td>장기보유특별공제율</td><td>${Math.round(d.longTermRate * 100)}%</td></tr>`;
+                rows += `<tr><td>양도소득금액 (공제 후)</td><td>${Math.round(d.incomeAmount).toLocaleString()}원</td></tr>`;
+                rows += `<tr><td>과세표준 (−250만원)</td><td>${Math.round(d.taxBase).toLocaleString()}원</td></tr>`;
+                const deductionText = d.taxDeduction > 0 ? ` −${d.taxDeduction}만원` : '';
+                rows += `<tr><td>산출세액 (${d.taxRate}%${deductionText})</td><td>${Math.round(d.taxBeforeLocal).toLocaleString()}원</td></tr>`;
+                rows += `<tr class="row-tax"><td>최종 양도세 (×1.1 지방세)</td><td>${taxObj.tax.toLocaleString()}원</td></tr>`;
+            } else {
+                rows += `<tr class="row-tax"><td>양도소득세 (${taxObj.label})</td><td>${taxObj.tax.toLocaleString()}원</td></tr>`;
+            }
 
         } else if (currentInvestType === 'stock-kr') {
             // 국내주식 계산
@@ -639,7 +803,9 @@
 
         // 금융 비용 (대출이자) 추가
         if (interest > 0) {
-            rows += `<tr class="row-group"><td colspan="2">2. 금융 비용</td></tr>`;
+            const isExemptVal = document.getElementById('isExempt').value === 'y';
+            const finSectionNum = (currentInvestType === 'realestate' && !isExemptVal) ? 3 : 2;
+            rows += `<tr class="row-group"><td colspan="2">${finSectionNum}. 금융 비용</td></tr>`;
             rows += `<tr><td>총 대출 이자 (${period}년)</td><td>${Math.round(interest).toLocaleString()}원</td></tr>`;
         }
 
